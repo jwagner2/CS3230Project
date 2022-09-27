@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import model.User;
+
 public class LoginDal {
 	
 	
-public User login(String username, String password) throws SQLException{
+public User login(String username, String password, Boolean adminLogin) throws SQLException{
 		
 		"TODO"
 		String query = "ToDo";
