@@ -14,20 +14,31 @@ import model.User;
 public class LoginDal {
 	
 	
-public User login(String username, String password, Boolean adminLogin) throws SQLException{
+public User login(String username, String password, Boolean adminLogin, Boolean nurseLogin) throws SQLException{
 		
-		"TODO"
-		String query = "ToDo";
+		
+		String queryToUse = "select * from user where username = ? and password = ?";
+		User loggedIn = null;
 		try ( Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING); 
-				PreparedStatement stmt = connection.prepareStatement(query)){ 
-	
+				PreparedStatement stmt = connection.prepareStatement(queryToUse)){ 
+			
+			stmt.setString(1, username);
+			stmt.setString(2, password);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next() ) {
+				String firstName = rs.getString("fname");
+				String lastName = rs.getString("lname");
+				boolean isAdmin = rs.getBoolean("isAdmin");
+				boolean isNurse = rs.getBoolean("isNurse");
+				if (adminLogin == isAdmin && nurseLogin == isNurse) {
+					loggedIn = new User(firstName, lastName, username, password, isAdmin, isNurse);
+					return loggedIn;
+				}
 		
-			  	User loggedIn = new User();
 			}
 
         } 
 		return loggedIn;
 	}
+
 }
