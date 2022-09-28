@@ -16,7 +16,7 @@
       <TextField fx:id="pwdTextField" layoutX="226.0" layoutY="307.0" />
       <ImageView fitHeight="150.0" fitWidth="263.0" layoutX="169.0" layoutY="35.0" pickOnBounds="true">
          <image>
-            <Image url="@images/eth%20s.png" />
+            <Image url="@eth%20s.png" />
          </image>
       </ImageView>
    </children>

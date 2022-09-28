@@ -1,4 +1,4 @@
-package main;
+package main.java.ethos;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,14 +9,18 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    public static final String LOGIN_PAGE = "view/codebehind/LoginPage.fxml";
+    public static final String MAIN_PAGE = "view/codebehind/MainPage.fxml";
+    public static final String ICON_PATH = "view/codebehind/test_logo.png";
+
     @Override
     public void start(Stage primaryStage) throws Exception {
     	//login page size: 600w400h
     	//main page size: 600w700h
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/codebehind/MainPage.fxml"));
-        primaryStage.getIcons().add(new Image("view/codebehind/test_logo.png"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(Main.LOGIN_PAGE));
+        primaryStage.getIcons().add(new Image(Main.ICON_PATH));
         primaryStage.setTitle("ethOS");
-        primaryStage.setScene(new Scene(root, 600, 600));
+        primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
 

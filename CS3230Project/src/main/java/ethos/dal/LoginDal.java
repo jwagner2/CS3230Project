@@ -1,4 +1,4 @@
-package dal;
+package main.java.ethos.dal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import model.User;
+import main.java.ethos.model.User;
 
 public class LoginDal {
 	

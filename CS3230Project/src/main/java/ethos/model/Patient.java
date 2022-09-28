@@ -1,4 +1,4 @@
-package model;
+package main.java.ethos.model;
 
 import java.sql.Date;
 

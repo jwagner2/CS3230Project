@@ -1,4 +1,4 @@
-package dal;
+package main.java.ethos.dal;
 
 /**
  * Connection string

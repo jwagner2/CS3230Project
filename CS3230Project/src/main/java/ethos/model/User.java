@@ -1,4 +1,4 @@
-package model;
+package main.java.ethos.model;
 
 public class User {
 	
