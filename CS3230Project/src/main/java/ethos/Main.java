@@ -1,4 +1,5 @@
 package main;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,8 +13,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
     	//login page size: 600w400h
     	//main page size: 600w700h
-        Parent root = FXMLLoader.load(getClass().getResource("../resources/MainPage.fxml"));
-        primaryStage.getIcons().add(new Image("/resources/images/test_logo.png"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/codebehind/MainPage.fxml"));
+        primaryStage.getIcons().add(new Image("view/codebehind/test_logo.png"));
         primaryStage.setTitle("ethOS");
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
