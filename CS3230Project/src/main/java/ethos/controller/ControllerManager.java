@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package main.java.ethos.controller;
 
 import java.sql.SQLException;
@@ -11,6 +14,13 @@ public class ControllerManager {
 	private User loggedInUser;
 	private Patient displayedPatient;
 
+	/**
+	 * Validate login.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @return true, if successful
+	 */
 	public boolean validateLogin(String username, String password) {
 		LoginDal valid8r = new LoginDal();
 		try {

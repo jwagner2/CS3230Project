@@ -12,7 +12,11 @@ import main.java.ethos.controller.ControllerManager;
 import main.java.ethos.dal.LoginDal;
 import main.java.ethos.model.User;
 
+/**
+ * The Class LoginController.
+ */
 public class LoginController {
+	
 	private ControllerManager manager = new ControllerManager();
 
     @FXML
@@ -27,40 +31,23 @@ public class LoginController {
     @FXML
     private Label invalidCredentialsLabel;
 
+    /**
+     * Handle login.
+     *
+     * @param event the event
+     */
     @FXML
     void handleLogin(ActionEvent event) {
-        if (unameTextField.getText().isEmpty() &&  pwdTextField.getText().isEmpty()) {
+        if (this.unameTextField.getText().isEmpty() &&  this.pwdTextField.getText().isEmpty()) {
         	this.invalidCredentialsLabel.setVisible(true);
         } else {
-        	 if (this.manager.validateLogin(unameTextField.getText(), pwdTextField.getText())) {
+        	 if (this.manager.validateLogin(this.unameTextField.getText(), this.pwdTextField.getText())) {
         		 this.invalidCredentialsLabel.setVisible(false);
         	 } else {
         		 this.invalidCredentialsLabel.setVisible(true);
         	 }
         }
-        //this.validateLogin(unameTextField.getText(), pwdTextField.getText());
     }
-// 
-//    private void validateLogin(String username, String password) {
-//        LoginDal valid8r = new LoginDal();
-//        if (username.isEmpty() && password.isEmpty()) {
-//        	this.invalidCredentialsLabel.setVisible(true);
-//        }
-//        else {
-//            try {
-//                User user = valid8r.login(username, password, false, true);
-//                if (user != null) {
-//                    this.invalidCredentialsLabel.setVisible(false);
-//                    System.out.println("Login success");
-//                } else {
-//                    this.invalidCredentialsLabel.setVisible(true);
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//                
-//            }
-//        	
-//        }
  
         /**if user == null {
             this.invalidCredentialsLable.setVisible(true);

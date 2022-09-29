@@ -11,9 +11,23 @@ import java.util.List;
 
 import main.java.ethos.model.User;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LoginDal.
+ */
 public class LoginDal {
 	
 	
+	/**
+	 * Login.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param adminLogin the admin login
+	 * @param nurseLogin the nurse login
+	 * @return the user
+	 * @throws SQLException the SQL exception
+	 */
 	public User login(String username, String password, Boolean adminLogin, Boolean nurseLogin) throws SQLException{
 			
 			
