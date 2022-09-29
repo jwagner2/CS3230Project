@@ -23,8 +23,9 @@ public class ControllerManager {
 	 */
 	public boolean validateLogin(String username, String password) {
 		LoginDal valid8r = new LoginDal();
+		System.out.println("here");
 		try {
-			this.loggedInUser = valid8r.login(username, password, false, true);
+			this.loggedInUser = valid8r.login(username, password, true, true);
 			if (this.loggedInUser != null) {
 				System.out.println("Login success");
 				return true;
