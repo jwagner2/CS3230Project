@@ -31,18 +31,25 @@ public class LoginController {
 
     private void validateLogin(String username, String password) {
         LoginDal valid8r = new LoginDal();
-        try {
-            User user = valid8r.login(username, password, false, true);
-            if (user != null) {
-                this.invalidCredentialsLabel.setVisible(false);
-                System.out.println("Login success");
-            } else {
-                this.invalidCredentialsLabel.setVisible(true);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            
+        if (username.isEmpty() && password.isEmpty()) {
+        	this.invalidCredentialsLabel.setVisible(true);
         }
+        else {
+            try {
+                User user = valid8r.login(username, password, false, true);
+                if (user != null) {
+                    this.invalidCredentialsLabel.setVisible(false);
+                    System.out.println("Login success");
+                } else {
+                    this.invalidCredentialsLabel.setVisible(true);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                
+            }
+        	
+        }
+ 
         /**if user == null {
             this.invalidCredentialsLable.setVisible(true);
         } else {

@@ -20,6 +20,6 @@
          </image>
       </ImageView>
       <Button fx:id="loginButton" layoutX="276.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleLogin" text="Log In" />
-      <Label fx:id="invalidCredentialsLabel" layoutX="190.0" layoutY="359.0" prefHeight="17.0" prefWidth="221.0" text="Invalid login credentials. Please try again." textFill="RED" />
+      <Label fx:id="invalidCredentialsLabel" layoutX="190.0" layoutY="359.0" prefHeight="17.0" prefWidth="221.0" text="Invalid login credentials. Please try again." textFill="RED" visible="false"/>
    </children>
 </AnchorPane>
