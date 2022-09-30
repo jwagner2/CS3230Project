@@ -3,9 +3,15 @@
  */
 package main.java.ethos.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import main.java.ethos.dal.LoginDal;
+import main.java.ethos.model.PageType;
 import main.java.ethos.model.Patient;
 import main.java.ethos.model.User;
 
@@ -37,4 +43,15 @@ public class ControllerManager {
 		return false;
 	}
 
+	public void changeView(PageType page, Stage currentStage) {
+		try {
+			Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource(page.label));
+			Scene scene = new Scene(parent);
+			currentStage.setTitle("ethos");
+			currentStage.setScene(scene);
+			currentStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
