@@ -17,7 +17,9 @@ import main.java.ethos.model.User;
  */
 public class LoginDal {
 	
-	
+	public LoginDal() {
+		
+	}
 	/**
 	 * Login.
 	 *
@@ -34,12 +36,13 @@ public class LoginDal {
 			String queryToUse = "select * from user where username = ? and password = ?";
 			User loggedIn = null;
 			try ( Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING); 
-					PreparedStatement stmt = connection.prepareStatement(queryToUse)){ 
+					PreparedStatement stmt = connection.prepareStatement(queryToUse)) { 
 				
 				stmt.setString(1, username);
 				stmt.setString(2, password);
 				ResultSet rs = stmt.executeQuery();
 				while (rs.next() ) {
+					System.out.println("rs has next");
 					String firstName = rs.getString("fname");
 					String lastName = rs.getString("lname");
 					boolean isAdmin = rs.getBoolean("isAdmin");
@@ -47,10 +50,9 @@ public class LoginDal {
 					if (adminLogin == isAdmin && nurseLogin == isNurse) {
 						loggedIn = new User(firstName, lastName, username, password, isAdmin, isNurse);
 						return loggedIn;
-					}
-			
+					}			
 				}
-
+				System.out.println("rs no has next");
 			} 
 			return loggedIn;
 		}

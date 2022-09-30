@@ -43,23 +43,26 @@ public class LoginController {
 	 */
 	@FXML
 	void handleLogin(ActionEvent event) throws IOException {
-		if (this.unameTextField.getText().isEmpty() && this.pwdTextField.getText().isEmpty()) {
+		if (this.unameTextField.getText().isEmpty() || this.pwdTextField.getText().isEmpty()) {
 			System.out.print("here");
 			this.invalidCredentialsLabel.setVisible(true);
 		} else {
 			System.out.print("here");
 			if (this.manager.validateLogin(this.unameTextField.getText(), this.pwdTextField.getText())) {
+				
 				this.invalidCredentialsLabel.setVisible(false);
 				
-					Stage stage = (Stage) this.loginButton.getScene().getWindow();;
-					Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource(Main.MAIN_PAGE));
-					Scene scene = new Scene(parent);
-					stage.setTitle("ethos");
-					stage.setScene(scene);
-					stage.show();
+				Stage stage = (Stage) this.loginButton.getScene().getWindow();;
+				Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource(Main.MAIN_PAGE));
+				Scene scene = new Scene(parent);
+				stage.setTitle("ethos");
+				stage.setScene(scene);
+				stage.show();
 
-				}
-
+			} else {
+				this.invalidCredentialsLabel.setVisible(true);
+				this.pwdTextField.setText("");
 			}
+		}
 	}
 }
