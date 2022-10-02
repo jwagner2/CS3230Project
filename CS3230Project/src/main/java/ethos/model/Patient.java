@@ -17,7 +17,9 @@ public class Patient {
 	private String addressTwo;
 	private String addressZip;
 	private String addressState;
-
+	private char gender;
+	private int patientId;
+	
 	/**
 	 * Instantiates a new patient.
 	 *
@@ -31,9 +33,10 @@ public class Patient {
 	 * @param addressTwo the address two
 	 * @param addressZip the address zip
 	 * @param addressState the address state
+	 * @param gender the gender
 	 */
 	public Patient(String fname, String lname, String ssn, Date birthDate, boolean isActive, String contactNumber,
-			String addressOne, String addressTwo, String addressZip, String addressState) {
+			String addressOne, String addressTwo, String addressZip, String addressState, char gender) {
 		this.firstName = fname;
 		this.lastName = lname;
 		this.ssn = ssn;
@@ -41,9 +44,29 @@ public class Patient {
 		this.isActive = isActive;
 		this.contactNumber = contactNumber;
 		this.setAddress(addressOne, addressTwo, addressZip, addressState);
+		this.gender = gender;
+		
 	}
 
-	/**
+    /**
+	 * Gets the gender.
+	 *
+	 * @return the gender
+	 */
+	public char getGender() {
+        return this.gender;
+    }
+
+    /**
+     * Sets the gender.
+     *
+     * @param gender the new gender
+     */
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+
+    /**
 	 * Sets the address.
 	 *
 	 * @param addressOne the address one
@@ -118,7 +141,7 @@ public class Patient {
 	 * @return true, if is active
 	 */
 	public boolean isActive() {
-		return isActive;
+		return this.isActive;
 	}
 
 	/**
@@ -127,7 +150,7 @@ public class Patient {
 	 * @return the address one
 	 */
 	public String getAddressOne() {
-		return addressOne;
+		return this.addressOne;
 	}
 
 	/**
@@ -136,7 +159,7 @@ public class Patient {
 	 * @return the address two
 	 */
 	public String getAddressTwo() {
-		return addressTwo;
+		return this.addressTwo;
 	}
 
 	/**
@@ -145,7 +168,7 @@ public class Patient {
 	 * @return the address zip
 	 */
 	public String getAddressZip() {
-		return addressZip;
+		return this.addressZip;
 	}
 
 	/**
@@ -154,7 +177,7 @@ public class Patient {
 	 * @return the address state
 	 */
 	public String getAddressState() {
-		return addressState;
+		return this.addressState;
 	}
 
 	/**
@@ -163,7 +186,7 @@ public class Patient {
 	 * @return the first name
 	 */
 	public String getFirstName() {
-		return firstName;
+		return this.firstName;
 	}
 
 	/**
@@ -181,7 +204,7 @@ public class Patient {
 	 * @return the ssn
 	 */
 	public String getSsn() {
-		return ssn;
+		return this.ssn;
 	}
 
 	/**
@@ -190,7 +213,7 @@ public class Patient {
 	 * @return the birth date
 	 */
 	public Date getBirthDate() {
-		return birthDate;
+		return this.birthDate;
 	}
 
 	/**
@@ -199,7 +222,19 @@ public class Patient {
 	 * @return the contact number
 	 */
 	public String getContactNumber() {
-		return contactNumber;
+		return this.contactNumber;
+	}
+	
+	/**
+	 * gets the patient id
+	 * @return the patient id
+	 */
+	public int getPatientId() {
+	    return this.patientId;
+	}
+	
+	public void setPatientId(int patientId) {
+	    this.patientId = patientId;
 	}
 
 }

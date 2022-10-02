@@ -1,5 +1,8 @@
 package main.java.ethos.view;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +17,7 @@ import main.java.ethos.model.PageType;
 public class PatientInfoView {
 
     private ControllerManager manager = new ControllerManager();
+    private Map<String, String> patientDetails = new HashMap<String, String>();
 
     @FXML
     private TextField patientIdField;
@@ -56,6 +60,21 @@ public class PatientInfoView {
 
     @FXML
     void handleSubmit(ActionEvent event) {
+        this.manager.patientRegister(this.patientDetails, this.patientActiveChBox.isSelected());
         this.manager.changeView(PageType.MAIN, (Stage) this.submitButton.getScene().getWindow());
+    }
+    
+    private void populateMap() {
+        this.patientDetails.put("fname", this.patientFnameField.getText());
+        this.patientDetails.put("lname", this.patientLnameField.getText());
+        this.patientDetails.put("patientId", this.patientIdField.getText());
+        this.patientDetails.put("ssn", this.patientSsnField.getText());
+        this.patientDetails.put("dob", this.patientDobPicker.getValue().toString());
+        this.patientDetails.put("phone", this.patientPhoneField.getText());
+        this.patientDetails.put("addressOne", this.patientAddr1Field.getText());
+        this.patientDetails.put("addressTwo", this.patientAddr2Field.getText());
+        this.patientDetails.put("zip", this.patientAddrZipcodeField.getText());
+        this.patientDetails.put("state", this.patientAddrStateComboBox.getValue());
+        this.patientDetails.put("gender", this.patientGenderComboBox.getValue());
     }
 }

@@ -38,7 +38,7 @@ public class User {
 	 * @return the first name
 	 */
 	public String getFirstName() {
-		return firstName;
+		return this.firstName;
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class User {
 	 * @return the last name
 	 */
 	public String getLastName() {
-		return lastName;
+		return this.lastName;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class User {
 	 * @return the user name
 	 */
 	public String getUserName() {
-		return userName;
+		return this.userName;
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class User {
 	 * @return the password
 	 */
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	/**
