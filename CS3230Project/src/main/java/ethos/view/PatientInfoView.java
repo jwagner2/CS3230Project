@@ -61,7 +61,12 @@ public class PatientInfoView {
     @FXML
     void handleSubmit(ActionEvent event) {
         this.manager.patientRegister(this.patientDetails, this.patientActiveChBox.isSelected());
-        this.manager.changeView(PageType.MAIN, (Stage) this.submitButton.getScene().getWindow());
+        this.manager.changeToMainView((Stage) this.submitButton.getScene().getWindow());
+    }
+
+    public void initialize(ControllerManager manager) {
+        this.manager = manager;
+        this.manager.populateStatesComboBox(this.patientAddrStateComboBox);
     }
     
     private void populateMap() {

@@ -15,7 +15,7 @@ import main.java.ethos.model.PageType;
  */
 public class LoginView {
 
-	private ControllerManager manager = new ControllerManager();
+	private ControllerManager manager;
 
 	@FXML
 	private TextField unameTextField;
@@ -37,17 +37,19 @@ public class LoginView {
 	@FXML
 	void handleLogin(ActionEvent event) throws IOException {
 		if (this.unameTextField.getText().isEmpty() || this.pwdTextField.getText().isEmpty()) {
-			System.out.print("here");
 			this.invalidCredentialsLabel.setVisible(true);
 		} else {
-			System.out.print("here");
 			if (this.manager.validateLogin(this.unameTextField.getText(), this.pwdTextField.getText())) {
 				this.invalidCredentialsLabel.setVisible(false);
-				this.manager.changeView(PageType.MAIN, (Stage) this.loginButton.getScene().getWindow());
+				this.manager.changeToMainView((Stage) this.loginButton.getScene().getWindow());
 			} else {
 				this.invalidCredentialsLabel.setVisible(true);
 				this.pwdTextField.setText("");
 			}
 		}
+	}
+
+	public void initialize(ControllerManager manager) {
+		this.manager = manager;
 	}
 }

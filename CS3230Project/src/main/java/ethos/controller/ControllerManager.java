@@ -2,6 +2,8 @@
 package main.java.ethos.controller;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -13,6 +15,7 @@ import java.util.Map;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import main.java.ethos.dal.LoginDal;
 import main.java.ethos.dal.PatientRegEditDal;
@@ -20,6 +23,8 @@ import main.java.ethos.dal.PatientSearchDal;
 import main.java.ethos.model.PageType;
 import main.java.ethos.model.Patient;
 import main.java.ethos.model.User;
+import main.java.ethos.view.MainView;
+import main.java.ethos.view.PatientInfoView;
 
 /**
  * The Class ControllerManager.
@@ -48,7 +53,6 @@ public class ControllerManager {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-
         }
         return false;
     }
@@ -73,23 +77,72 @@ public class ControllerManager {
         return this.loggedInUser.getUserName();
     }
 
-    /**
-     * Change view.
-     *
-     * @param page         the page
-     * @param currentStage the current stage
-     */
-    public void changeView(PageType page, Stage currentStage) {
+    // /**
+    //  * Change view.
+    //  *
+    //  * @param page         the page
+    //  * @param currentStage the current stage
+    //  */
+    // public void changeView(PageType page, Stage currentStage) {
+    //     try {
+    //         Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource(page.label));
+    //         Scene scene = new Scene(parent);
+    //         currentStage.setTitle("ethos");
+    //         currentStage.setScene(scene);
+    //         currentStage.show();
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
+
+    public void changeToMainView(Stage currentStage) {
+        
         try {
-            Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource(page.label));
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PageType.class.getResource(PageType.MAIN.label));
+            Parent parent = loader.load();
+
+            MainView mainView = loader.getController();
+            mainView.initialize(this);
+
             Scene scene = new Scene(parent);
             currentStage.setTitle("ethos");
             currentStage.setScene(scene);
             currentStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (MalformedURLException murlerr) {
+            System.err.println("Bad FXML URL");
+            murlerr.printStackTrace();
+        } catch (IOException ioerr) {
+            System.err.println("Bad file");
+            ioerr.printStackTrace();
         }
+        
     }
+
+    public void changeToPatientInfoView(Stage currentStage) {
+        
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(new URL(PageType.EDIT_INFO.label));
+            Parent parent = loader.load();
+
+            PatientInfoView infoView = loader.getController();
+            infoView.initialize(this);
+
+            Scene scene = new Scene(parent);
+            currentStage.setTitle("ethos");
+            currentStage.setScene(scene);
+            currentStage.show();
+        } catch (MalformedURLException murlerr) {
+            System.err.println("Bad FXML URL");
+            murlerr.printStackTrace();
+        } catch (IOException ioerr) {
+            System.err.println("Bad file");
+            ioerr.printStackTrace();
+        }
+        
+    }
+
 
     /**
      * Execute search.
@@ -239,4 +292,16 @@ public class ControllerManager {
     public char getPatientGender() {
         return this.getPatientGender();
     }
+
+    /**
+     * Populates the states ComboBox for patient register/edit
+     * @param statesCombo - the states combo box
+     */
+    public void populateStatesComboBox(ComboBox<String> statesCombo) {
+        String[] states = {"Alaska", "Alabama", "Arkansas", "American Samoa", "Arizona", "California", "Colorado", "Connecticut", "District of Columbia", "Delaware", "Florida", "Georgia", "Guam", "Hawaii", "Iowa", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Louisiana", "Massachusetts", "Maryland", "Maine", "Michigan", "Minnesota", "Missouri", "Mississippi", "Montana", "North Carolina", "North Dakota", "Nebraska", "New Hampshire", "New Jersey", "New Mexico", "Nevada", "New York", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Virginia", "Virgin Islands", "Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming"};
+        for (String state : states) {
+            statesCombo.getItems().add(state);
+        }
+    }
+
 }

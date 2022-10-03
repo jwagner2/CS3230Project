@@ -124,5 +124,6 @@ public class PatientSearchDal {
         this.nameQuery = false;
         this.dateQuery = false;
         this.comboQuery = false;
+    }
 
 }

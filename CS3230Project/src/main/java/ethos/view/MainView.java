@@ -41,7 +41,7 @@ public class MainView {
 
     @FXML
     void handleRegister(ActionEvent event) {
-        this.manager.changeView(PageType.EDIT_INFO, (Stage) this.registerPatientButton.getScene().getWindow());
+        this.manager.changeToPatientInfoView((Stage) this.registerPatientButton.getScene().getWindow());
     }
 
     @FXML
@@ -54,4 +54,8 @@ public class MainView {
 
     }
 
+    public void initialize(ControllerManager manager) {
+        this.manager = manager;
+        this.currentUserLabel.textProperty().set(manager.getLoggedInName());
+    }
 }
