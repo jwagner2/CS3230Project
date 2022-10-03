@@ -77,26 +77,11 @@ public class ControllerManager {
         return this.loggedInUser.getUserName();
     }
 
-    // /**
-    //  * Change view.
-    //  *
-    //  * @param page         the page
-    //  * @param currentStage the current stage
-    //  */
-    // public void changeView(PageType page, Stage currentStage) {
-    //     try {
-    //         Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource(page.label));
-    //         Scene scene = new Scene(parent);
-    //         currentStage.setTitle("ethos");
-    //         currentStage.setScene(scene);
-    //         currentStage.show();
-    //     } catch (IOException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
-
+    /**
+     * Changes the current view to the main screen
+     * @param currentStage - the current stage for the application
+     */
     public void changeToMainView(Stage currentStage) {
-        
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(PageType.class.getResource(PageType.MAIN.label));
@@ -119,6 +104,10 @@ public class ControllerManager {
         
     }
 
+    /**
+     * Changes the view to the patient info view
+     * @param currentStage - the current stage for the application
+     */
     public void changeToPatientInfoView(Stage currentStage) {
         
         try {
@@ -298,7 +287,12 @@ public class ControllerManager {
      * @param statesCombo - the states combo box
      */
     public void populateStatesComboBox(ComboBox<String> statesCombo) {
-        String[] states = {"Alaska", "Alabama", "Arkansas", "American Samoa", "Arizona", "California", "Colorado", "Connecticut", "District of Columbia", "Delaware", "Florida", "Georgia", "Guam", "Hawaii", "Iowa", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Louisiana", "Massachusetts", "Maryland", "Maine", "Michigan", "Minnesota", "Missouri", "Mississippi", "Montana", "North Carolina", "North Dakota", "Nebraska", "New Hampshire", "New Jersey", "New Mexico", "Nevada", "New York", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Virginia", "Virgin Islands", "Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming"};
+        String[] states = {"AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC",  
+        "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",  
+        "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE",  
+        "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC",  
+        "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"};
+
         for (String state : states) {
             statesCombo.getItems().add(state);
         }

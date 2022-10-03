@@ -1,5 +1,7 @@
 package main.java.ethos.view;
 
+import java.util.Calendar;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -56,6 +58,7 @@ public class MainView {
 
     public void initialize(ControllerManager manager) {
         this.manager = manager;
-        this.currentUserLabel.textProperty().set(manager.getLoggedInName());
+        this.currentUserLabel.textProperty().set("Hello, " + manager.getLoggedInName() + " (" + manager.getLoggedInUserName() + ")");
+        Calendar calendar = Calendar.getInstance();
     }
 }

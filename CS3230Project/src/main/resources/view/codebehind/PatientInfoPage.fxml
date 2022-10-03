@@ -34,5 +34,6 @@
       <Label layoutX="377.0" layoutY="141.0" opacity="0.5" text="Zip" />
       <Label layoutX="377.0" layoutY="190.0" opacity="0.5" text="State" />
       <Label layoutX="473.0" layoutY="245.0" opacity="0.5" text="Gender" />
+      <Label fx:id="currentUserField" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="443.0" layoutY="5.0" opacity="0.6" prefHeight="17.0" prefWidth="150.0" text="user (uname)" textAlignment="RIGHT" />
    </children>
 </AnchorPane>

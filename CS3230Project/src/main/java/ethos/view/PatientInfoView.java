@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
@@ -59,6 +60,9 @@ public class PatientInfoView {
     private Button submitButton;
 
     @FXML
+    private Label currentUserField;
+
+    @FXML
     void handleSubmit(ActionEvent event) {
         this.manager.patientRegister(this.patientDetails, this.patientActiveChBox.isSelected());
         this.manager.changeToMainView((Stage) this.submitButton.getScene().getWindow());
@@ -67,6 +71,8 @@ public class PatientInfoView {
     public void initialize(ControllerManager manager) {
         this.manager = manager;
         this.manager.populateStatesComboBox(this.patientAddrStateComboBox);
+        this.patientGenderComboBox.getItems().addAll("M", "F");
+        this.currentUserField.textProperty().set(manager.getLoggedInName() + " (" + manager.getLoggedInUserName() + ")");
     }
     
     private void populateMap() {
