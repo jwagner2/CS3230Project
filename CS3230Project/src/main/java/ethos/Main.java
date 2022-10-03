@@ -32,7 +32,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(PageType.class.getResource(PageType.LOGIN.label));
         Parent root = loader.load();
-        LoginView loginView = loader.getController();
+        LoginView loginView = loader.<LoginView>getController();
         loginView.initialize(new ControllerManager());
         primaryStage.getIcons().add(new Image(Main.ICON_PATH));
         primaryStage.setTitle("ethOS");

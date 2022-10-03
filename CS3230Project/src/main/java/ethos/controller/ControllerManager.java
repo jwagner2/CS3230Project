@@ -102,7 +102,7 @@ public class ControllerManager {
             loader.setLocation(PageType.class.getResource(PageType.MAIN.label));
             Parent parent = loader.load();
 
-            MainView mainView = loader.getController();
+            MainView mainView = loader.<MainView>getController();
             mainView.initialize(this);
 
             Scene scene = new Scene(parent);
@@ -123,10 +123,10 @@ public class ControllerManager {
         
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(new URL(PageType.EDIT_INFO.label));
+            loader.setLocation(PageType.class.getResource(PageType.EDIT_INFO.label));
             Parent parent = loader.load();
 
-            PatientInfoView infoView = loader.getController();
+            PatientInfoView infoView = loader.<PatientInfoView>getController();
             infoView.initialize(this);
 
             Scene scene = new Scene(parent);
