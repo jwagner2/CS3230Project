@@ -1,10 +1,8 @@
 package main.java.ethos.dal;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import main.java.ethos.model.Patient;
@@ -31,11 +29,9 @@ public class PatientRegEditDal {
 
             this.setStatement(patient, edit, stmt);
 
-            ResultSet rs = stmt.executeQuery();
+            int rs = stmt.executeUpdate();
             System.out.println("rows affected = " + rs);
-
         }
-
     }
 
     private void setStatement(Patient patient, boolean edit, PreparedStatement stmt) throws SQLException {

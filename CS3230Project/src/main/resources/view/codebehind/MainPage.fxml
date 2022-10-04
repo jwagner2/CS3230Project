@@ -25,11 +25,6 @@
             <Font name="Agency FB" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="currentTimeLabel" layoutX="25.0" layoutY="14.0" prefHeight="20.0" prefWidth="66.0" text="12:05pm" textAlignment="RIGHT">
-         <font>
-            <Font name="Agency FB" size="16.0" />
-         </font>
-      </Label>
       <Label fx:id="currentUserLabel" alignment="CENTER_RIGHT" layoutX="381.0" layoutY="48.0" prefHeight="17.0" prefWidth="188.0" text="Hello, nurseUser1" textAlignment="RIGHT" />
       <TextField fx:id="patientNameSearchField" layoutX="60.0" layoutY="469.0" />
       <DatePicker fx:id="patientDobPicker" layoutX="277.0" layoutY="469.0" />

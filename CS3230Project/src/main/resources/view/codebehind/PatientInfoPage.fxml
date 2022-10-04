@@ -10,30 +10,30 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ethos.view.PatientInfoView">
    <children>
-      <TextField fx:id="patientIdField" layoutX="75.0" layoutY="60.0" />
-      <TextField fx:id="patientFnameField" layoutX="75.0" layoutY="109.0" />
-      <TextField fx:id="patientLnameField" layoutX="75.0" layoutY="158.0" />
-      <TextField fx:id="patientSsnField" layoutX="75.0" layoutY="207.0" />
-      <DatePicker fx:id="patientDobPicker" layoutX="74.0" layoutY="256.0" prefHeight="25.0" prefWidth="149.0" />
-      <TextField fx:id="patientPhoneField" layoutX="74.0" layoutY="307.0" />
-      <TextField fx:id="patientAddr1Field" layoutX="378.0" layoutY="60.0" />
-      <TextField fx:id="patientAddr2Field" layoutX="378.0" layoutY="109.0" />
-      <TextField fx:id="patientAddrZipcodeField" layoutX="378.0" layoutY="158.0" />
-      <ComboBox fx:id="patientAddrStateComboBox" layoutX="377.0" layoutY="207.0" prefWidth="150.0" />
+      <TextField fx:id="patientFnameField" editable="false" layoutX="75.0" layoutY="67.0" />
+      <TextField fx:id="patientLnameField" editable="false" layoutX="75.0" layoutY="116.0" />
+      <TextField fx:id="patientSsnField" editable="false" layoutX="75.0" layoutY="165.0" />
+      <DatePicker fx:id="patientDobPicker" disable="true" editable="false" layoutX="74.0" layoutY="214.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="patientPhoneField" editable="false" layoutX="74.0" layoutY="265.0" />
+      <TextField fx:id="patientAddr1Field" editable="false" layoutX="378.0" layoutY="60.0" />
+      <TextField fx:id="patientAddr2Field" editable="false" layoutX="378.0" layoutY="109.0" />
+      <TextField fx:id="patientAddrZipcodeField" editable="false" layoutX="378.0" layoutY="158.0" />
+      <ComboBox fx:id="patientAddrStateComboBox" disable="true" layoutX="377.0" layoutY="207.0" prefWidth="150.0" />
       <CheckBox fx:id="patientActiveChBox" layoutX="377.0" layoutY="266.0" mnemonicParsing="false" text="Active" />
-      <ComboBox fx:id="patientGenderComboBox" layoutX="459.0" layoutY="262.0" prefHeight="25.0" prefWidth="67.0" />
+      <ComboBox fx:id="patientGenderComboBox" disable="true" layoutX="459.0" layoutY="262.0" prefHeight="25.0" prefWidth="67.0" />
       <Button fx:id="submitButton" layoutX="377.0" layoutY="307.0" mnemonicParsing="false" onAction="#handleSubmit" prefHeight="25.0" prefWidth="149.0" text="Submit" />
-      <Label layoutX="75.0" layoutY="42.0" opacity="0.5" text="Patient ID" />
-      <Label layoutX="75.0" layoutY="92.0" opacity="0.5" text="First Name" />
-      <Label layoutX="75.0" layoutY="141.0" opacity="0.5" text="Last Name" />
-      <Label layoutX="75.0" layoutY="190.0" opacity="0.5" text="SSN" />
-      <Label layoutX="75.0" layoutY="239.0" opacity="0.5" text="D.O.B." />
-      <Label layoutX="75.0" layoutY="290.0" opacity="0.5" text="Phone" />
+      <Label layoutX="75.0" layoutY="50.0" opacity="0.5" text="First Name" />
+      <Label layoutX="75.0" layoutY="99.0" opacity="0.5" text="Last Name" />
+      <Label layoutX="75.0" layoutY="148.0" opacity="0.5" text="SSN" />
+      <Label layoutX="75.0" layoutY="197.0" opacity="0.5" text="D.O.B." />
+      <Label layoutX="75.0" layoutY="248.0" opacity="0.5" text="Phone" />
       <Label layoutX="377.0" layoutY="42.0" opacity="0.5" text="Address 1" />
       <Label layoutX="377.0" layoutY="92.0" opacity="0.5" text="Address 2" />
       <Label layoutX="377.0" layoutY="141.0" opacity="0.5" text="Zip" />
       <Label layoutX="377.0" layoutY="190.0" opacity="0.5" text="State" />
       <Label layoutX="473.0" layoutY="245.0" opacity="0.5" text="Gender" />
       <Label fx:id="currentUserField" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="443.0" layoutY="5.0" opacity="0.6" prefHeight="17.0" prefWidth="150.0" text="user (uname)" textAlignment="RIGHT" />
+      <Button fx:id="editButton" layoutX="74.0" layoutY="307.0" mnemonicParsing="false" onAction="#enableEditing" prefHeight="25.0" prefWidth="150.0" text="Edit" />
+      <Label fx:id="invalidDataLabel" layoutX="251.0" layoutY="343.0" text="Invalid data entered" textFill="RED" />
    </children>
 </AnchorPane>

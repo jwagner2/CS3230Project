@@ -3,12 +3,12 @@ package main.java.ethos.controller;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +58,39 @@ public class ControllerManager {
     }
 
     /**
+     * Checks to ensure that the data provided as patient fields is valid.
+     * 
+     * @param fields - the fields to check
+     * @return true if the data in the fields are valid; false otherwise.
+     */
+    public boolean validateFields(Map<String, String> fields) {
+        if (fields.get("fname") == null || fields.get("fname").isEmpty()) {
+            return false;
+        } else if (fields.get("lname") == null || fields.get("lname").isEmpty()) {
+            return false;
+        } else if (fields.get("ssn") != null && fields.get("ssn").length() != 9) {
+            return false;
+        } else if (fields.get("dob") == null) {
+            return false;
+        } else if (fields.get("phone") == null || fields.get("phone").length() != 10) {
+            return false;
+        } else if (fields.get("addressOne") == null || fields.get("addressOne").isEmpty()) {
+            return false;
+        } else if (fields.get("addressTwo") != null && fields.get("addressTwo").length() == 0) {
+            return false;
+        } else if (fields.get("zip") == null || fields.get("zip").length() != 5) {
+            return false;
+        } else if (fields.get("state") == null || fields.get("state").length() != 2) {
+            return false;
+        } else if (fields.get("gender") == null
+                || (!fields.get("gender").equals("M") || !fields.get("gender").equals("F"))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Gets the logged in name.
      *
      * @return the logged in name
@@ -79,6 +112,7 @@ public class ControllerManager {
 
     /**
      * Changes the current view to the main screen
+     * 
      * @param currentStage - the current stage for the application
      */
     public void changeToMainView(Stage currentStage) {
@@ -101,15 +135,16 @@ public class ControllerManager {
             System.err.println("Bad file");
             ioerr.printStackTrace();
         }
-        
+
     }
 
     /**
      * Changes the view to the patient info view
+     * 
      * @param currentStage - the current stage for the application
      */
     public void changeToPatientInfoView(Stage currentStage) {
-        
+
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(PageType.class.getResource(PageType.EDIT_INFO.label));
@@ -129,9 +164,8 @@ public class ControllerManager {
             System.err.println("Bad file");
             ioerr.printStackTrace();
         }
-        
-    }
 
+    }
 
     /**
      * Execute search.
@@ -141,7 +175,7 @@ public class ControllerManager {
      * @param dob       the dob
      * @return the list
      */
-    public List<Patient> executeSearch(String firstName, String lastName, Date dob) {
+    public List<Map<String, Object>> executeSearch(String firstName, String lastName, Date dob) {
         this.searchResults = new ArrayList<Patient>();
         PatientSearchDal searchDal = new PatientSearchDal();
         try {
@@ -151,7 +185,17 @@ public class ControllerManager {
             e.printStackTrace();
 
         }
-        return this.searchResults;
+        List<Map<String, Object>> patientInfo = new ArrayList<Map<String, Object>>();
+        for (Patient currentPatient : this.searchResults) {
+            Map<String, Object> patient = new HashMap<String, Object>();
+            patient.put("firstName", currentPatient.getFirstName());
+            patient.put("lastName", currentPatient.getLastName());
+            patient.put("dob", currentPatient.getBirthDate());
+            patient.put("phone", currentPatient.getContactNumber());
+            patientInfo.add(patient);
+        }
+
+        return patientInfo;
     }
 
     public void registerEditPatient() {
@@ -165,7 +209,7 @@ public class ControllerManager {
     }
 
     public void patientRegister(Map<String, String> patientDetails, boolean isActive) {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date langDate;
         try {
             langDate = sdf.parse(patientDetails.get("dob"));
@@ -274,24 +318,42 @@ public class ControllerManager {
     }
 
     /**
-     * Gets the patient gender.
-     *
-     * @return the patient gender
+     * Gets patient gender
+     * 
+     * @return the gender
      */
-    public char getPatientGender() {
-        return this.getPatientGender();
+    public String getPatientGender() {
+        return Character.toString(this.displayedPatient.getGender());
+    }
+
+    /**
+     * Gets the patient dob.
+     *
+     * @return the patient dob
+     */
+    public Date getPatientDob() {
+        return this.displayedPatient.getBirthDate();
+    }
+
+    /**
+     * Clears 
+     */
+    public void clearDisplayedPatient() {
+        this.displayedPatient = null;
+
     }
 
     /**
      * Populates the states ComboBox for patient register/edit
+     * 
      * @param statesCombo - the states combo box
      */
     public void populateStatesComboBox(ComboBox<String> statesCombo) {
-        String[] states = {"AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC",  
-        "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",  
-        "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE",  
-        "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC",  
-        "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"};
+        String[] states = { "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC",
+                "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
+                "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE",
+                "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC",
+                "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY" };
 
         for (String state : states) {
             statesCombo.getItems().add(state);

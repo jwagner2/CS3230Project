@@ -8,8 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import main.java.ethos.controller.ControllerManager;
-import main.java.ethos.model.PageType;
-
 /**
  * The Class LoginController.
  */
