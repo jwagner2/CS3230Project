@@ -17,8 +17,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PatientInfoView.
+ */
 public class PatientInfoView {
-
+    
     private ControllerManager manager;
     private Map<String, String> patientDetails = new HashMap<String, String>();
     private List<TextInputControl> editableControls;
@@ -73,9 +77,8 @@ public class PatientInfoView {
     
     @FXML
     void handleGoBack(ActionEvent event) {
-
+        this.manager.changeToMainView((Stage) this.backButton.getScene().getWindow());
     }
-
 
     @FXML
     void enableEditing(ActionEvent event) {
@@ -93,6 +96,11 @@ public class PatientInfoView {
         }
     }
 
+    /**
+     * Initialize.
+     *
+     * @param manager the manager
+     */
     public void initialize(ControllerManager manager) {
         this.manager = manager;
         this.manager.populateStatesComboBox(this.patientAddrStateComboBox);
@@ -112,6 +120,9 @@ public class PatientInfoView {
         }
     }
 
+    /**
+     * Enable controls.
+     */
     public void enableControls() {
         if (!this.patientFnameField.editableProperty().get()) {
             this.patientDobPicker.disableProperty().set(false);

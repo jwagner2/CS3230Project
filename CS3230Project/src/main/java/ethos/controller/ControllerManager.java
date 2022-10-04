@@ -40,6 +40,9 @@ public class ControllerManager {
     private ArrayList<String> states;
     
 
+    /**
+     * Instantiates a new controller manager.
+     */
     public ControllerManager() {
         String[] states = { "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC",
         "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
@@ -49,6 +52,11 @@ public class ControllerManager {
         this.states = new ArrayList<String>(Arrays.asList(states));
     }
 
+    /**
+     * Checks for selected patient.
+     *
+     * @return true, if successful
+     */
     public boolean hasSelectedPatient() {
         return this.displayedPatient != null;
     }
@@ -62,7 +70,6 @@ public class ControllerManager {
      */
     public boolean validateLogin(String username, String password) {
         LoginDal valid8r = new LoginDal();
-        System.out.println("here");
         try {
             this.loggedInUser = valid8r.login(username, password, true, true);
             if (this.loggedInUser != null) {
@@ -109,7 +116,7 @@ public class ControllerManager {
         } else if (fields.get("state") == null || !this.states.contains(fields.get("state"))) {
             System.err.println("Bad state input");
             return false;
-        } else if (fields.get("gender") == null || (!fields.get("gender").equals("M") || !fields.get("gender").equals("F"))) {
+        } else if (fields.get("gender") == null || (!fields.get("gender").equals("M") && !fields.get("gender").equals("F"))) {
             System.err.println("Bad gender input");
             return false;
         }
@@ -138,8 +145,8 @@ public class ControllerManager {
     }
 
     /**
-     * Changes the current view to the main screen
-     * 
+     * Changes the current view to the main screen.
+     *
      * @param currentStage - the current stage for the application
      */
     public void changeToMainView(Stage currentStage) {
@@ -166,8 +173,8 @@ public class ControllerManager {
     }
 
     /**
-     * Changes the view to the patient info view
-     * 
+     * Changes the view to the patient info view.
+     *
      * @param currentStage - the current stage for the application
      */
     public void changeToPatientInfoView(Stage currentStage) {
@@ -212,6 +219,18 @@ public class ControllerManager {
             e.printStackTrace();
 
         }
+        return buildResultsForTable();
+    }
+
+    /**
+     * Builds the results for table.
+     *
+     * @return the list
+     */
+    public List<Map<String, Object>> buildResultsForTable() {
+        if (this.searchResults == null) {
+            return null;
+        }
         List<Map<String, Object>> patientInfo = new ArrayList<Map<String, Object>>();
         for (Patient currentPatient : this.searchResults) {
             Map<String, Object> patient = new HashMap<String, Object>();
@@ -225,6 +244,9 @@ public class ControllerManager {
         return patientInfo;
     }
 
+    /**
+     * Register edit patient.
+     */
     public void registerEditPatient() {
         PatientRegEditDal regEdit = new PatientRegEditDal();
         try {
@@ -235,6 +257,12 @@ public class ControllerManager {
 
     }
 
+    /**
+     * Patient register.
+     *
+     * @param patientDetails the patient details
+     * @param isActive the is active
+     */
     public void patientRegister(Map<String, String> patientDetails, boolean isActive) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date langDate;
@@ -345,8 +373,8 @@ public class ControllerManager {
     }
 
     /**
-     * Gets patient gender
-     * 
+     * Gets patient gender.
+     *
      * @return the gender
      */
     public String getPatientGender() {
@@ -363,7 +391,7 @@ public class ControllerManager {
     }
 
     /**
-     * Clears 
+     * Clears.
      */
     public void clearDisplayedPatient() {
         this.displayedPatient = null;
@@ -371,8 +399,8 @@ public class ControllerManager {
     }
 
     /**
-     * Populates the states ComboBox for patient register/edit
-     * 
+     * Populates the states ComboBox for patient register/edit.
+     *
      * @param statesCombo - the states combo box
      */
     public void populateStatesComboBox(ComboBox<String> statesCombo) {

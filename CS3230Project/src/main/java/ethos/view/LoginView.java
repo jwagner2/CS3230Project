@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import main.java.ethos.controller.ControllerManager;
+
 /**
  * The Class LoginController.
  */
@@ -23,7 +24,7 @@ public class LoginView {
 
 	@FXML
 	private Button loginButton;
-
+	
 	@FXML
 	private Label invalidCredentialsLabel;
 
@@ -31,6 +32,7 @@ public class LoginView {
 	 * Handle login.
 	 *
 	 * @param event the event
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@FXML
 	void handleLogin(ActionEvent event) throws IOException {
@@ -47,6 +49,11 @@ public class LoginView {
 		}
 	}
 
+	/**
+	 * Initialize.
+	 *
+	 * @param manager the manager
+	 */
 	public void initialize(ControllerManager manager) {
 		this.manager = manager;
 	}

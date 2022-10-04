@@ -18,7 +18,7 @@ public class LoginDal {
     }
 
     /**
-     * Login.
+     * Connects to the database and authenticates the user
      *
      * @param username   the username
      * @param password   the password
@@ -38,7 +38,6 @@ public class LoginDal {
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                System.out.println("rs has next");
                 String firstName = rs.getString("fname");
                 String lastName = rs.getString("lname");
                 boolean isAdmin = rs.getBoolean("isAdmin");
@@ -48,7 +47,6 @@ public class LoginDal {
                     return loggedIn;
                 }
             }
-            System.out.println("rs no has next");
         }
         return loggedIn;
     }

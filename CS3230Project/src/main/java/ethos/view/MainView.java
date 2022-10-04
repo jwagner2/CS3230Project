@@ -3,6 +3,7 @@ package main.java.ethos.view;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 import javafx.collections.FXCollections;
@@ -22,6 +23,9 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
+/**
+ * The Class MainView.
+ */
 public class MainView {
 
     private ControllerManager manager = new ControllerManager();
@@ -50,7 +54,7 @@ public class MainView {
 
     @FXML
     private Button searchButton;
-    
+
     @FXML
     private Button viewPatientButton;
 
@@ -93,6 +97,11 @@ public class MainView {
         this.manager.changeToPatientInfoView((Stage) this.registerPatientButton.getScene().getWindow());
     }
 
+    /**
+     * Initialize the mainview
+     *
+     * @param manager the manager
+     */
     public void initialize(ControllerManager manager) {
         this.manager = manager;
         this.currentUserLabel.textProperty()
@@ -100,7 +109,7 @@ public class MainView {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("E, M/d/Y");
         this.currentDateLabel.textProperty().set(format.format(calendar.getTime()));
-        
+
         this.patientNameListener();
         this.patientDobListener();
         initializeTableView();
@@ -122,11 +131,16 @@ public class MainView {
         this.patientDataTableView.getColumns().add(lastNameColumn);
         this.patientDataTableView.getColumns().add(dobColumn);
         this.patientDataTableView.getColumns().add(phoneColumn);
+        List<Map<String, Object>> currentResults = this.manager.buildResultsForTable();
+        if (currentResults != null) {
+            this.patients.addAll(currentResults);
+            this.patientDataTableView.getItems().addAll(this.patients);
+        }
     }
 
     private void patientNameListener() {
         this.patientNameSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.isBlank() && this.patientDobPicker.valueProperty() == null ) {
+            if (newValue.isBlank() && this.patientDobPicker.valueProperty() == null) {
                 this.searchButton.setDisable(true);
             } else {
                 this.searchButton.setDisable(false);

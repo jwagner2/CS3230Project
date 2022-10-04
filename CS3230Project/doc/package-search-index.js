@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"main.java.ethos"},{"l":"main.java.ethos.controller"},{"l":"main.java.ethos.dal"},{"l":"main.java.ethos.model"},{"l":"main.java.ethos.view"}];updateSearchResults();

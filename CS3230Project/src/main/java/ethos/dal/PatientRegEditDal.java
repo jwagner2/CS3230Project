@@ -7,6 +7,9 @@ import java.sql.SQLException;
 
 import main.java.ethos.model.Patient;
 
+/**
+ * The Class PatientRegEditDal.
+ */
 public class PatientRegEditDal {
 
     String editQuery = "update patient set fname = ?, lname = ?, ssn = ?,dob = ?,  isActive = ?, phone = ?, "
@@ -15,6 +18,12 @@ public class PatientRegEditDal {
     String registerQuery = "insert into patient (fname, lname, ssn, dob, isActive, phone, address1, address2, zip, state, gender)"
             + "values (?, ?, ?, ?, ?, ?,? ,?, ?, ?, ?)";
 
+    /**
+     * Register edit patient.
+     *
+     * @param patient the patient
+     * @throws SQLException the SQL exception
+     */
     public void registerEditPatient(Patient patient) throws SQLException {
         String queryToUse = "";
         boolean edit = false;
