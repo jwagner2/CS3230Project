@@ -35,5 +35,6 @@
       <Label fx:id="currentUserField" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="443.0" layoutY="5.0" opacity="0.6" prefHeight="17.0" prefWidth="150.0" text="user (uname)" textAlignment="RIGHT" />
       <Button fx:id="editButton" layoutX="74.0" layoutY="307.0" mnemonicParsing="false" onAction="#enableEditing" prefHeight="25.0" prefWidth="150.0" text="Edit" />
       <Label fx:id="invalidDataLabel" layoutX="251.0" layoutY="343.0" text="Invalid data entered" textFill="RED" />
+      <Button fx:id="backButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleGoBack" text="&lt;- Back" />
    </children>
 </AnchorPane>

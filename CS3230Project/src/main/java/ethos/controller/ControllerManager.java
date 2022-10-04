@@ -8,15 +8,18 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+
 import main.java.ethos.dal.LoginDal;
 import main.java.ethos.dal.PatientRegEditDal;
 import main.java.ethos.dal.PatientSearchDal;
@@ -34,6 +37,21 @@ public class ControllerManager {
     private User loggedInUser;
     private Patient displayedPatient;
     private List<Patient> searchResults;
+    private ArrayList<String> states;
+    
+
+    public ControllerManager() {
+        String[] states = { "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC",
+        "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
+        "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE",
+        "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC",
+        "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY" };
+        this.states = new ArrayList<String>(Arrays.asList(states));
+    }
+
+    public boolean hasSelectedPatient() {
+        return this.displayedPatient != null;
+    }
 
     /**
      * Validate login.
@@ -64,26 +82,35 @@ public class ControllerManager {
      * @return true if the data in the fields are valid; false otherwise.
      */
     public boolean validateFields(Map<String, String> fields) {
-        if (fields.get("fname") == null || fields.get("fname").isEmpty()) {
+        if ((fields.get("fname") == null || fields.get("fname").isEmpty()) || !Pattern.matches("[A-z]*", (fields.get("fname")))) {
+            System.err.println("Bad fname input");
             return false;
-        } else if (fields.get("lname") == null || fields.get("lname").isEmpty()) {
+        } else if ((fields.get("lname") == null || !Pattern.matches("[A-z]*", (fields.get("lname"))))) {
+            System.err.println("Bad lname input");
             return false;
-        } else if (fields.get("ssn") != null && fields.get("ssn").length() != 9) {
+        } else if (fields.get("ssn") != null && !Pattern.matches("\\d{9}", fields.get("ssn"))) {
+            System.err.println("Bad ssn input");
             return false;
-        } else if (fields.get("dob") == null) {
+        } else if (fields.get("dob") == null || fields.get("dob").isBlank()) {
+            System.err.println("Bad dob input");
             return false;
-        } else if (fields.get("phone") == null || fields.get("phone").length() != 10) {
+        } else if (fields.get("phone") == null || !Pattern.matches("\\d{10}", fields.get("phone"))) {
+            System.err.println("Bad phone input");
             return false;
-        } else if (fields.get("addressOne") == null || fields.get("addressOne").isEmpty()) {
+        } else if (fields.get("addressOne") == null || fields.get("addressOne").isBlank()) {
+            System.err.println("Bad address one input");
             return false;
-        } else if (fields.get("addressTwo") != null && fields.get("addressTwo").length() == 0) {
+        } else if (!fields.get("addressTwo").isEmpty() && !Pattern.matches("[A-z0-9]*", fields.get("addressTwo"))) {
+            System.err.println("Bad address two input");
             return false;
-        } else if (fields.get("zip") == null || fields.get("zip").length() != 5) {
+        } else if (fields.get("zip") == null || !Pattern.matches("\\d{5}", fields.get("zip"))) {
+            System.err.println("Bad zip input");
             return false;
-        } else if (fields.get("state") == null || fields.get("state").length() != 2) {
+        } else if (fields.get("state") == null || !this.states.contains(fields.get("state"))) {
+            System.err.println("Bad state input");
             return false;
-        } else if (fields.get("gender") == null
-                || (!fields.get("gender").equals("M") || !fields.get("gender").equals("F"))) {
+        } else if (fields.get("gender") == null || (!fields.get("gender").equals("M") || !fields.get("gender").equals("F"))) {
+            System.err.println("Bad gender input");
             return false;
         }
 
@@ -349,13 +376,7 @@ public class ControllerManager {
      * @param statesCombo - the states combo box
      */
     public void populateStatesComboBox(ComboBox<String> statesCombo) {
-        String[] states = { "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC",
-                "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
-                "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE",
-                "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC",
-                "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY" };
-
-        for (String state : states) {
+        for (String state : this.states) {
             statesCombo.getItems().add(state);
         }
     }

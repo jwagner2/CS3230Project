@@ -69,16 +69,17 @@ public class PatientInfoView {
     private Label invalidDataLabel;
 
     @FXML
+    private Button backButton;
+    
+    @FXML
+    void handleGoBack(ActionEvent event) {
+
+    }
+
+
+    @FXML
     void enableEditing(ActionEvent event) {
-        if (!this.patientFnameField.editableProperty().get()) {
-            this.patientDobPicker.disableProperty().set(false);
-            this.patientGenderComboBox.disableProperty().set(false);
-            this.patientAddrStateComboBox.disableProperty().set(false);
-            this.patientActiveChBox.disableProperty().set(false);
-            for (TextInputControl control : this.editableControls) {
-                control.setEditable(true);
-            }
-        }
+        this.enableControls();
     }
 
     @FXML
@@ -100,10 +101,27 @@ public class PatientInfoView {
                 .set(manager.getLoggedInName() + " (" + manager.getLoggedInUserName() + ")");
         this.editableControls = new ArrayList<TextInputControl>();
         this.addEditableControls();
-        this.patientActiveChBox.disableProperty().set(true);
-        this.patientActiveChBox.setStyle("-fx-opacity:1");
-        this.invalidDataLabel.setVisible(false);
-        this.populateFields();
+        if (manager.hasSelectedPatient()) {
+            this.patientActiveChBox.disableProperty().set(true);
+            this.patientActiveChBox.setStyle("-fx-opacity:1");
+            this.invalidDataLabel.setVisible(false);
+            this.populateFields();    
+        } else {
+            this.invalidDataLabel.setVisible(false);
+            this.enableControls();
+        }
+    }
+
+    public void enableControls() {
+        if (!this.patientFnameField.editableProperty().get()) {
+            this.patientDobPicker.disableProperty().set(false);
+            this.patientGenderComboBox.disableProperty().set(false);
+            this.patientAddrStateComboBox.disableProperty().set(false);
+            this.patientActiveChBox.disableProperty().set(false);
+            for (TextInputControl control : this.editableControls) {
+                control.setEditable(true);
+            }
+        }
     }
 
     private void addEditableControls() {
@@ -146,6 +164,6 @@ public class PatientInfoView {
         this.patientAddrStateComboBox.getSelectionModel().select(this.manager.getPatientState());
         this.patientGenderComboBox.getSelectionModel().select(this.manager.getPatientGender());
         this.patientActiveChBox.selectedProperty().set(this.manager.getPatientIsActive());
-        this.patientPhoneField.textProperty().set(this.manager.getPatientContactNumber());
+        this.patientPhoneField.textProperty().set(this.manager.getPatientContactNumber()); 
     }
 }
