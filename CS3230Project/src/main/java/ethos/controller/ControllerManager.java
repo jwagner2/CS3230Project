@@ -30,14 +30,22 @@ import main.java.ethos.view.LoginView;
 import main.java.ethos.view.MainView;
 import main.java.ethos.view.PatientInfoView;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ControllerManager.
  */
 public class ControllerManager {
 
+    /** The logged in user. */
     private User loggedInUser;
+    
+    /** The displayed patient. */
     private Patient displayedPatient;
+    
+    /** The search results. */
     private List<Patient> searchResults;
+    
+    /** The states. */
     private ArrayList<String> states;
 
     /**
@@ -175,6 +183,11 @@ public class ControllerManager {
 
     }
 
+    /**
+     * Change to login.
+     *
+     * @param currentStage the current stage
+     */
     public void changeToLogin(Stage currentStage) {
         this.loggedInUser = null;
         this.searchResults.clear();
@@ -308,6 +321,13 @@ public class ControllerManager {
         }
     }
 
+    /**
+     * Edits the patient details.
+     *
+     * @param patientDetails the patient details
+     * @param isActive the is active
+     * @param sqlDate the sql date
+     */
     private void editPatientDetails(Map<String, String> patientDetails, boolean isActive, java.sql.Date sqlDate) {
         this.displayedPatient.setFirstName(patientDetails.get("fname"));
         this.displayedPatient.setLastName(patientDetails.get("lname"));
@@ -322,6 +342,13 @@ public class ControllerManager {
         this.registerEditPatient();
     }
 
+    /**
+     * Register new patient.
+     *
+     * @param patientDetails the patient details
+     * @param isActive the is active
+     * @param sqlDate the sql date
+     */
     private void registerNewPatient(Map<String, String> patientDetails, boolean isActive, Date sqlDate) {
 
         char gender = patientDetails.get("gender").charAt(0);
