@@ -56,7 +56,7 @@ public class PatientRegEditDal {
         stmt.setString(10, patient.getAddressState());
         stmt.setString(11, Character.toString(patient.getGender()));
         if (edit) {
-            stmt.setString(12, patient.getFirstName());
+            stmt.setInt(12, patient.getPatientId());
         }
     }
 
