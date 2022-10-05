@@ -39,17 +39,16 @@ public class ControllerManager {
     private Patient displayedPatient;
     private List<Patient> searchResults;
     private ArrayList<String> states;
-    
 
     /**
      * Instantiates a new controller manager.
      */
     public ControllerManager() {
         String[] states = { "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC",
-        "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
-        "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE",
-        "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC",
-        "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY" };
+                "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
+                "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE",
+                "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC",
+                "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY" };
         this.states = new ArrayList<String>(Arrays.asList(states));
     }
 
@@ -90,7 +89,8 @@ public class ControllerManager {
      * @return true if the data in the fields are valid; false otherwise.
      */
     public boolean validateFields(Map<String, String> fields) {
-        if ((fields.get("fname") == null || fields.get("fname").isEmpty()) || !Pattern.matches("[A-z]*", (fields.get("fname")))) {
+        if ((fields.get("fname") == null || fields.get("fname").isEmpty())
+                || !Pattern.matches("[A-z]*", (fields.get("fname")))) {
             System.err.println("Bad fname input");
             return false;
         } else if ((fields.get("lname") == null || !Pattern.matches("[A-z]*", (fields.get("lname"))))) {
@@ -117,7 +117,8 @@ public class ControllerManager {
         } else if (fields.get("state") == null || !this.states.contains(fields.get("state"))) {
             System.err.println("Bad state input");
             return false;
-        } else if (fields.get("gender") == null || (!fields.get("gender").equals("M") && !fields.get("gender").equals("F"))) {
+        } else if (fields.get("gender") == null
+                || (!fields.get("gender").equals("M") && !fields.get("gender").equals("F"))) {
             System.err.println("Bad gender input");
             return false;
         }
@@ -183,6 +184,30 @@ public class ControllerManager {
 
             MainView mainView = loader.<MainView>getController();
             mainView.initialize(this);
+
+            Scene scene = new Scene(parent);
+            currentStage.setTitle("ethos");
+            currentStage.setScene(scene);
+            currentStage.show();
+        } catch (MalformedURLException murlerr) {
+            System.err.println("Bad FXML URL");
+            murlerr.printStackTrace();
+        } catch (IOException ioerr) {
+            System.err.println("Bad file");
+            ioerr.printStackTrace();
+        }
+
+    }
+
+    public void changeToLogin(Stage currentStage) {
+        this.loggedInUser = null;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PageType.class.getResource(PageType.LOGIN.label));
+            Parent parent = loader.load();
+
+            LoginView LoginView = loader.<LoginView>getController();
+            LoginView.initialize(this);
 
             Scene scene = new Scene(parent);
             currentStage.setTitle("ethos");
@@ -287,24 +312,49 @@ public class ControllerManager {
      * Patient register.
      *
      * @param patientDetails the patient details
-     * @param isActive the is active
+     * @param isActive       the is active
      */
     public void patientRegister(Map<String, String> patientDetails, boolean isActive) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date langDate;
+        java.sql.Date sqlDate;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             langDate = sdf.parse(patientDetails.get("dob"));
-            java.sql.Date sqlDate = new java.sql.Date(langDate.getTime());
-            char gender = patientDetails.get("gender").charAt(0);
-            this.displayedPatient = new Patient(patientDetails.get("fname"), patientDetails.get("lname"),
-                    patientDetails.get("ssn"),
-                    sqlDate, isActive, patientDetails.get("phone"), patientDetails.get("addressOne"),
-                    patientDetails.get("addressTwo"),
-                    patientDetails.get("zip"), patientDetails.get("state"), gender);
-            this.registerEditPatient();
+            sqlDate = new java.sql.Date(langDate.getTime());
+            if (this.hasSelectedPatient()) {
+                this.editPatientDetails(patientDetails, isActive, sqlDate);
+            } else {
+                this.registerNewPatient(patientDetails, isActive, sqlDate);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    private void editPatientDetails(Map<String, String> patientDetails, boolean isActive, java.sql.Date sqlDate) {
+        this.displayedPatient.setFirstName(patientDetails.get("fname"));
+        this.displayedPatient.setLastName(patientDetails.get("lname"));
+        this.displayedPatient.setSsn(patientDetails.get("ssn"));
+        this.displayedPatient.setBirthDate(getPatientDob());
+        this.displayedPatient.setBirthDate(sqlDate);
+        this.displayedPatient.setIsActive(isActive);
+        this.displayedPatient.setContactNumber(patientDetails.get("phone"));
+        this.displayedPatient.setAddress(patientDetails.get("addressOne"), patientDetails.get("addressTwo"),
+                patientDetails.get("zip"), patientDetails.get("state"));
+        this.displayedPatient.setGender(patientDetails.get("gender").charAt(0));
+        this.registerEditPatient();
+    }
+
+    private void registerNewPatient(Map<String, String> patientDetails, boolean isActive, Date sqlDate) {
+
+        char gender = patientDetails.get("gender").charAt(0);
+        this.displayedPatient = new Patient(patientDetails.get("fname"), patientDetails.get("lname"),
+                patientDetails.get("ssn"),
+                sqlDate, isActive, patientDetails.get("phone"), patientDetails.get("addressOne"),
+                patientDetails.get("addressTwo"),
+                patientDetails.get("zip"), patientDetails.get("state"), gender);
+        this.registerEditPatient();
+
     }
 
     /**
