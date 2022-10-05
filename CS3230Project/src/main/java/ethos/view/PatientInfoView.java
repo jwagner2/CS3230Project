@@ -92,10 +92,12 @@ public class PatientInfoView {
                 this.manager.changeToMainView((Stage) this.submitButton.getScene().getWindow());
             } else {
                 this.invalidDataLabel.setVisible(true);
+                
             }
             
         } else {
             this.invalidDataLabel.setVisible(true);
+            this.patientFnameField.setStyle("-fx-text-box-border:red");
         }
     }
 
@@ -173,7 +175,7 @@ public class PatientInfoView {
         this.patientSsnField.textProperty().set(this.manager.getPatientSsn());
         this.patientDobPicker.setValue(this.manager.getPatientDob().toLocalDate());
         this.patientAddr1Field.textProperty().set(this.manager.getPatientAddressOne());
-        this.patientAddr2Field.textProperty().set(this.manager.getPatientFirstName());
+        this.patientAddr2Field.textProperty().set(this.manager.getPatientAddressTwo());
         this.patientAddrZipcodeField.textProperty().set(this.manager.getPatientZip());
         this.patientAddrStateComboBox.getSelectionModel().select(this.manager.getPatientState());
         this.patientGenderComboBox.getSelectionModel().select(this.manager.getPatientGender());
