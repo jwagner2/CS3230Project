@@ -288,14 +288,15 @@ public class ControllerManager {
     /**
      * Register edit patient.
      */
-    public void registerEditPatient() {
+    public boolean registerEditPatient() {
         PatientRegEditDal regEdit = new PatientRegEditDal();
         try {
             regEdit.registerEditPatient(this.displayedPatient);
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-
+        return true;
     }
 
     /**
@@ -304,7 +305,7 @@ public class ControllerManager {
      * @param patientDetails the patient details
      * @param isActive       the is active
      */
-    public void patientRegister(Map<String, String> patientDetails, boolean isActive) {
+    public boolean patientRegister(Map<String, String> patientDetails, boolean isActive) {
         java.util.Date langDate;
         java.sql.Date sqlDate;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -314,11 +315,13 @@ public class ControllerManager {
             if (this.hasSelectedPatient()) {
                 this.editPatientDetails(patientDetails, isActive, sqlDate);
             } else {
-                this.registerNewPatient(patientDetails, isActive, sqlDate);
+                return this.registerNewPatient(patientDetails, isActive, sqlDate);
             }
         } catch (ParseException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     /**
@@ -349,7 +352,7 @@ public class ControllerManager {
      * @param isActive the is active
      * @param sqlDate the sql date
      */
-    private void registerNewPatient(Map<String, String> patientDetails, boolean isActive, Date sqlDate) {
+    private boolean registerNewPatient(Map<String, String> patientDetails, boolean isActive, Date sqlDate) {
 
         char gender = patientDetails.get("gender").charAt(0);
         this.displayedPatient = new Patient(patientDetails.get("fname"), patientDetails.get("lname"),
@@ -357,7 +360,7 @@ public class ControllerManager {
                 sqlDate, isActive, patientDetails.get("phone"), patientDetails.get("addressOne"),
                 patientDetails.get("addressTwo"),
                 patientDetails.get("zip"), patientDetails.get("state"), gender);
-        this.registerEditPatient();
+        return this.registerEditPatient();
 
     }
 

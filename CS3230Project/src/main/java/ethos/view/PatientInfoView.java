@@ -88,8 +88,12 @@ public class PatientInfoView {
     void handleSubmit(ActionEvent event) {
         this.populateMap();
         if (this.manager.validateFields(this.patientDetails)) {
-            this.manager.patientRegister(this.patientDetails, this.patientActiveChBox.isSelected());
-            this.manager.changeToMainView((Stage) this.submitButton.getScene().getWindow());
+            if (this.manager.patientRegister(this.patientDetails, this.patientActiveChBox.isSelected())) {
+                this.manager.changeToMainView((Stage) this.submitButton.getScene().getWindow());
+            } else {
+                this.invalidDataLabel.setVisible(true);
+            }
+            
         } else {
             this.invalidDataLabel.setVisible(true);
         }
