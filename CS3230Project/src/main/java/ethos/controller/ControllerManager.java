@@ -146,30 +146,6 @@ public class ControllerManager {
         return this.loggedInUser.getUserName();
     }
 
-    public void changeToLogin(Stage currentStage) {
-        this.loggedInUser = null;
-        this.searchResults.clear();
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(PageType.class.getResource(PageType.LOGIN.label));
-            Parent parent = loader.load();
-
-            LoginView mainView = loader.<LoginView>getController();
-            mainView.initialize(this);
-
-            Scene scene = new Scene(parent);
-            currentStage.setTitle("ethos");
-            currentStage.setScene(scene);
-            currentStage.show();
-        } catch (MalformedURLException murlerr) {
-            System.err.println("Bad FXML URL");
-            murlerr.printStackTrace();
-        } catch (IOException ioerr) {
-            System.err.println("Bad file");
-            ioerr.printStackTrace();
-        }
-
-    }
 
     /**
      * Changes the current view to the main screen.
@@ -201,6 +177,7 @@ public class ControllerManager {
 
     public void changeToLogin(Stage currentStage) {
         this.loggedInUser = null;
+        this.searchResults.clear();
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(PageType.class.getResource(PageType.LOGIN.label));
