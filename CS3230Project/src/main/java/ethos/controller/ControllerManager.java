@@ -26,6 +26,7 @@ import main.java.ethos.dal.PatientSearchDal;
 import main.java.ethos.model.PageType;
 import main.java.ethos.model.Patient;
 import main.java.ethos.model.User;
+import main.java.ethos.view.LoginView;
 import main.java.ethos.view.MainView;
 import main.java.ethos.view.PatientInfoView;
 
@@ -142,6 +143,31 @@ public class ControllerManager {
      */
     public String getLoggedInUserName() {
         return this.loggedInUser.getUserName();
+    }
+
+    public void changeToLogin(Stage currentStage) {
+        this.loggedInUser = null;
+        this.searchResults.clear();
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PageType.class.getResource(PageType.LOGIN.label));
+            Parent parent = loader.load();
+
+            LoginView mainView = loader.<LoginView>getController();
+            mainView.initialize(this);
+
+            Scene scene = new Scene(parent);
+            currentStage.setTitle("ethos");
+            currentStage.setScene(scene);
+            currentStage.show();
+        } catch (MalformedURLException murlerr) {
+            System.err.println("Bad FXML URL");
+            murlerr.printStackTrace();
+        } catch (IOException ioerr) {
+            System.err.println("Bad file");
+            ioerr.printStackTrace();
+        }
+
     }
 
     /**
@@ -279,7 +305,6 @@ public class ControllerManager {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
     }
 
     /**

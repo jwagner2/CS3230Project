@@ -35,5 +35,6 @@
       <Button fx:id="searchButton" disable="true" layoutX="500.0" layoutY="469.0" mnemonicParsing="false" onAction="#handleSearch" text="Search" />
       <Separator layoutX="14.0" layoutY="513.0" prefHeight="3.0" prefWidth="570.0" />
       <Button fx:id="viewPatientButton" disable="true" layoutX="61.0" layoutY="528.0" mnemonicParsing="false" onAction="#handleViewInfo" prefHeight="59.0" prefWidth="188.0" text="View Patient Details" />
+      <Button fx:id="logoutButton" layoutX="508.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleLogout" text="Log Out" />
    </children>
 </AnchorPane>

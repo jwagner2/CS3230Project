@@ -59,6 +59,14 @@ public class MainView {
     private Button viewPatientButton;
 
     @FXML
+    private Button logoutButton;
+
+    @FXML
+    void handleLogout(ActionEvent event) {
+        this.manager.changeToLogin((Stage) this.logoutButton.getScene().getWindow());
+    }
+
+    @FXML
     void handleRegister(ActionEvent event) {
         this.manager.clearDisplayedPatient();
         this.manager.changeToPatientInfoView((Stage) this.registerPatientButton.getScene().getWindow());

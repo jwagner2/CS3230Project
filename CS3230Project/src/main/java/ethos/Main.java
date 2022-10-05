@@ -38,7 +38,6 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
     /**
      * The main method.
      *

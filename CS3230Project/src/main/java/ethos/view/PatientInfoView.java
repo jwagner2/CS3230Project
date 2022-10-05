@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PatientInfoView.
  */
