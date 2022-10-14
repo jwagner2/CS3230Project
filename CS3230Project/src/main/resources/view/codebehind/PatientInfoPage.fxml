@@ -7,8 +7,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ethos.view.PatientInfoView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ethos.view.PatientInfoView">
    <children>
       <TextField fx:id="patientFnameField" editable="false" layoutX="75.0" layoutY="67.0" />
       <TextField fx:id="patientLnameField" editable="false" layoutX="75.0" layoutY="116.0" />
@@ -34,7 +35,57 @@
       <Label layoutX="473.0" layoutY="245.0" opacity="0.5" text="Gender" />
       <Label fx:id="currentUserField" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="443.0" layoutY="5.0" opacity="0.6" prefHeight="17.0" prefWidth="150.0" text="user (uname)" textAlignment="RIGHT" />
       <Button fx:id="editButton" layoutX="74.0" layoutY="307.0" mnemonicParsing="false" onAction="#enableEditing" prefHeight="25.0" prefWidth="150.0" text="Edit" />
-      <Label fx:id="invalidDataLabel" layoutX="251.0" layoutY="343.0" text="Invalid data entered" textFill="RED" />
+      <Label fx:id="invalidDataLabel" layoutX="188.0" layoutY="343.0" text="Invalid data entered (Inputs with * invalid)" textFill="RED" />
       <Button fx:id="backButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleGoBack" text="&lt;- Back" />
+      <Label fx:id="fnameInvalidLabel" layoutX="142.0" layoutY="42.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="lnameInvalidLabel" layoutX="142.0" layoutY="92.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="ssnInvalidLabel" layoutX="104.0" layoutY="141.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="dobInvalidLabel" layoutX="113.0" layoutY="190.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="phoneInvalidLabel" layoutX="113.0" layoutY="238.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="stateInvalidLabel" layoutX="409.0" layoutY="183.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="genderInvalidLabel" layoutX="515.0" layoutY="238.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="zipInvalidLabel" layoutX="398.0" layoutY="132.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="a2InvalidLabel" layoutX="438.0" layoutY="83.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="a1InvalidLabel" layoutX="438.0" layoutY="34.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

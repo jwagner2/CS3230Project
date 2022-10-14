@@ -96,42 +96,45 @@ public class ControllerManager {
      * @param fields - the fields to check
      * @return true if the data in the fields are valid; false otherwise.
      */
-    public boolean validateFields(Map<String, String> fields) {
+    public List<String> validateFields(Map<String, String> fields) {
+        List<String> invalidFields = new ArrayList<String>();
         if ((fields.get("fname") == null || fields.get("fname").isEmpty())
                 || !Pattern.matches("[A-z]*", (fields.get("fname")))) {
             System.err.println("Bad fname input");
-            return false;
-        } else if ((fields.get("lname") == null || !Pattern.matches("[A-z]*", (fields.get("lname"))))) {
+            invalidFields.add("fname");
+        }
+        if ((fields.get("lname") == null || fields.get("lname").isEmpty() || !Pattern.matches("[A-z]*", (fields.get("lname"))))) {
             System.err.println("Bad lname input");
-            return false;
-        } else if (fields.get("ssn") != null && !Pattern.matches("\\d{9}", fields.get("ssn"))) {
+            invalidFields.add("lname");
+        } 
+        if (fields.get("ssn") != null && !Pattern.matches("\\d{9}", fields.get("ssn"))) {
             System.err.println("Bad ssn input");
-            return false;
-        } else if (fields.get("dob") == null || fields.get("dob").isBlank()) {
+            invalidFields.add("ssn");
+        } if (fields.get("dob") == null || fields.get("dob").isBlank()) {
             System.err.println("Bad dob input");
-            return false;
-        } else if (fields.get("phone") == null || !Pattern.matches("\\d{10}", fields.get("phone"))) {
+            invalidFields.add("dob");
+        } if (fields.get("phone") == null || !Pattern.matches("\\d{10}", fields.get("phone"))) {
             System.err.println("Bad phone input");
-            return false;
-        } else if (fields.get("addressOne") == null || fields.get("addressOne").isBlank()) {
+            invalidFields.add("phone");
+        } if (fields.get("addressOne") == null || fields.get("addressOne").isBlank()) {
             System.err.println("Bad address one input");
-            return false;
-        } else if (!fields.get("addressTwo").isEmpty() && !Pattern.matches("[A-z0-9]*", fields.get("addressTwo"))) {
+            invalidFields.add("addressOne");
+        } if (!(fields.get("addressTwo") == null) && !fields.get("addressTwo").isEmpty() && !Pattern.matches("[A-z0-9]*", fields.get("addressTwo"))) {
             System.err.println("Bad address two input");
-            return false;
-        } else if (fields.get("zip") == null || !Pattern.matches("\\d{5}", fields.get("zip"))) {
+            invalidFields.add("addressTwo");
+        } if (fields.get("zip") == null || !Pattern.matches("\\d{5}", fields.get("zip"))) {
             System.err.println("Bad zip input");
-            return false;
-        } else if (fields.get("state") == null || !this.states.contains(fields.get("state"))) {
+            invalidFields.add("zip");
+        } if (fields.get("state") == null || !this.states.contains(fields.get("state"))) {
             System.err.println("Bad state input");
-            return false;
-        } else if (fields.get("gender") == null
+            invalidFields.add("state");
+        } if (fields.get("gender") == null
                 || (!fields.get("gender").equals("M") && !fields.get("gender").equals("F"))) {
             System.err.println("Bad gender input");
-            return false;
+            invalidFields.add("gender");
         }
 
-        return true;
+        return invalidFields;
     }
 
     /**

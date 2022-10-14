@@ -21,25 +21,43 @@ import main.java.ethos.controller.ControllerManager;
  * The Class PatientInfoView.
  */
 public class PatientInfoView {
-    
+
     private ControllerManager manager;
     private Map<String, String> patientDetails = new HashMap<String, String>();
     private List<TextInputControl> editableControls;
 
     @FXML
-    private TextField patientFnameField;
+    private Label a1InvalidLabel;
 
     @FXML
-    private TextField patientLnameField;
+    private Label a2InvalidLabel;
 
     @FXML
-    private TextField patientSsnField;
+    private Button backButton;
 
     @FXML
-    private DatePicker patientDobPicker;
+    private Label currentUserField;
 
     @FXML
-    private TextField patientPhoneField;
+    private Label dobInvalidLabel;
+
+    @FXML
+    private Button editButton;
+
+    @FXML
+    private Label fnameInvalidLabel;
+
+    @FXML
+    private Label genderInvalidLabel;
+
+    @FXML
+    private Label invalidDataLabel;
+
+    @FXML
+    private Label lnameInvalidLabel;
+
+    @FXML
+    private CheckBox patientActiveChBox;
 
     @FXML
     private TextField patientAddr1Field;
@@ -48,32 +66,44 @@ public class PatientInfoView {
     private TextField patientAddr2Field;
 
     @FXML
-    private TextField patientAddrZipcodeField;
-
-    @FXML
     private ComboBox<String> patientAddrStateComboBox;
 
     @FXML
-    private CheckBox patientActiveChBox;
+    private TextField patientAddrZipcodeField;
+
+    @FXML
+    private DatePicker patientDobPicker;
+
+    @FXML
+    private TextField patientFnameField;
 
     @FXML
     private ComboBox<String> patientGenderComboBox;
 
     @FXML
+    private TextField patientLnameField;
+
+    @FXML
+    private TextField patientPhoneField;
+
+    @FXML
+    private TextField patientSsnField;
+
+    @FXML
+    private Label phoneInvalidLabel;
+
+    @FXML
+    private Label ssnInvalidLabel;
+
+    @FXML
+    private Label stateInvalidLabel;
+
+    @FXML
     private Button submitButton;
 
     @FXML
-    private Label currentUserField;
+    private Label zipInvalidLabel;
 
-    @FXML
-    private Button editButton;
-
-    @FXML
-    private Label invalidDataLabel;
-
-    @FXML
-    private Button backButton;
-    
     @FXML
     void handleGoBack(ActionEvent event) {
         this.manager.changeToMainView((Stage) this.backButton.getScene().getWindow());
@@ -87,18 +117,86 @@ public class PatientInfoView {
     @FXML
     void handleSubmit(ActionEvent event) {
         this.populateMap();
-        if (this.manager.validateFields(this.patientDetails)) {
+        this.resetInvalidLabels();
+        List<String> invalidInputs = this.manager.validateFields(this.patientDetails);
+        if (invalidInputs.size() == 0) {
             if (this.manager.patientRegister(this.patientDetails, this.patientActiveChBox.isSelected())) {
                 this.manager.changeToMainView((Stage) this.submitButton.getScene().getWindow());
-            } else {
-                this.invalidDataLabel.setVisible(true);
-                
             }
-            
         } else {
             this.invalidDataLabel.setVisible(true);
-            this.patientFnameField.setStyle("-fx-text-box-border:red");
+            this.showInvalidLabels(invalidInputs);
+
         }
+    }
+
+    private void showInvalidLabels(List<String> invalidInputs) {
+        for (String result : invalidInputs) {
+            if (result.equals("fname")) {
+                this.patientFnameField.setStyle("-fx-text-box-border:red");
+                this.fnameInvalidLabel.setVisible(true);
+            } else if (result.equals("lname")) {
+                this.patientLnameField.setStyle("-fx-text-box-border:red");
+                this.lnameInvalidLabel.setVisible(true);
+            } else if (result.equals("ssn")) {
+                this.patientSsnField.setStyle("-fx-text-box-border:red");
+                this.ssnInvalidLabel.setVisible(true);
+            } else if (result.equals("dob")) {
+                this.patientDobPicker.setStyle("-fx-text-box-border:red");
+                this.dobInvalidLabel.setVisible(true);
+            } else if (result.equals("phone")) {
+                this.patientPhoneField.setStyle("-fx-text-box-border:red");
+                this.phoneInvalidLabel.setVisible(true);
+            } else if (result.equals("addressOne")) {
+                this.patientAddr1Field.setStyle("-fx-text-box-border:red");
+                this.a1InvalidLabel.setVisible(true);
+            } else if (result.equals("addressTwo")) {
+                this.patientAddr2Field.setStyle("-fx-text-box-border:red");
+                this.a2InvalidLabel.setVisible(true);
+            } else if (result.equals("zip")) {
+                this.patientAddrZipcodeField.setStyle("-fx-text-box-border:red");
+                this.zipInvalidLabel.setVisible(true);
+            } else if (result.equals("state")) {
+                this.patientAddrStateComboBox.setStyle("-fx-text-box-border:red");
+                this.stateInvalidLabel.setVisible(true);
+            } else if (result.equals("gender")) {
+                this.patientGenderComboBox.setStyle("-fx-text-box-border:red");
+                this.genderInvalidLabel.setVisible(true);
+            }
+        }
+    }
+
+    private void resetInvalidLabels() {
+        this.patientFnameField.setStyle("-fx-border-width: 0px");
+        this.fnameInvalidLabel.setVisible(false);
+
+        this.patientLnameField.setStyle("-fx-border-width: 0px");
+        this.lnameInvalidLabel.setVisible(false);
+
+        this.patientSsnField.setStyle("-fx-border-width: 0px");
+        this.ssnInvalidLabel.setVisible(false);
+
+        this.patientDobPicker.setStyle("-fx-border-width: 0px");
+        this.dobInvalidLabel.setVisible(false);
+
+        this.patientPhoneField.setStyle("--fx-border-width: 0px");
+        this.phoneInvalidLabel.setVisible(false);
+
+        this.patientAddr1Field.setStyle("-fx-border-width: 0px");
+        this.a1InvalidLabel.setVisible(false);
+
+        this.patientAddr2Field.setStyle("-fx-border-width: 0px");
+        this.a2InvalidLabel.setVisible(false);
+
+        this.patientAddrZipcodeField.setStyle("-fx-border-width: 0px");
+        this.zipInvalidLabel.setVisible(false);
+
+        this.patientAddrStateComboBox.setStyle("-fx-border-width: 0px");
+        this.stateInvalidLabel.setVisible(false);
+
+        this.patientGenderComboBox.setStyle("-fx-border-width: 0px");
+        this.genderInvalidLabel.setVisible(false);
+
     }
 
     /**
@@ -118,7 +216,7 @@ public class PatientInfoView {
             this.patientActiveChBox.disableProperty().set(true);
             this.patientActiveChBox.setStyle("-fx-opacity:1");
             this.invalidDataLabel.setVisible(false);
-            this.populateFields();    
+            this.populateFields();
         } else {
             this.invalidDataLabel.setVisible(false);
             this.enableControls();
@@ -166,7 +264,7 @@ public class PatientInfoView {
         } catch (Exception e) {
             this.invalidDataLabel.setVisible(true);
         }
-        
+
     }
 
     private void populateFields() {
@@ -180,6 +278,6 @@ public class PatientInfoView {
         this.patientAddrStateComboBox.getSelectionModel().select(this.manager.getPatientState());
         this.patientGenderComboBox.getSelectionModel().select(this.manager.getPatientGender());
         this.patientActiveChBox.selectedProperty().set(this.manager.getPatientIsActive());
-        this.patientPhoneField.textProperty().set(this.manager.getPatientContactNumber()); 
+        this.patientPhoneField.textProperty().set(this.manager.getPatientContactNumber());
     }
 }
