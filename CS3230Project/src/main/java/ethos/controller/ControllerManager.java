@@ -30,7 +30,6 @@ import main.java.ethos.view.LoginView;
 import main.java.ethos.view.MainView;
 import main.java.ethos.view.PatientInfoView;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ControllerManager.
  */
@@ -201,6 +200,34 @@ public class ControllerManager {
 
             LoginView LoginView = loader.<LoginView>getController();
             LoginView.initialize(this);
+
+            Scene scene = new Scene(parent);
+            currentStage.setTitle("ethos");
+            currentStage.setScene(scene);
+            currentStage.show();
+        } catch (MalformedURLException murlerr) {
+            System.err.println("Bad FXML URL");
+            murlerr.printStackTrace();
+        } catch (IOException ioerr) {
+            System.err.println("Bad file");
+            ioerr.printStackTrace();
+        }
+
+    }
+    
+    /**
+     * Changes the current view to the main screen.
+     *
+     * @param currentStage - the current stage for the application
+     */
+    public void changeToApptView(Stage currentStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PageType.class.getResource(PageType.MAIN.label));
+            Parent parent = loader.load();
+
+            MainView mainView = loader.<MainView>getController();
+            mainView.initialize(this);
 
             Scene scene = new Scene(parent);
             currentStage.setTitle("ethos");

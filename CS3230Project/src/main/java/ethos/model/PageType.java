@@ -7,7 +7,10 @@ public enum PageType {
     
     LOGIN("/view/codebehind/LoginPage.fxml"),
     MAIN("/view/codebehind/MainPage.fxml"),
-    EDIT_INFO("/view/codebehind/PatientInfoPage.fxml");
+    EDIT_INFO("/view/codebehind/PatientInfoPage.fxml"),
+    VISIT("/view/codebehind/VisitPage.fxml"),
+    APPT("/view/codebehind/ApptView.fxml"),
+    LAB("/view/codebehind/LabView.fxml");
 
     /** The label. */
     public final String label;
