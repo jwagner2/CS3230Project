@@ -60,10 +60,18 @@ public class MainView {
 
     @FXML
     private Button logoutButton;
+    
+    @FXML
+    private Button bookAppointment;
 
     @FXML
     void handleLogout(ActionEvent event) {
         this.manager.changeToLogin((Stage) this.logoutButton.getScene().getWindow());
+    }
+    
+    @FXML
+    void handleBook(ActionEvent event) {
+
     }
 
     @FXML
@@ -171,6 +179,7 @@ public class MainView {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         this.viewPatientButton.setDisable(false);
+                        this.bookAppointment.setDisable(false);
                     } else {
                         this.searchButton.setDisable(true);
                     }
