@@ -31,6 +31,25 @@ public class VisitView {
     private Label invalidDataLabel;
 
     @FXML
+    private Label invalidDiaLabel;
+
+    @FXML
+    private Label invalidPulseLabel;
+
+    @FXML
+    private Label invalidSympLabel;
+
+    @FXML
+    private Label invalidSysLabel;
+
+    @FXML
+    private Label invalidTempLabel;
+
+    @FXML
+    private Label invalidWeightLabel;
+
+
+    @FXML
     private ComboBox<?> labSelectionBox;
 
     @FXML
@@ -63,7 +82,11 @@ public class VisitView {
     void handleGoBack(ActionEvent event) {
 
     }
+    
+    @FXML
+    void handleOrder(ActionEvent event) {
 
+    }
     @FXML
     void handleViewResults(ActionEvent event) {
 

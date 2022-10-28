@@ -4,15 +4,8 @@ package main.java.ethos.controller;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.Date;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,12 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
-import main.java.ethos.dal.LoginDal;
-import main.java.ethos.dal.PatientRegEditDal;
-import main.java.ethos.dal.PatientSearchDal;
 import main.java.ethos.model.PageType;
 import main.java.ethos.model.Patient;
-import main.java.ethos.model.User;
+
 import main.java.ethos.view.LoginView;
 import main.java.ethos.view.MainView;
 import main.java.ethos.view.PatientInfoView;
@@ -34,29 +24,24 @@ import main.java.ethos.view.PatientInfoView;
  * The Class ControllerManager.
  */
 public class ControllerManager {
-
-    /** The logged in user. */
-    private User loggedInUser;
     
-    /** The displayed patient. */
-    private Patient displayedPatient;
+    private LoginController loginController;
     
-    /** The search results. */
-    private List<Patient> searchResults;
+    private MainViewController mainViewController;
     
-    /** The states. */
-    private ArrayList<String> states;
+    private RegisterEditController regEditController;
+    
+    private SceneController sceneController;
 
     /**
      * Instantiates a new controller manager.
      */
     public ControllerManager() {
-        String[] states = { "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC",
-                "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
-                "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE",
-                "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC",
-                "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY" };
-        this.states = new ArrayList<String>(Arrays.asList(states));
+
+        this.loginController = new LoginController();
+        this.mainViewController = new MainViewController();
+        this.regEditController = new RegisterEditController();
+        this.sceneController = new SceneController();
     }
 
     /**
@@ -65,7 +50,7 @@ public class ControllerManager {
      * @return true, if successful
      */
     public boolean hasSelectedPatient() {
-        return this.displayedPatient != null;
+        return this.regEditController.hasSelectedPatient();
     }
 
     /**
@@ -76,17 +61,7 @@ public class ControllerManager {
      * @return true, if successful
      */
     public boolean validateLogin(String username, String password) {
-        LoginDal valid8r = new LoginDal();
-        try {
-            this.loggedInUser = valid8r.login(username, password, true, true);
-            if (this.loggedInUser != null) {
-                System.out.println("Login success");
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
+        return this.loginController.validateLogin(username, password);
     }
 
     /**
@@ -96,44 +71,7 @@ public class ControllerManager {
      * @return true if the data in the fields are valid; false otherwise.
      */
     public List<String> validateFields(Map<String, String> fields) {
-        List<String> invalidFields = new ArrayList<String>();
-        if ((fields.get("fname") == null || fields.get("fname").isEmpty())
-                || !Pattern.matches("[A-z]*", (fields.get("fname")))) {
-            System.err.println("Bad fname input");
-            invalidFields.add("fname");
-        }
-        if ((fields.get("lname") == null || fields.get("lname").isEmpty() || !Pattern.matches("[A-z]*", (fields.get("lname"))))) {
-            System.err.println("Bad lname input");
-            invalidFields.add("lname");
-        } 
-        if (fields.get("ssn") != null && !Pattern.matches("\\d{9}", fields.get("ssn"))) {
-            System.err.println("Bad ssn input");
-            invalidFields.add("ssn");
-        } if (fields.get("dob") == null || fields.get("dob").isBlank()) {
-            System.err.println("Bad dob input");
-            invalidFields.add("dob");
-        } if (fields.get("phone") == null || !Pattern.matches("\\d{10}", fields.get("phone"))) {
-            System.err.println("Bad phone input");
-            invalidFields.add("phone");
-        } if (fields.get("addressOne") == null || fields.get("addressOne").isBlank()) {
-            System.err.println("Bad address one input");
-            invalidFields.add("addressOne");
-        } if (!(fields.get("addressTwo") == null) && !fields.get("addressTwo").isEmpty() && !Pattern.matches("[A-z0-9]*", fields.get("addressTwo"))) {
-            System.err.println("Bad address two input");
-            invalidFields.add("addressTwo");
-        } if (fields.get("zip") == null || !Pattern.matches("\\d{5}", fields.get("zip"))) {
-            System.err.println("Bad zip input");
-            invalidFields.add("zip");
-        } if (fields.get("state") == null || !this.states.contains(fields.get("state"))) {
-            System.err.println("Bad state input");
-            invalidFields.add("state");
-        } if (fields.get("gender") == null
-                || (!fields.get("gender").equals("M") && !fields.get("gender").equals("F"))) {
-            System.err.println("Bad gender input");
-            invalidFields.add("gender");
-        }
-
-        return invalidFields;
+        return this.regEditController.validateFields(fields);
     }
 
     /**
@@ -142,9 +80,7 @@ public class ControllerManager {
      * @return the logged in name
      */
     public String getLoggedInName() {
-        String name = this.loggedInUser.getFirstName();
-        name += " " + this.loggedInUser.getLastName();
-        return name;
+        return this.loginController.getLoggedInName();
     }
 
     /**
@@ -153,7 +89,7 @@ public class ControllerManager {
      * @return the logged in user name
      */
     public String getLoggedInUserName() {
-        return this.loggedInUser.getUserName();
+        return this.loginController.getLoggedInUserName();
     }
 
 
@@ -163,25 +99,7 @@ public class ControllerManager {
      * @param currentStage - the current stage for the application
      */
     public void changeToMainView(Stage currentStage) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(PageType.class.getResource(PageType.MAIN.label));
-            Parent parent = loader.load();
-
-            MainView mainView = loader.<MainView>getController();
-            mainView.initialize(this);
-
-            Scene scene = new Scene(parent);
-            currentStage.setTitle("ethos");
-            currentStage.setScene(scene);
-            currentStage.show();
-        } catch (MalformedURLException murlerr) {
-            System.err.println("Bad FXML URL");
-            murlerr.printStackTrace();
-        } catch (IOException ioerr) {
-            System.err.println("Bad file");
-            ioerr.printStackTrace();
-        }
+        this.sceneController.changeToMainView(currentStage, this);
 
     }
 
@@ -191,27 +109,11 @@ public class ControllerManager {
      * @param currentStage the current stage
      */
     public void changeToLogin(Stage currentStage) {
-        this.loggedInUser = null;
-        this.searchResults.clear();
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(PageType.class.getResource(PageType.LOGIN.label));
-            Parent parent = loader.load();
-
-            LoginView LoginView = loader.<LoginView>getController();
-            LoginView.initialize(this);
-
-            Scene scene = new Scene(parent);
-            currentStage.setTitle("ethos");
-            currentStage.setScene(scene);
-            currentStage.show();
-        } catch (MalformedURLException murlerr) {
-            System.err.println("Bad FXML URL");
-            murlerr.printStackTrace();
-        } catch (IOException ioerr) {
-            System.err.println("Bad file");
-            ioerr.printStackTrace();
+        this.loginController = new LoginController();
+        if (this.mainViewController.getResults() != null) {
+            this.mainViewController.getResults().clear();
         }
+        this.sceneController.changeToLogin(currentStage, this);
 
     }
     
@@ -221,25 +123,7 @@ public class ControllerManager {
      * @param currentStage - the current stage for the application
      */
     public void changeToApptView(Stage currentStage) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(PageType.class.getResource(PageType.MAIN.label));
-            Parent parent = loader.load();
-
-            MainView mainView = loader.<MainView>getController();
-            mainView.initialize(this);
-
-            Scene scene = new Scene(parent);
-            currentStage.setTitle("ethos");
-            currentStage.setScene(scene);
-            currentStage.show();
-        } catch (MalformedURLException murlerr) {
-            System.err.println("Bad FXML URL");
-            murlerr.printStackTrace();
-        } catch (IOException ioerr) {
-            System.err.println("Bad file");
-            ioerr.printStackTrace();
-        }
+        this.sceneController.changeToApptView(currentStage, this);
 
     }
 
@@ -250,25 +134,7 @@ public class ControllerManager {
      */
     public void changeToPatientInfoView(Stage currentStage) {
 
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(PageType.class.getResource(PageType.EDIT_INFO.label));
-            Parent parent = loader.load();
-
-            PatientInfoView infoView = loader.<PatientInfoView>getController();
-            infoView.initialize(this);
-
-            Scene scene = new Scene(parent);
-            currentStage.setTitle("ethos");
-            currentStage.setScene(scene);
-            currentStage.show();
-        } catch (MalformedURLException murlerr) {
-            System.err.println("Bad FXML URL");
-            murlerr.printStackTrace();
-        } catch (IOException ioerr) {
-            System.err.println("Bad file");
-            ioerr.printStackTrace();
-        }
+        this.sceneController.changeToPatientInfoView(currentStage, this);
 
     }
 
@@ -281,16 +147,7 @@ public class ControllerManager {
      * @return the list
      */
     public List<Map<String, Object>> executeSearch(String firstName, String lastName, Date dob) {
-        this.searchResults = new ArrayList<Patient>();
-        PatientSearchDal searchDal = new PatientSearchDal();
-        try {
-            this.searchResults = searchDal.patientSearch(firstName, lastName, dob);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-        return buildResultsForTable();
+        return this.mainViewController.executeSearch(firstName, lastName, dob);
     }
 
     /**
@@ -299,34 +156,14 @@ public class ControllerManager {
      * @return the list
      */
     public List<Map<String, Object>> buildResultsForTable() {
-        if (this.searchResults == null) {
-            return null;
-        }
-        List<Map<String, Object>> patientInfo = new ArrayList<Map<String, Object>>();
-        for (Patient currentPatient : this.searchResults) {
-            Map<String, Object> patient = new HashMap<String, Object>();
-            patient.put("firstName", currentPatient.getFirstName());
-            patient.put("lastName", currentPatient.getLastName());
-            patient.put("dob", currentPatient.getBirthDate());
-            patient.put("phone", currentPatient.getContactNumber());
-            patientInfo.add(patient);
-        }
-
-        return patientInfo;
+        return this.mainViewController.buildResultsForTable();
     }
 
     /**
      * Register edit patient.
      */
     public boolean registerEditPatient() {
-        PatientRegEditDal regEdit = new PatientRegEditDal();
-        try {
-            regEdit.registerEditPatient(this.displayedPatient);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
+        return this.regEditController.registerEditPatient();
     }
 
     /**
@@ -336,63 +173,10 @@ public class ControllerManager {
      * @param isActive       the is active
      */
     public boolean patientRegister(Map<String, String> patientDetails, boolean isActive) {
-        java.util.Date langDate;
-        java.sql.Date sqlDate;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            langDate = sdf.parse(patientDetails.get("dob"));
-            sqlDate = new java.sql.Date(langDate.getTime());
-            if (this.hasSelectedPatient()) {
-                this.editPatientDetails(patientDetails, isActive, sqlDate);
-            } else {
-                return this.registerNewPatient(patientDetails, isActive, sqlDate);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
+        return this.regEditController.patientRegister(patientDetails, isActive);
     }
 
-    /**
-     * Edits the patient details.
-     *
-     * @param patientDetails the patient details
-     * @param isActive the is active
-     * @param sqlDate the sql date
-     */
-    private void editPatientDetails(Map<String, String> patientDetails, boolean isActive, java.sql.Date sqlDate) {
-        this.displayedPatient.setFirstName(patientDetails.get("fname"));
-        this.displayedPatient.setLastName(patientDetails.get("lname"));
-        this.displayedPatient.setSsn(patientDetails.get("ssn"));
-        this.displayedPatient.setBirthDate(getPatientDob());
-        this.displayedPatient.setBirthDate(sqlDate);
-        this.displayedPatient.setIsActive(isActive);
-        this.displayedPatient.setContactNumber(patientDetails.get("phone"));
-        this.displayedPatient.setAddress(patientDetails.get("addressOne"), patientDetails.get("addressTwo"),
-                patientDetails.get("zip"), patientDetails.get("state"));
-        this.displayedPatient.setGender(patientDetails.get("gender").charAt(0));
-        this.registerEditPatient();
-    }
 
-    /**
-     * Register new patient.
-     *
-     * @param patientDetails the patient details
-     * @param isActive the is active
-     * @param sqlDate the sql date
-     */
-    private boolean registerNewPatient(Map<String, String> patientDetails, boolean isActive, Date sqlDate) {
-
-        char gender = patientDetails.get("gender").charAt(0);
-        this.displayedPatient = new Patient(patientDetails.get("fname"), patientDetails.get("lname"),
-                patientDetails.get("ssn"),
-                sqlDate, isActive, patientDetails.get("phone"), patientDetails.get("addressOne"),
-                patientDetails.get("addressTwo"),
-                patientDetails.get("zip"), patientDetails.get("state"), gender);
-        return this.registerEditPatient();
-
-    }
 
     /**
      * Sets the displayed patient.
@@ -400,7 +184,8 @@ public class ControllerManager {
      * @param indexOfPatient the new displayed patient
      */
     public void setDisplayedPatient(int indexOfPatient) {
-        this.displayedPatient = this.searchResults.get(indexOfPatient);
+        List<Patient> results = this.mainViewController.getResults();
+        this.regEditController.setDisplayedPatient(results.get(indexOfPatient));
     }
 
     /**
@@ -409,7 +194,7 @@ public class ControllerManager {
      * @return the patient first name
      */
     public String getPatientFirstName() {
-        return this.displayedPatient.getFirstName();
+        return this.regEditController.getPatientFirstName();
     }
 
     /**
@@ -418,7 +203,7 @@ public class ControllerManager {
      * @return the patient last name
      */
     public String getPatientLastName() {
-        return this.displayedPatient.getLastName();
+        return this.regEditController.getPatientLastName();
     }
 
     /**
@@ -427,7 +212,7 @@ public class ControllerManager {
      * @return the patient ssn
      */
     public String getPatientSsn() {
-        return this.displayedPatient.getSsn();
+        return this.regEditController.getPatientSsn();
     }
 
     /**
@@ -436,7 +221,7 @@ public class ControllerManager {
      * @return the patient is active
      */
     public boolean getPatientIsActive() {
-        return this.displayedPatient.isActive();
+        return this.regEditController.getPatientIsActive();
     }
 
     /**
@@ -445,7 +230,7 @@ public class ControllerManager {
      * @return the patient contact number
      */
     public String getPatientContactNumber() {
-        return this.displayedPatient.getContactNumber();
+        return this.regEditController.getPatientContactNumber();
     }
 
     /**
@@ -454,7 +239,7 @@ public class ControllerManager {
      * @return the patient address one
      */
     public String getPatientAddressOne() {
-        return this.displayedPatient.getAddressOne();
+        return this.regEditController.getPatientAddressOne();
     }
 
     /**
@@ -463,7 +248,7 @@ public class ControllerManager {
      * @return the patient address two
      */
     public String getPatientAddressTwo() {
-        return this.displayedPatient.getAddressTwo();
+        return this.regEditController.getPatientAddressTwo();
     }
 
     /**
@@ -472,7 +257,7 @@ public class ControllerManager {
      * @return the patient zip
      */
     public String getPatientZip() {
-        return this.displayedPatient.getAddressZip();
+        return this.regEditController.getPatientZip();
     }
 
     /**
@@ -481,7 +266,7 @@ public class ControllerManager {
      * @return the patient state
      */
     public String getPatientState() {
-        return this.displayedPatient.getAddressState();
+        return this.regEditController.getPatientState();
     }
 
     /**
@@ -490,7 +275,7 @@ public class ControllerManager {
      * @return the gender
      */
     public String getPatientGender() {
-        return Character.toString(this.displayedPatient.getGender());
+        return this.regEditController.getPatientGender();
     }
 
     /**
@@ -499,14 +284,14 @@ public class ControllerManager {
      * @return the patient dob
      */
     public Date getPatientDob() {
-        return this.displayedPatient.getBirthDate();
+        return this.regEditController.getPatientDob();
     }
 
     /**
      * Clears.
      */
     public void clearDisplayedPatient() {
-        this.displayedPatient = null;
+        this.regEditController.clearDisplayedPatient();
 
     }
 
@@ -516,9 +301,8 @@ public class ControllerManager {
      * @param statesCombo - the states combo box
      */
     public void populateStatesComboBox(ComboBox<String> statesCombo) {
-        for (String state : this.states) {
-            statesCombo.getItems().add(state);
-        }
+        
+        this.regEditController.populateStatesComboBox(statesCombo);
     }
 
 }

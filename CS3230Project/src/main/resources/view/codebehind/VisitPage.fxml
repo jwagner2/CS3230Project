@@ -34,7 +34,7 @@
       <Button fx:id="orderLabButton" layoutX="428.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleOrder" prefHeight="25.0" prefWidth="149.0" text="Order Lab" />
       <Label fx:id="invalidSysLabel" layoutX="119.0" layoutY="75.0" text="*" textFill="#e61c1c" visible="false" />
       <Label fx:id="invalidDiaLabel" layoutX="121.0" layoutY="123.0" text="*" textFill="#e61c1c" visible="false" />
-      <Label fx:id="invalidWeightLabel1" layoutX="116.0" layoutY="173.0" text="*" textFill="#e61c1c" visible="false" />
+      <Label fx:id="invalidWeightLabel" layoutX="116.0" layoutY="173.0" text="*" textFill="#e61c1c" visible="false" />
       <Label fx:id="invalidTempLabel" layoutX="146.0" layoutY="221.0" text="*" textFill="#e61c1c" visible="false" />
       <Label fx:id="invalidPulseLabel" layoutX="105.0" layoutY="276.0" text="*" textFill="#e61c1c" visible="false" />
       <Label fx:id="invalidSympLabel" layoutX="220.0" layoutY="48.0" text="*" textFill="#e61c1c" visible="false" />
