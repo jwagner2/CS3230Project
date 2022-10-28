@@ -33,6 +33,9 @@ public class ApptView {
 
     @FXML
     private Button startVisitButton;
+    
+    @FXML
+    private ComboBox<?> timeComboBox;
 
     @FXML
     void handleBook(ActionEvent event) {
