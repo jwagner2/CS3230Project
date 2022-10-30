@@ -57,6 +57,9 @@ public class ApptView {
 
     @FXML
     private ComboBox<Date> timeComboBox;
+    
+    @FXML
+    private Label bookingLabel;
    
 
     @FXML
@@ -71,7 +74,8 @@ public class ApptView {
 
     @FXML
     void handleEditAppt(ActionEvent event) {
-
+        this.manager.setDisplayedPatient(this.patientDataTableView.getSelectionModel().getSelectedIndex());
+        this.manager.changeToPatientInfoView((Stage) this.registerPatientButton.getScene().getWindow());
     }
 
     @FXML
@@ -99,8 +103,9 @@ public class ApptView {
         this.currentDateLabel.textProperty().set(format.format(calendar.getTime()));
 
         initializeTableView();
+        this.tableListener();
     }
-    
+
     @SuppressWarnings("rawtypes")
     private void initializeTableView() {
         this.apptDataTableView.getColumns().clear();
@@ -123,4 +128,16 @@ public class ApptView {
         }
     }
 
+    private void tableListener() {
+        this.apptDataTableView.getSelectionModel().selectedIndexProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        this.editAppt.setDisable(false);
+                        this.bookAppointment.setDisable(true);
+                    } else if (newValue){
+                        this.searchButton.setDisable(true);
+                    }
+                });
+
+    }
 }
