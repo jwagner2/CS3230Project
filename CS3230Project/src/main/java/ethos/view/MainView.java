@@ -71,7 +71,7 @@ public class MainView {
     
     @FXML
     void handleBook(ActionEvent event) {
-
+        this.manager.changeToApptView((Stage) this.bookAppointment.getScene().getWindow());
     }
 
     @FXML

@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
+import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
 public class ApptView {
@@ -75,7 +76,7 @@ public class ApptView {
 
     @FXML
     void handleLogout(ActionEvent event) {
-
+        this.manager.changeToLogin((Stage) this.logoutButton.getScene().getWindow());
     }
 
     @FXML
@@ -97,10 +98,7 @@ public class ApptView {
         SimpleDateFormat format = new SimpleDateFormat("E, M/d/Y");
         this.currentDateLabel.textProperty().set(format.format(calendar.getTime()));
 
-        this.patientNameListener();
-        this.patientDobListener();
         initializeTableView();
-        this.tableListener();
     }
     
     @SuppressWarnings("rawtypes")

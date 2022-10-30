@@ -49,8 +49,8 @@ public class VisitView {
     private Label invalidWeightLabel;
 
 
-    @FXML
-    private ComboBox<?> labSelectionBox;
+   // @FXML
+   // private ComboBox<Lab> labSelectionBox;
 
     @FXML
     private ListView<?> labsToOrderBox;
