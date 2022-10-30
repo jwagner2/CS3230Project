@@ -74,7 +74,7 @@ public class SceneController {
     }
     
     /**
-     * Changes the current view to the main screen.
+     * Changes the current view to the appointment screen.
      *
      * @param currentStage - the current stage for the application
      */
@@ -100,6 +100,35 @@ public class SceneController {
         }
 
     }
+    
+    /**
+     * Changes the current view to the appointment screen.
+     *
+     * @param currentStage - the current stage for the application
+     */
+    public void changeToVisitView(Stage currentStage, ControllerManager manager) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PageType.class.getResource(PageType.VISIT.label));
+            Parent parent = loader.load();
+
+            MainView mainView = loader.<MainView>getController();
+            mainView.initialize(manager);
+
+            Scene scene = new Scene(parent);
+            currentStage.setTitle("ethos");
+            currentStage.setScene(scene);
+            currentStage.show();
+        } catch (MalformedURLException murlerr) {
+            System.err.println("Bad FXML URL");
+            murlerr.printStackTrace();
+        } catch (IOException ioerr) {
+            System.err.println("Bad file");
+            ioerr.printStackTrace();
+        }
+
+    }
+
 
     /**
      * Changes the view to the patient info view.
