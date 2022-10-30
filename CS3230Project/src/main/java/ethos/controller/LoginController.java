@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import main.java.ethos.dal.LoginDal;
 import main.java.ethos.model.User;
+import main.java.ethos.model.UserRole;
 
 public class LoginController {
     
@@ -16,10 +17,15 @@ public class LoginController {
      * @param password the password
      * @return true, if successful
      */
-    public boolean validateLogin(String username, String password) {
+    public boolean validateLogin(String username, String password, UserRole role) {
         LoginDal valid8r = new LoginDal();
         try {
-            this.loggedInUser = valid8r.login(username, password, true, true);
+            if (role == UserRole.ADMIN) {
+                this.loggedInUser = valid8r.loginAdmin(username, password);
+            } else if (role == UserRole.NURSE) {
+                this.loggedInUser = valid8r.loginNurse(username, password);
+            }
+            
             if (this.loggedInUser != null) {
                 System.out.println("Login success");
                 return true;

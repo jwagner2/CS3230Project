@@ -51,18 +51,20 @@ public class PatientSearchDal {
                 Date dateOfBirth = rs.getDate("dob");
                 boolean isActive = rs.getBoolean("isActive");
                 String contactNumber = rs.getString("phone");
-                String addressOne = rs.getString("address1");
-                String addressTwo = rs.getString("address2");
+                String addressOne = rs.getString("addr1_street");
+                String addressTwo = rs.getString("addr2_street");
                 if (rs.wasNull()) {
                     addressTwo = "";
                 }
-                String addressZip = rs.getString("zip");
-                String addressState = rs.getString("state");
-                int patientId = rs.getInt("patientId");
+                String addressZip = rs.getString("addr_zip");
+                String addressState = rs.getString("addr_state");
+                int patientId = rs.getInt("patient_id");
+                int personId = rs.getInt("pid");
                 char gender = rs.getString("gender").charAt(0);
                 Patient patient = new Patient(fName, lName, ssn, dateOfBirth, isActive, contactNumber, addressOne,
                         addressTwo, addressZip, addressState, gender);
                 patient.setPatientId(patientId);
+                patient.setPersonId(personId);
                 patientList.add(patient);
 
             }
@@ -103,7 +105,7 @@ public class PatientSearchDal {
      * @return the string
      */
     private String determineQuery(String firstName, String lastName, Date dob) {
-        String queryToUse = "select * from patient where ";
+        String queryToUse = "select * from person ps join patient pt on ps.pid = pt.pid where ";
         if (!firstName.isBlank() && !lastName.isBlank() && dob != null) {
             queryToUse += "fname = ? and lname = ? and dob = ?";
             this.comboQuery = true;

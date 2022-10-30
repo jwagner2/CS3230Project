@@ -2,7 +2,6 @@ package main.java.ethos.model;
 
 import java.sql.Date;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Patient.
  */
@@ -43,6 +42,9 @@ public class Patient {
 	
 	/** The patient id. */
 	private int patientId;
+
+	/** The person id. */
+	private int personId;
 	
 	/**
 	 * Instantiates a new patient.
@@ -265,6 +267,24 @@ public class Patient {
 	 */
 	public void setPatientId(int patientId) {
 	    this.patientId = patientId;
+	}
+
+	/**
+	 * gets the person id.
+	 *
+	 * @return the patient id
+	 */
+	public int getPersonId() {
+	    return this.personId;
+	}
+	
+	/**
+	 * Sets the person id.
+	 *
+	 * @param personId the new person id
+	 */
+	public void setPersonId(int personId) {
+	    this.personId = personId;
 	}
 
 }

@@ -90,10 +90,21 @@ public class RegisterEditController {
     /**
      * Register edit patient.
      */
-    public boolean registerEditPatient() {
+    public boolean registerPatient() {
         PatientRegEditDal regEdit = new PatientRegEditDal();
         try {
-            regEdit.registerEditPatient(this.displayedPatient);
+            regEdit.registerPatient(this.displayedPatient);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean editPatient() {
+        PatientRegEditDal regEdit = new PatientRegEditDal();
+        try {
+            regEdit.editPatient(this.displayedPatient);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -144,7 +155,7 @@ public class RegisterEditController {
         this.displayedPatient.setAddress(patientDetails.get("addressOne"), patientDetails.get("addressTwo"),
                 patientDetails.get("zip"), patientDetails.get("state"));
         this.displayedPatient.setGender(patientDetails.get("gender").charAt(0));
-        this.registerEditPatient();
+        this.editPatient();
     }
 
     /**
@@ -162,8 +173,7 @@ public class RegisterEditController {
                 sqlDate, isActive, patientDetails.get("phone"), patientDetails.get("addressOne"),
                 patientDetails.get("addressTwo"),
                 patientDetails.get("zip"), patientDetails.get("state"), gender);
-        return this.registerEditPatient();
-
+        return this.registerPatient();
     }
     
     /**

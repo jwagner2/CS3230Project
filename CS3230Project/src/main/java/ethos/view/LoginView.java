@@ -6,7 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import main.java.ethos.controller.ControllerManager;
 
 /**
@@ -28,6 +30,15 @@ public class LoginView {
 	@FXML
 	private Label invalidCredentialsLabel;
 
+	@FXML
+    private RadioButton nurseRadioButton;
+
+    @FXML
+    private ToggleGroup user_role;
+
+    @FXML
+    private RadioButton adminRadioButton;
+
 	/**
 	 * Handle login.
 	 *
@@ -39,7 +50,8 @@ public class LoginView {
 		if (this.unameTextField.getText().isEmpty() || this.pwdTextField.getText().isEmpty()) {
 			this.invalidCredentialsLabel.setVisible(true);
 		} else {
-			if (this.manager.validateLogin(this.unameTextField.getText(), this.pwdTextField.getText())) {
+			this.invalidCredentialsLabel.setVisible(false);
+			if (this.manager.validateLogin(this.unameTextField.getText(), this.pwdTextField.getText(), this.adminRadioButton.isSelected(), this.nurseRadioButton.isSelected())) {
 				this.invalidCredentialsLabel.setVisible(false);
 				this.manager.changeToMainView((Stage) this.loginButton.getScene().getWindow());
 			} else {

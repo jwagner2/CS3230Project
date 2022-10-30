@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 import main.java.ethos.model.PageType;
 import main.java.ethos.model.Patient;
-
+import main.java.ethos.model.UserRole;
 import main.java.ethos.view.LoginView;
 import main.java.ethos.view.MainView;
 import main.java.ethos.view.PatientInfoView;
@@ -60,8 +60,14 @@ public class ControllerManager {
      * @param password the password
      * @return true, if successful
      */
-    public boolean validateLogin(String username, String password) {
-        return this.loginController.validateLogin(username, password);
+    public boolean validateLogin(String username, String password, boolean isAdmin, boolean isNurse) {
+        UserRole role = null;
+        if (isAdmin) {
+            role = UserRole.ADMIN;
+        } else if (isNurse) {
+            role = UserRole.NURSE;
+        }
+        return this.loginController.validateLogin(username, password, role);
     }
 
     /**
@@ -157,13 +163,6 @@ public class ControllerManager {
      */
     public List<Map<String, Object>> buildResultsForTable() {
         return this.mainViewController.buildResultsForTable();
-    }
-
-    /**
-     * Register edit patient.
-     */
-    public boolean registerEditPatient() {
-        return this.regEditController.registerEditPatient();
     }
 
     /**

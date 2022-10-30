@@ -126,7 +126,6 @@ public class PatientInfoView {
         } else {
             this.invalidDataLabel.setVisible(true);
             this.showInvalidLabels(invalidInputs);
-
         }
     }
 
@@ -218,6 +217,7 @@ public class PatientInfoView {
             this.invalidDataLabel.setVisible(false);
             this.populateFields();
         } else {
+            this.editButton.disableProperty().set(true);
             this.invalidDataLabel.setVisible(false);
             this.enableControls();
         }

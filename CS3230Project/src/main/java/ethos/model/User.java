@@ -9,8 +9,7 @@ public class User {
 	private String lastName;
 	private String userName;
 	private String password;
-	private boolean isAdmin;
-	private boolean isNurse;
+	private UserRole currentRole;
 	
 	/**
 	 * Instantiates a new user.
@@ -19,17 +18,23 @@ public class User {
 	 * @param lname the lname
 	 * @param userName the user name
 	 * @param password the password
-	 * @param isAdmin the is admin
-	 * @param isNurse the is nurse
+	 * @param role the current user role (admin or nurse)
 	 */
-	public User(String fname, String lname, String userName, String password, boolean isAdmin, boolean isNurse) {
+	public User(String fname, String lname, String userName, String password, UserRole role) {
 		
 		this.firstName = fname;
 		this.lastName = lname;
 		this.userName = userName;
 		this.password = password;
-		this.isAdmin = isAdmin;
-		this.isNurse = isNurse;
+		this.currentRole = role;
+	}
+
+	/**
+	 * Gets the user role
+	 * @return the role
+	 */
+	public UserRole getUserRole() {
+		return this.currentRole;
 	}
 	
 	/**
@@ -103,42 +108,4 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	/**
-	 * Checks if is admin.
-	 *
-	 * @return true, if is admin
-	 */
-	public boolean isAdmin() {
-		return this.isAdmin;
-	}
-	
-	/**
-	 * Sets the checks if is admin.
-	 *
-	 * @param isAdmin the new checks if is admin
-	 */
-	public void setIsAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-	
-	/**
-	 * Checks if is nurse.
-	 *
-	 * @return true, if is nurse
-	 */
-	public boolean isNurse() {
-		return this.isNurse;
-	}
-	
-	/**
-	 * Sets the checks if is nurse.
-	 *
-	 * @param isNurse the new checks if is nurse
-	 */
-	public void setIsNurse(boolean isNurse) {
-		this.isNurse = isNurse;
-	}
-
-
 }

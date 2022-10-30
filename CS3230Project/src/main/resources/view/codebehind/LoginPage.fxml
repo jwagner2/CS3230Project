@@ -2,24 +2,32 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ethos.view.LoginView">
    <children>
-      <Label layoutX="242.0" layoutY="200.0" text="Welcome to E.T.H.O.S." />
-      <Label layoutX="273.0" layoutY="225.0" text="Username" />
-      <Label layoutX="275.0" layoutY="275.0" text="Password" />
-      <TextField fx:id="unameTextField" layoutX="226.0" layoutY="243.0" />
-      <TextField fx:id="pwdTextField" layoutX="226.0" layoutY="293.0" />
+      <Label layoutX="242.0" layoutY="185.0" text="Welcome to E.T.H.O.S." />
+      <Label layoutX="273.0" layoutY="210.0" text="Username" />
+      <Label layoutX="275.0" layoutY="260.0" text="Password" />
+      <TextField fx:id="unameTextField" layoutX="226.0" layoutY="228.0" />
+      <TextField fx:id="pwdTextField" layoutX="226.0" layoutY="278.0" />
       <ImageView fitHeight="150.0" fitWidth="263.0" layoutX="169.0" layoutY="35.0" pickOnBounds="true">
          <image>
             <Image url="@eth%20s.png" />
          </image>
       </ImageView>
-      <Button fx:id="loginButton" layoutX="276.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleLogin" text="Log In" />
-      <Label fx:id="invalidCredentialsLabel" layoutX="190.0" layoutY="359.0" prefHeight="17.0" prefWidth="221.0" text="Invalid login credentials. Please try again." textFill="RED" visible="false"/>
+      <RadioButton fx:id="nurseRadioButton" layoutX="226.0" layoutY="314.0" mnemonicParsing="false" selected="true" text="Nurse">
+         <toggleGroup>
+            <ToggleGroup fx:id="user_role" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="adminRadioButton" layoutX="315.0" layoutY="314.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="60.0" text="Admin" toggleGroup="$user_role" />
+      <Button fx:id="loginButton" layoutX="226.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="25.0" prefWidth="149.0" text="Log In" />
+      <Label fx:id="invalidCredentialsLabel" layoutX="190.0" layoutY="372.0" prefHeight="17.0" prefWidth="221.0" text="Invalid login credentials. Please try again." textFill="RED" visible="false" />
    </children>
 </AnchorPane>
