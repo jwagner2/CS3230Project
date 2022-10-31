@@ -1,6 +1,7 @@
 package main.java.ethos.model;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 /**
  * The Appointment class
  */
@@ -16,7 +17,7 @@ public class Appointment {
         this.doctorFName = doctorFName;
         this.doctorLName = doctorLName;
         this.doctorId = doctorId;
-        this.apptDateTime = apptDateTime;
+        this.setApptDateTime(apptDateTime);
         this.appointmentReason = appointmentReason;
     }
 
@@ -85,5 +86,17 @@ public class Appointment {
      */
     public void setAppointmentReason(String newReason) {
         this.appointmentReason = newReason;
+    }
+
+    public LocalDateTime getApptDateTime() {
+        return apptDateTime;
+    }
+    public LocalTime getApptTime() {
+        return apptDateTime.toLocalTime();
+    }
+
+
+    public void setApptDateTime(LocalDateTime apptDateTime) {
+        this.apptDateTime = apptDateTime;
     }
 }

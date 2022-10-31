@@ -22,12 +22,12 @@ import main.java.ethos.controller.ControllerManager;
 import main.java.ethos.model.Appointment;
 
 public class ApptView {
-    
+
     private ControllerManager manager;
     ObservableList<Map<String, Object>> appts = FXCollections.<Map<String, Object>>observableArrayList();
-    
+
     @FXML
-    private TableView<Appointment> apptDataTableView;
+    private TableView<Map> apptDataTableView;
 
     @FXML
     private DatePicker apptDatePicker;
@@ -58,10 +58,9 @@ public class ApptView {
 
     @FXML
     private ComboBox<Date> timeComboBox;
-    
+
     @FXML
     private Label bookingLabel;
-   
 
     @FXML
     void getTimes(ActionEvent event) {
@@ -75,8 +74,9 @@ public class ApptView {
 
     @FXML
     void handleEditAppt(ActionEvent event) {
-        this.manager.setDisplayedPatient(this.patientDataTableView.getSelectionModel().getSelectedIndex());
-        this.manager.changeToPatientInfoView((Stage) this.registerPatientButton.getScene().getWindow());
+        // this.manager.setDisplayedPatient(this.apptDataTableView.getSelectionModel().getSelectedIndex());
+        // this.manager.changeToPatientInfoView((Stage)
+        // this.registerPatientButton.getScene().getWindow());
     }
 
     @FXML
@@ -88,7 +88,6 @@ public class ApptView {
     void handleStartVisit(ActionEvent event) {
 
     }
-
 
     /**
      * Initialize the mainview
@@ -134,9 +133,7 @@ public class ApptView {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         this.editAppt.setDisable(false);
-                        this.bookAppointment.setDisable(true);
-                    } else if (newValue){
-                        this.searchButton.setDisable(true);
+                        this.bookApptButton.setDisable(true);
                     }
                 });
 
