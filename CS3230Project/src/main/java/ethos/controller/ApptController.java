@@ -52,7 +52,7 @@ public class ApptController {
         this.searchResults = new ArrayList<Appointment>();
         AppointmentDal apptDal = new AppointmentDal();
         try {
-            this.searchResults = apptDal.getAppointmentsByDoctorID(doctorId);
+            this.searchResults = apptDal.getAppointmentsForPatient(doctorId);
 
         } catch (SQLException e) {
             e.printStackTrace();
