@@ -1,8 +1,6 @@
 package main.java.ethos.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
+import java.time.LocalDateTime;
 /**
  * The Appointment class
  */
@@ -10,17 +8,15 @@ public class Appointment {
 
     private String doctorFName;
     private String doctorLName;
-    private LocalDate appointmentDate;
-    private LocalTime appointmentTime;
+    private LocalDateTime apptDateTime;
     private int doctorId;
     private String appointmentReason;
 
-    public Appointment(String doctorFName, String doctorLName, int doctorId, LocalDate apptDate, LocalTime apptTime, String appointmentReason) {
+    public Appointment(String doctorFName, String doctorLName, int doctorId, LocalDateTime apptDateTime, String appointmentReason) {
         this.doctorFName = doctorFName;
         this.doctorLName = doctorLName;
         this.doctorId = doctorId;
-        this.appointmentDate = apptDate;
-        this.appointmentTime = apptTime;
+        this.apptDateTime = apptDateTime;
         this.appointmentReason = appointmentReason;
     }
 
@@ -58,39 +54,6 @@ public class Appointment {
     public void setDoctorLName(String doctorLName) {
         this.doctorLName = doctorLName;
     }
-
-    
-    /** 
-     * @return LocalDate
-     */
-    public LocalDate getAppointmentDate() {
-        return appointmentDate;
-    }
-
-    
-    /** 
-     * @param appointmentDate
-     */
-    public void setAppointmentDate(LocalDate appointmentDate) {
-        this.appointmentDate = appointmentDate;
-    }
-
-    
-    /** 
-     * @return LocalTime
-     */
-    public LocalTime getAppointmentTime() {
-        return appointmentTime;
-    }
-
-    /**
-     * Sets the reason for the appointment
-     * @param newReason the new reason
-     */
-    public void setAppointmentTime(LocalTime appointmentTime) {
-        this.appointmentTime = appointmentTime;
-    }
-
     
     /** 
      * @return int
