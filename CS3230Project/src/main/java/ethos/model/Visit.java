@@ -5,8 +5,8 @@ import java.util.List;
 public class Visit {
     private int systolicPressure;
     private int diastolicPressure;
-    private double bodyWeight;
-    private double bodyTemp;
+    private double bodyWeightLbs;
+    private double bodyTempDegreesF;
     private int pulseBpm;
     private String symptoms;
     private String diagnosis;
@@ -17,8 +17,8 @@ public class Visit {
             String symptoms, String diagnosis, List<LabTest> labsOrdered) {
         this.systolicPressure = systolicPressure;
         this.diastolicPressure = diastolicPressure;
-        this.bodyWeight = bodyWeight;
-        this.bodyTemp = bodyTemp;
+        this.bodyWeightLbs = bodyWeight;
+        this.bodyTempDegreesF = bodyTemp;
         this.pulseBpm = pulseBpm;
         this.symptoms = symptoms;
         this.diagnosis = diagnosis;
@@ -26,5 +26,5 @@ public class Visit {
     }
     //Need to add diagnosis to visit view
 
-    
+
 }

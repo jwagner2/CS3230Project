@@ -24,7 +24,6 @@ public class Appointment {
         this.appointmentReason = appointmentReason;
     }
 
-    
     /** 
      * Gets the doctor first name
      * @return the first name
