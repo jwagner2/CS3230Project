@@ -32,6 +32,7 @@ public class ControllerManager {
     private RegisterEditController regEditController;
     
     private SceneController sceneController;
+    private ApptController apptController;
 
     /**
      * Instantiates a new controller manager.
@@ -42,6 +43,7 @@ public class ControllerManager {
         this.mainViewController = new MainViewController();
         this.regEditController = new RegisterEditController();
         this.sceneController = new SceneController();
+        this.apptController = new ApptController();
     }
 
     /**
@@ -52,7 +54,8 @@ public class ControllerManager {
     public boolean hasSelectedPatient() {
         return this.regEditController.hasSelectedPatient();
     }
-
+    
+    public Patient getSelectedOatie
     /**
      * Validate login.
      *
@@ -213,6 +216,10 @@ public class ControllerManager {
     public String getPatientSsn() {
         return this.regEditController.getPatientSsn();
     }
+    
+    public int getSelectedPatientId() {
+        return this.regEditController.getSelectedPatientId();
+    }
 
     /**
      * Gets the patient is active.
@@ -302,6 +309,11 @@ public class ControllerManager {
     public void populateStatesComboBox(ComboBox<String> statesCombo) {
         
         this.regEditController.populateStatesComboBox(statesCombo);
+    }
+    
+    public void getApptTimes(String doctorName, Date date) {
+        
+        this.apptController.getDoctorsAvailability(doctorName, date);
     }
 
 }

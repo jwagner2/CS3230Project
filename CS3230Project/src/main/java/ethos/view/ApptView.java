@@ -2,6 +2,8 @@ package main.java.ethos.view;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +21,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
+import main.java.ethos.dal.AppointmentDal;
 import main.java.ethos.model.Appointment;
 
 public class ApptView {
 
     private ControllerManager manager;
+    AppointmentDal apptDal;
     ObservableList<Map<String, Object>> appts = FXCollections.<Map<String, Object>>observableArrayList();
 
     @FXML
@@ -101,9 +105,12 @@ public class ApptView {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("E, M/d/Y");
         this.currentDateLabel.textProperty().set(format.format(calendar.getTime()));
-
+        this.apptDal = new AppointmentDal();
+        this.apptDal.getAppointmentsByDoctorID(this.manager);
         initializeTableView();
         this.tableListener();
+        this.bookingListener();
+        
     }
 
     @SuppressWarnings("rawtypes")
@@ -133,9 +140,16 @@ public class ApptView {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         this.editAppt.setDisable(false);
-                        this.bookApptButton.setDisable(true);
                     }
                 });
-
+    }
+    
+    private void bookingListener() {
+        this.doctorComboBox.selectionModelProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null && this.apptDatePicker.getValue() != null) {
+                        java.util.Date date = Date.from(this.apptDatePicker.getValue().atStartOfDay( ZoneId.systemDefault()).toInstant());
+                        this.manager.getApptTimes(newValue.toString(), (Date) date);
+                    }
+                });
     }
 }

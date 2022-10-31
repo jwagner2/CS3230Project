@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 
 public class VisitView {
 
+
     @FXML
     private Button backButton;
 
@@ -22,16 +23,31 @@ public class VisitView {
     private Label currentUserField;
 
     @FXML
+    private TextArea diagnosisTextArea;
+
+    @FXML
     private TextField diastolicField;
 
     @FXML
     private Button endVisit;
 
     @FXML
+    private TextField heightField;
+
+    @FXML
+    private Label heightLabel;
+
+    @FXML
     private Label invalidDataLabel;
 
     @FXML
     private Label invalidDiaLabel;
+
+    @FXML
+    private Label invalidDiagLabel;
+
+    @FXML
+    private Label invalidHeightLabel;
 
     @FXML
     private Label invalidPulseLabel;
@@ -48,12 +64,11 @@ public class VisitView {
     @FXML
     private Label invalidWeightLabel;
 
-
-   // @FXML
-   // private ComboBox<Lab> labSelectionBox;
-
     @FXML
     private ListView<?> labsToOrderBox;
+
+    @FXML
+    private Button orderLabButton;
 
     @FXML
     private TextField pulseField;

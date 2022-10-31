@@ -3,6 +3,7 @@ package main.java.ethos.controller;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import main.java.ethos.model.Patient;
 public class ApptController {
     /** The search results. */
     private List<Appointment> searchResults;
+    private Map<String, Integer> allDoctors;
     /**
      * gets the search results
      * @return the search results
@@ -48,18 +50,20 @@ public class ApptController {
  //   }
     
     
-    public List<Map<String, Object>> getDrAppts(int doctorId) {
-        this.searchResults = new ArrayList<Appointment>();
-        AppointmentDal apptDal = new AppointmentDal();
-        try {
-            this.searchResults = apptDal.getAppointmentsForPatient(doctorId);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-        return this.buildResultsForTable();
-    }
+//    public List<Map<String, Object>> getPatientAppts(int patientId) {
+//        this.searchResults = new ArrayList<Appointment>();
+//        AppointmentDal apptDal = new AppointmentDal();
+//        try {
+//            this.searchResults = apptDal.getAppointmentsByPatientID(patientId);
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//
+//        }
+//        return this.buildResultsForTable();
+//    }
+    
+    public
     
     /**
      * Builds the results for table.
@@ -106,6 +110,24 @@ public class ApptController {
 
    
         return result;
+    }
+    public void getDoctorsAvailability(String doctorName, Date date) {
+        int doctorID = this.allDoctors.get(doctorName);
+        AppointmentDal apptDal = new AppointmentDal();
+        try {
+            apptDal.getDoctorAvailability(doctorID, date);
+        } catch (SQLException e) {
+           
+            e.printStackTrace();
+        }
+    }
+    /**
+     * populates with doctors and doctor ids
+     */
+    public void getDoctors(){
+        this.allDoctors = new HashMap<>();
+        AppointmentDal apptDal = new AppointmentDal();
+        //apptDal.getDoctors();
     }
 
 
