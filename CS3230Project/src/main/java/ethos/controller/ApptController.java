@@ -20,14 +20,16 @@ public class ApptController {
     /** The search results. */
     private List<Appointment> searchResults;
     private Map<String, Integer> allDoctors;
+
     /**
      * gets the search results
+     * 
      * @return the search results
      */
     public List<Appointment> getResults() {
         return this.searchResults;
     }
-    
+
     /**
      * Execute search.
      *
@@ -36,35 +38,32 @@ public class ApptController {
      * @param dob       the dob
      * @return the list
      */
-//    public List<Map<String, Object>> executeSearch() {
-//        this.searchResults = new ArrayList<Appointment>();
-//        AppointmentDal apptDal = new AppointmentDal();
-//        try {
-//            this.searchResults = apptDal;
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//
-//        }
-//        return this.buildResultsForTable();
- //   }
-    
-    
-//    public List<Map<String, Object>> getPatientAppts(int patientId) {
-//        this.searchResults = new ArrayList<Appointment>();
-//        AppointmentDal apptDal = new AppointmentDal();
-//        try {
-//            this.searchResults = apptDal.getAppointmentsByPatientID(patientId);
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//
-//        }
-//        return this.buildResultsForTable();
-//    }
-    
-    public
-    
+    // public List<Map<String, Object>> executeSearch() {
+    //     this.searchResults = new ArrayList<Appointment>();
+    //     AppointmentDal apptDal = new AppointmentDal();
+    //     try {
+    //         this.searchResults = apptDal;
+
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+
+    //     }
+    //     return this.buildResultsForTable();
+    // }
+
+    public List<Map<String, Object>> getPatientAppts(int patientId) {
+        this.searchResults = new ArrayList<Appointment>();
+        AppointmentDal apptDal = new AppointmentDal();
+        try {
+            this.searchResults = apptDal.getAppointmentsForPatient(patientId);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return this.buildResultsForTable();
+    }
+
     /**
      * Builds the results for table.
      *
@@ -86,8 +85,8 @@ public class ApptController {
 
         return apptInfo;
     }
-    
-    public List<LocalTime> getTimes(List<LocalTime> drAppts){
+
+    public List<LocalTime> getTimes(List<LocalTime> drAppts) {
         List<LocalTime> result = new ArrayList<>();
         String start = "08:00:00";
         String finish = "18:00:00";
@@ -104,31 +103,36 @@ public class ApptController {
             if (!drAppts.contains(currentTime)) {
                 result.add(currentTime);
                 currentTime = currentTime.plus(subintervalLength);
-                
+
             }
         }
 
-   
         return result;
     }
+
     public void getDoctorsAvailability(String doctorName, Date date) {
         int doctorID = this.allDoctors.get(doctorName);
         AppointmentDal apptDal = new AppointmentDal();
         try {
             apptDal.getDoctorAvailability(doctorID, date);
         } catch (SQLException e) {
-           
+
             e.printStackTrace();
         }
     }
+
     /**
      * populates with doctors and doctor ids
      */
-    public void getDoctors(){
+    public void getDoctors() {
         this.allDoctors = new HashMap<>();
         AppointmentDal apptDal = new AppointmentDal();
-        //apptDal.getDoctors();
+        try {
+            this.allDoctors = apptDal.getDoctorNameAndId();
+        } catch (SQLException sqlEx) {
+            System.out.println("Error building name:id map for doctors - \n");
+            sqlEx.printStackTrace();
+        }
     }
-
 
 }
