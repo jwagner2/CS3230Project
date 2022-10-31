@@ -19,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
+import main.java.ethos.model.Appointment;
 
 public class ApptView {
     

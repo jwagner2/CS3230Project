@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import main.java.ethos.dal.PatientSearchDal;
+import main.java.ethos.model.Appointment;
 import main.java.ethos.model.Patient;
 
 public class ApptController {
@@ -54,10 +55,10 @@ public class ApptController {
         List<Map<String, Object>> apptInfo = new ArrayList<Map<String, Object>>();
         for (Appointment currentAppt : this.searchResults) {
             Map<String, Object> appts = new HashMap<String, Object>();
-            appts.put("doctor", currentAppt.getDoctor());
-            appts.put("date", currentAppt.getDate());
-            appts.put("time", currentAppt.getTime());
-            appts.put("reason", currentAppt.getReason());
+            appts.put("doctor", currentAppt.getDoctorFName() + currentAppt.getDoctorLName());
+            appts.put("date", currentAppt.getAppointmentDate());
+            appts.put("time", currentAppt.getAppointmentTime());
+            appts.put("reason", currentAppt.getAppointmentReason());
             apptInfo.add(appts);
         }
 
