@@ -305,4 +305,9 @@ public class RegisterEditController {
     }
 
 
+    public int getSelectedPatientId() {
+        return this.displayedPatient.getPatientId();
+    }
+
+
 }
