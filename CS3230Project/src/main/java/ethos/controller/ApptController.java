@@ -108,10 +108,10 @@ public class ApptController {
     
     public boolean compareDates(int apptIndex) {
         Appointment toGetDateFrom = this.searchResults.get(apptIndex);
-        if (toGetDateFrom.getApptDateTime().isBefore(LocalDateTime.now().plusMinutes(15))) {
-            return true;
+        if (toGetDateFrom.getApptDateTime().isBefore(LocalDateTime.now().minusMinutes(20))) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**

@@ -187,7 +187,7 @@ public class ApptView {
         this.apptDataTableView.getSelectionModel().selectedIndexProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     int selectedIndex = this.apptDataTableView.getSelectionModel().getSelectedIndex();
-                    if (newValue != null && this.manager.isDateToday(selectedIndex)) {
+                    if (newValue != null && this.manager.isAppointmentTodayWithin15(selectedIndex)) {
                         this.startVisitButton.setDisable(false);
 
                     } else {
