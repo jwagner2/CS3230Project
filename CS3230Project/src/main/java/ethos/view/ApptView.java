@@ -90,7 +90,7 @@ public class ApptView {
 
     @FXML
     void handleBook(ActionEvent event) {
-        LocalDateTime apptTime = this.apptDatePicker.getValue().atTime(this.timeComboBox.getValue());
+        LocalDateTime apptTime = this.apptDatePicker.valueProperty().get().atTime(this.timeComboBox.getValue());
         Label reason = new Label("");
 
         TextInputDialog inputdialog = new TextInputDialog("Enter Reason for Appointment");
@@ -99,7 +99,6 @@ public class ApptView {
         inputdialog.setWidth(500);
         inputdialog.showAndWait();
         reason.setText(inputdialog.getEditor().getText());
-
         this.manager.bookAppt(this.doctors.get(this.doctorComboBox.getSelectionModel().getSelectedItem()), apptTime,
                 reason.getText());
         this.timeComboBox.getSelectionModel().clearSelection();
@@ -108,7 +107,7 @@ public class ApptView {
         this.resetTable();
         this.appts.addAll(this.manager.getPatientAppts());
         this.apptDataTableView.getItems().addAll(this.appts);
-        ;
+        
     }
 
     @FXML
