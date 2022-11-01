@@ -37,7 +37,8 @@
       <ComboBox fx:id="timeComboBox" layoutX="352.0" layoutY="469.0" prefHeight="25.0" prefWidth="125.0" />
       <Label layoutX="349.0" layoutY="445.0" text="Select Time:" />
       <Button fx:id="bookApptButton" disable="true" layoutX="224.0" layoutY="526.0" mnemonicParsing="false" onAction="#handleBook" prefHeight="59.0" prefWidth="149.0" text="Book Appointment" />
-      <Button fx:id="getTimesButton" disable="true" layoutX="498.0" layoutY="469.0" mnemonicParsing="false" onAction="#getTimes" prefHeight="26.0" prefWidth="79.0" text="Get Times" />
+      <Button fx:id="submitEditButton" disable="true" layoutX="498.0" layoutY="469.0" mnemonicParsing="false" onAction="#submitEdit" prefHeight="26.0" prefWidth="79.0" text="Submit Edit" />
       <Button fx:id="editAppt" disable="true" layoutX="412.0" layoutY="526.0" mnemonicParsing="false" onAction="#handleEditAppt" prefHeight="59.0" prefWidth="149.0" text="Edit Appointment" />
+      <Button fx:id="backButton" layoutX="7.0" layoutY="5.0" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="59.0" text="&lt;- Back" />
    </children>
 </AnchorPane>

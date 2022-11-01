@@ -24,30 +24,31 @@ public class AppointmentDal {
 
     private String doctorApptTimesForDateQuery = "select a.appt_datetime from appointment a where a.doctor_id = ? and DATE(a.appt_datetime) = ?;";
 
-    private String doctorNameAndIdsQuery = "select CONCAT(p.fname, p.lname) as name, d.doctor_id from person p join doctor d on p.pid = d.pid;";
+    private String doctorNameAndIdsQuery = "select CONCAT(p.fname, ' ', p.lname) as name, d.doctor_id from person p join doctor d on p.pid = d.pid;";
 
     private String createApptStatement = "insert into appointment (doctor_id, appt_datetime, patient_id, appt_reason)"
             + "values (?, ?, ?, ?);";
-    
+
     // Assumes system users can only update time for appts
-    private String updateApptInfoStatement = "update appointment set appt_datetime = ? where patient_id = ?";
+    private String updateApptInfoStatement = "update appointment set appt_datetime = ?, doctor_id = ? where patient_id = ? and appt_datetime = ?";
 
     public void createAppointment(Appointment appointment) throws SQLException {
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
-                PreparedStatement stmt = connection.prepareStatement(createApptStatement)) {
-
+                PreparedStatement stmt = connection.prepareStatement(this.createApptStatement)) {
             this.setStatement(appointment, stmt);
             int rs = stmt.executeUpdate();
             System.out.println("appointment -- rows affected = " + rs);
         }
     }
 
-    public void editApptTime(Appointment appointment) throws SQLException {
+    public void editApptTime(Appointment appointment, LocalDateTime originalDateTime) throws SQLException {
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
-                PreparedStatement stmt = connection.prepareStatement(updateApptInfoStatement)) {
+                PreparedStatement stmt = connection.prepareStatement(this.updateApptInfoStatement)) {
 
             stmt.setTimestamp(1, this.getTimestampFromDatetime(appointment.getApptDateTime()));
-            stmt.setInt(2, appointment.getPatientId());
+            stmt.setInt(2, appointment.getDoctorId());
+            stmt.setInt(3, appointment.getPatientId());
+            stmt.setTimestamp(4, this.getTimestampFromDatetime(originalDateTime));
             int rs = stmt.executeUpdate();
             System.out.println("appointment -- rows affected = " + rs);
         }
@@ -116,6 +117,7 @@ public class AppointmentDal {
     }
 
     private Timestamp getTimestampFromDatetime(LocalDateTime dateTime) {
-        return new java.sql.Timestamp(dateTime.atZone(ZoneId.systemDefault()).toEpochSecond());
+
+        return new java.sql.Timestamp(Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()).getTime());
     }
 }

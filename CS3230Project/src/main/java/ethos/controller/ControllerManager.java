@@ -4,6 +4,7 @@ package main.java.ethos.controller;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -336,14 +337,35 @@ public class ControllerManager {
         return this.apptController.getDoctorsAvailability(doctorName, date);
     }
 
-    public boolean compareDates(int newValue) {
-        
+    public boolean isDateAfterToday(int indexOfAppt) {
+        if (indexOfAppt < 0) {
+            return false;
+        }
+        Appointment toCheck = this.apptController.getResults().get(indexOfAppt);
+        if (toCheck.getApptDateTime().isAfter(LocalDateTime.now())) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean isDateToday(int indexOfAppt) {
+        if (indexOfAppt < 0) {
+            return false;
+        }
+        Appointment toCheck = this.apptController.getResults().get(indexOfAppt);
+        if (toCheck.getApptDateTime().toLocalDate().isEqual(LocalDate.now())) {
+            return true;
+        }
         return false;
     }
     
     public void bookAppt(int doctorId, LocalDateTime dateTime, String appt_reason) {
         Appointment toBook = new Appointment(doctorId, this.getSelectedPatientId(), dateTime, appt_reason);
         this.apptController.bookAppt(toBook);
+    }
+
+    public void editAppt(int selectedIndex, LocalDate newDate, String doctorName, LocalTime newTime) {
+       this.apptController.editAppt(selectedIndex, newDate, doctorName, newTime);
     }
 
 }

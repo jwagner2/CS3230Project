@@ -30,32 +30,13 @@ public class ApptController {
         return this.searchResults;
     }
 
-    /**
-     * Execute search.
-     *
-     * @param firstName the first name
-     * @param lastName  the last name
-     * @param dob       the dob
-     * @return the list
-     */
-    // public List<Map<String, Object>> executeSearch() {
-    //     this.searchResults = new ArrayList<Appointment>();
-    //     AppointmentDal apptDal = new AppointmentDal();
-    //     try {
-    //         this.searchResults = apptDal;
-
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-
-    //     }
-    //     return this.buildResultsForTable();
-    // }
 
     public List<Map<String, Object>> getPatientAppts(int patientId) {
         this.searchResults = new ArrayList<Appointment>();
         AppointmentDal apptDal = new AppointmentDal();
         try {
             this.searchResults = apptDal.getAppointmentsForPatient(patientId);
+            System.out.println(this.searchResults.size());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,7 +58,6 @@ public class ApptController {
         for (Appointment currentAppt : this.searchResults) {
             Map<String, Object> appts = new HashMap<String, Object>();
             appts.put("doctor", currentAppt.getDoctorFName() + " " + currentAppt.getDoctorLName());
-            System.out.println(appts.get("doctor"));
             appts.put("date", currentAppt.getApptDateTime().toLocalDate());
             appts.put("time", currentAppt.getApptTime());
             appts.put("reason", currentAppt.getAppointmentReason());
@@ -103,9 +83,9 @@ public class ApptController {
         for (int i = 0; i < subintervalCount; i++) {
             if (!drAppts.contains(currentTime)) {
                 result.add(currentTime);
-                currentTime = currentTime.plus(subintervalLength);
 
             }
+            currentTime = currentTime.plus(subintervalLength);
         }
         return result;
     }
@@ -148,10 +128,29 @@ public class ApptController {
         }
     }
     
+    public void editAppt(int indexToEdit, LocalDate newDate, String doctorName, LocalTime newTime) {
+        Appointment toEdit = this.searchResults.get(indexToEdit);
+        LocalDateTime originalTime = toEdit.getApptDateTime();
+        LocalDateTime apptTime = newDate.atTime(newTime);
+        
+        toEdit.setApptDateTime(apptTime);
+        toEdit.setDoctorId(this.allDoctors.get(doctorName));
+        toEdit.setAppointmentReason(toEdit.getAppointmentReason());
+        AppointmentDal apptDal = new AppointmentDal();
+        try {
+            apptDal.editApptTime(toEdit, originalTime);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+      
+    }
+    
     public void bookAppt(Appointment toBook) {
         AppointmentDal apptDal = new AppointmentDal();
         try {
+
             apptDal.createAppointment(toBook);
+            this.searchResults.add(toBook);
         } catch (SQLException e) {
             e.printStackTrace();
         }

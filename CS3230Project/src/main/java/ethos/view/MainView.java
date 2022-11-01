@@ -128,7 +128,7 @@ public class MainView {
 
         this.patientNameListener();
         this.patientDobListener();
-        initializeTableView();
+        this.initializeTableView();
         this.tableListener();
     }
 

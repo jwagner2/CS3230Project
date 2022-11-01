@@ -33,8 +33,7 @@ public class ApptView {
     AppointmentDal apptDal;
     ObservableList<Map<String, Object>> appts = FXCollections.<Map<String, Object>>observableArrayList();
     Map<String, Integer> doctors;
-    
-    
+    String editing = "Editing Appointment";
 
     @FXML
     private TableView<Map> apptDataTableView;
@@ -58,7 +57,7 @@ public class ApptView {
     private Button editAppt;
 
     @FXML
-    private Button getTimesButton;
+    private Button submitEditButton;
 
     @FXML
     private Button logoutButton;
@@ -73,29 +72,52 @@ public class ApptView {
     private Label bookingLabel;
 
     @FXML
-    void getTimes(ActionEvent event) {
+    private Button backButton;
 
+    @FXML
+    void submitEdit(ActionEvent event) {
+        this.manager.editAppt(this.apptDataTableView.getSelectionModel().getSelectedIndex(), this.apptDatePicker.getValue(), this.doctorComboBox.getValue(), this.timeComboBox.getValue());
+        this.bookingLabel.setText("Book Appointment");
+        this.timeComboBox.getSelectionModel().clearSelection();
+        this.doctorComboBox.getSelectionModel().clearSelection();
+        this.apptDatePicker.getEditor().clear();
+        this.submitEditButton.setDisable(true);
+        this.resetTable();
+        this.apptDataTableView.setDisable(false);
+        this.appts.addAll(this.manager.getPatientAppts());
+        this.apptDataTableView.getItems().addAll(this.appts);
     }
 
     @FXML
     void handleBook(ActionEvent event) {
         LocalDateTime apptTime = this.apptDatePicker.getValue().atTime(this.timeComboBox.getValue());
         Label reason = new Label("");
-        
+
         TextInputDialog inputdialog = new TextInputDialog("Enter Reason for Appointment");
         inputdialog.setContentText("Reason: ");
         inputdialog.setHeaderText("Enter Reason");
+        inputdialog.setWidth(500);
         inputdialog.showAndWait();
-        reason.setText(inputdialog.getEditor().getText()); 
-       
-        this.manager.bookAppt(this.doctors.get(this.doctorComboBox.getSelectionModel().getSelectedItem()), apptTime, reason.getText());
+        reason.setText(inputdialog.getEditor().getText());
+
+        this.manager.bookAppt(this.doctors.get(this.doctorComboBox.getSelectionModel().getSelectedItem()), apptTime,
+                reason.getText());
+        this.timeComboBox.getSelectionModel().clearSelection();
+        this.doctorComboBox.getSelectionModel().clearSelection();
+        this.apptDatePicker.getEditor().clear();
+        this.resetTable();
+        this.appts.addAll(this.manager.getPatientAppts());
+        this.apptDataTableView.getItems().addAll(this.appts);
+        ;
     }
 
     @FXML
     void handleEditAppt(ActionEvent event) {
-        // this.manager.setDisplayedPatient(this.apptDataTableView.getSelectionModel().getSelectedIndex());
-        // this.manager.changeToPatientInfoView((Stage)
-        // this.registerPatientButton.getScene().getWindow());
+        this.bookingLabel.setText(this.editing);
+        this.timeComboBox.getSelectionModel().clearSelection();
+        this.doctorComboBox.getSelectionModel().clearSelection();
+        this.apptDatePicker.getEditor().clear();
+        this.apptDataTableView.setDisable(true);
     }
 
     @FXML
@@ -128,10 +150,16 @@ public class ApptView {
         this.doctorSelectionListener();
         this.bookingListener();
         this.dateListener();
+        this.resetTable();
         this.appts.addAll(this.manager.getPatientAppts());
         this.apptDataTableView.getItems().addAll(this.appts);
-        
-        
+
+    }
+
+    private void resetTable() {
+        this.apptDataTableView.getItems().clear();
+        this.appts.clear();
+
     }
 
     @SuppressWarnings("rawtypes")
@@ -149,7 +177,7 @@ public class ApptView {
         this.apptDataTableView.getColumns().add(dateColumn);
         this.apptDataTableView.getColumns().add(timeColumn);
         this.apptDataTableView.getColumns().add(reasonColumn);
-        List<Map<String, Object>> currentResults = this.manager.buildResultsForTable();
+        List<Map<String, Object>> currentResults = this.manager.buildApptResultsForTable();
         if (currentResults != null) {
             this.appts.addAll(currentResults);
             this.apptDataTableView.getItems().addAll(this.appts);
@@ -159,52 +187,75 @@ public class ApptView {
     private void tableListener() {
         this.apptDataTableView.getSelectionModel().selectedIndexProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    
-                    if (newValue != null && this.manager.compareDates((int) newValue)) {
-                        this.editAppt.setDisable(false);
+                    int selectedIndex = this.apptDataTableView.getSelectionModel().getSelectedIndex();
+                    if (newValue != null && this.manager.isDateToday(selectedIndex)) {
                         this.startVisitButton.setDisable(false);
-                        
-                    } 
-     
+
+                    } else {
+                        this.startVisitButton.setDisable(true);
+                    }
+                    if (newValue != null && this.manager.isDateAfterToday(selectedIndex)
+                            || this.manager.isDateToday(selectedIndex)) {
+                        this.editAppt.setDisable(false);
+                    } else {
+
+                        this.editAppt.setDisable(true);
+                    }
+
                 });
     }
-    
+
     private void doctorSelectionListener() {
         this.doctorComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-                    this.timeComboBox.getItems().clear();
-                    if (newValue != null && this.apptDatePicker.getValue() != null && this.apptDatePicker.getValue().isAfter(LocalDate.now())) {
-                        java.util.Date date = Date.from(this.apptDatePicker.getValue().atStartOfDay( ZoneId.systemDefault()).toInstant());
-                        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-                        List<LocalTime> times = this.manager.getApptTimes(newValue.toString(), sqlDate);
-                        this.timeComboBox.getItems().addAll(times);
-                    }
-                });
-    }
-    
-    private void dateListener() {
-        this.apptDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-                    this.timeComboBox.getItems().clear();
-                    if (newValue != null && this.doctorComboBox.getValue() != null && newValue.isAfter(LocalDate.now())) {
-                        java.sql.Date sqlDate = Date.valueOf(newValue);
-                        List<LocalTime> times = this.manager.getApptTimes(this.doctorComboBox.getValue(), sqlDate);
-                        this.timeComboBox.getItems().addAll(times);
-                    }
-                });
-    }
-    
-    private void bookingListener() {
-        this.timeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null && this.apptDatePicker.getValue() != null && this.apptDatePicker.getValue().isAfter(LocalDate.now())) {
-               this.bookApptButton.setDisable(false);
+            this.timeComboBox.getItems().clear();
+            if (newValue != null && this.apptDatePicker.getValue() != null
+                    && this.apptDatePicker.getValue().isAfter(LocalDate.now())) {
+                java.util.Date date = Date
+                        .from(this.apptDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                List<LocalTime> times = this.manager.getApptTimes(newValue.toString(), sqlDate);
+                this.timeComboBox.getItems().addAll(times);
+                if (this.bookingLabel.getText().equals(this.editing)) {
+                    this.submitEditButton.setDisable(false);
+                    this.bookApptButton.setDisable(true);
+                }
             }
         });
-}
+    }
 
-    
-    
+    private void dateListener() {
+        this.apptDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            this.timeComboBox.getItems().clear();
+            if (newValue != null && this.doctorComboBox.getValue() != null && newValue.isAfter(LocalDate.now())) {
+                java.sql.Date sqlDate = Date.valueOf(newValue);
+                List<LocalTime> times = this.manager.getApptTimes(this.doctorComboBox.getValue(), sqlDate);
+                this.timeComboBox.getItems().addAll(times);
+                if (this.bookingLabel.getText().equals(this.editing)) {
+                    this.submitEditButton.setDisable(false);
+                    this.bookApptButton.setDisable(true);
+                }
+            }
+        });
+    }
+
+    private void bookingListener() {
+        this.timeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && this.apptDatePicker.getValue() != null
+                    && this.apptDatePicker.getValue().isAfter(LocalDate.now())) {
+                
+                this.bookApptButton.setDisable(false);
+            }
+        });
+    }
+
     private void populateDoctors() {
         for (String docName : this.doctors.keySet()) {
             this.doctorComboBox.getItems().add(docName);
         }
+    }
+
+    @FXML
+    void goBack(ActionEvent event) {
+        this.manager.changeToMainView((Stage) this.backButton.getScene().getWindow());
     }
 }
