@@ -9,8 +9,8 @@ public enum PageType {
     MAIN("/view/codebehind/MainPage.fxml"),
     EDIT_INFO("/view/codebehind/PatientInfoPage.fxml"),
     VISIT("/view/codebehind/VisitPage.fxml"),
-    APPT("/view/codebehind/ApptView.fxml"),
-    LAB("/view/codebehind/LabView.fxml");
+    APPT("/view/codebehind/AppointmentPage.fxml"),
+    LAB("/view/codebehind/LabPage.fxml");
 
     /** The label. */
     public final String label;

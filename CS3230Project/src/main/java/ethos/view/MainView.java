@@ -109,7 +109,7 @@ public class MainView {
 
     @FXML
     void handleViewInfo(ActionEvent event) {
-        this.manager.setDisplayedPatient(this.patientDataTableView.getSelectionModel().getSelectedIndex());
+        
         this.manager.changeToPatientInfoView((Stage) this.registerPatientButton.getScene().getWindow());
     }
 
@@ -180,6 +180,7 @@ public class MainView {
                     if (newValue != null) {
                         this.viewPatientButton.setDisable(false);
                         this.bookAppointment.setDisable(false);
+                        this.manager.setDisplayedPatient(this.patientDataTableView.getSelectionModel().getSelectedIndex());
                     } else {
                         this.searchButton.setDisable(true);
                     }

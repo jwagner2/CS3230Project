@@ -8,9 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.java.ethos.model.PageType;
+import main.java.ethos.view.ApptView;
 import main.java.ethos.view.LoginView;
 import main.java.ethos.view.MainView;
 import main.java.ethos.view.PatientInfoView;
+import main.java.ethos.view.VisitView;
 
 public class SceneController {
     
@@ -84,8 +86,8 @@ public class SceneController {
             loader.setLocation(PageType.class.getResource(PageType.APPT.label));
             Parent parent = loader.load();
 
-            MainView mainView = loader.<MainView>getController();
-            mainView.initialize(manager);
+            ApptView apptView = loader.<ApptView>getController();
+            apptView.initialize(manager);
 
             Scene scene = new Scene(parent);
             currentStage.setTitle("ethos");
@@ -112,8 +114,8 @@ public class SceneController {
             loader.setLocation(PageType.class.getResource(PageType.VISIT.label));
             Parent parent = loader.load();
 
-            MainView mainView = loader.<MainView>getController();
-            mainView.initialize(manager);
+            VisitView visitView = loader.<VisitView>getController();
+            visitView.initialize(manager);
 
             Scene scene = new Scene(parent);
             currentStage.setTitle("ethos");

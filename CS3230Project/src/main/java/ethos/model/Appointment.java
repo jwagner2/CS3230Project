@@ -24,6 +24,13 @@ public class Appointment {
         this.setApptDateTime(apptDateTime);
         this.appointmentReason = appointmentReason;
     }
+    
+    public Appointment(int doctorId, int patientId, LocalDateTime apptDateTime, String appointmentReason) {
+        this.doctorId = doctorId;
+        this.patientId = patientId;
+        this.setApptDateTime(apptDateTime);
+        this.appointmentReason = appointmentReason;
+    }
 
     /**
      * Gets the doctor first name

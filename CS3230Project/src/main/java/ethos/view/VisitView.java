@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import main.java.ethos.controller.ControllerManager;
 
 
 public class VisitView {
@@ -105,6 +106,11 @@ public class VisitView {
     @FXML
     void handleViewResults(ActionEvent event) {
 
+    }
+
+    public void initialize(ControllerManager manager) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

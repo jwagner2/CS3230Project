@@ -27,7 +27,7 @@ public class AppointmentDal {
     private String doctorNameAndIdsQuery = "select CONCAT(p.fname, p.lname) as name, d.doctor_id from person p join doctor d on p.pid = d.pid;";
 
     private String createApptStatement = "insert into appointment (doctor_id, appt_datetime, patient_id, appt_reason)"
-            + "values = (?, ?, ?, ?);";
+            + "values (?, ?, ?, ?);";
     
     // Assumes system users can only update time for appts
     private String updateApptInfoStatement = "update appointment set appt_datetime = ? where patient_id = ?";

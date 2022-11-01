@@ -4,6 +4,8 @@ package main.java.ethos.controller;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
-
+import main.java.ethos.model.Appointment;
 import main.java.ethos.model.PageType;
 import main.java.ethos.model.Patient;
 import main.java.ethos.model.UserRole;
@@ -33,6 +35,7 @@ public class ControllerManager {
     
     private SceneController sceneController;
     private ApptController apptController;
+    
 
     /**
      * Instantiates a new controller manager.
@@ -55,7 +58,6 @@ public class ControllerManager {
         return this.regEditController.hasSelectedPatient();
     }
     
-    public Patient getSelectedOatie
     /**
      * Validate login.
      *
@@ -300,6 +302,24 @@ public class ControllerManager {
         this.regEditController.clearDisplayedPatient();
 
     }
+    
+    public void changeToVisit(Stage currentStage) {
+        this.sceneController.changeToVisitView(currentStage, this);
+    }
+    
+    public Map<String, Integer> getAllDoctors() {
+        this.apptController.getDoctors();
+        return this.apptController.getAllDoctors();
+    }
+    
+    public List<Map<String, Object>> getPatientAppts(){
+       return this.apptController.getPatientAppts(this.getSelectedPatientId());
+    }
+    
+    public List<Map<String,Object>> buildApptResultsForTable() {
+        return this.apptController.buildResultsForTable();
+    }
+    
 
     /**
      * Populates the states ComboBox for patient register/edit.
@@ -311,9 +331,19 @@ public class ControllerManager {
         this.regEditController.populateStatesComboBox(statesCombo);
     }
     
-    public void getApptTimes(String doctorName, Date date) {
+    public List<LocalTime> getApptTimes(String doctorName, Date date) {
         
-        this.apptController.getDoctorsAvailability(doctorName, date);
+        return this.apptController.getDoctorsAvailability(doctorName, date);
+    }
+
+    public boolean compareDates(int newValue) {
+        
+        return false;
+    }
+    
+    public void bookAppt(int doctorId, LocalDateTime dateTime, String appt_reason) {
+        Appointment toBook = new Appointment(doctorId, this.getSelectedPatientId(), dateTime, appt_reason);
+        this.apptController.bookAppt(toBook);
     }
 
 }

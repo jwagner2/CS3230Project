@@ -76,7 +76,8 @@ public class ApptController {
         List<Map<String, Object>> apptInfo = new ArrayList<Map<String, Object>>();
         for (Appointment currentAppt : this.searchResults) {
             Map<String, Object> appts = new HashMap<String, Object>();
-            appts.put("doctor", currentAppt.getDoctorFName() + currentAppt.getDoctorLName());
+            appts.put("doctor", currentAppt.getDoctorFName() + " " + currentAppt.getDoctorLName());
+            System.out.println(appts.get("doctor"));
             appts.put("date", currentAppt.getApptDateTime().toLocalDate());
             appts.put("time", currentAppt.getApptTime());
             appts.put("reason", currentAppt.getAppointmentReason());
@@ -106,19 +107,31 @@ public class ApptController {
 
             }
         }
-
         return result;
     }
 
-    public void getDoctorsAvailability(String doctorName, Date date) {
+    public List<LocalTime> getDoctorsAvailability(String doctorName, Date date) {
         int doctorID = this.allDoctors.get(doctorName);
         AppointmentDal apptDal = new AppointmentDal();
         try {
-            apptDal.getDoctorAvailability(doctorID, date);
+            return this.getTimes(apptDal.getDoctorAvailability(doctorID, date));
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
+        return null;
+    }
+    
+    public Map<String, Integer> getAllDoctors(){
+        return this.allDoctors;
+    }
+    
+    public boolean compareDates(int apptIndex) {
+        Appointment toGetDateFrom = this.searchResults.get(apptIndex);
+        if (toGetDateFrom.getApptDateTime().isBefore(LocalDateTime.now().plusMinutes(15))) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -132,6 +145,15 @@ public class ApptController {
         } catch (SQLException sqlEx) {
             System.out.println("Error building name:id map for doctors - \n");
             sqlEx.printStackTrace();
+        }
+    }
+    
+    public void bookAppt(Appointment toBook) {
+        AppointmentDal apptDal = new AppointmentDal();
+        try {
+            apptDal.createAppointment(toBook);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
