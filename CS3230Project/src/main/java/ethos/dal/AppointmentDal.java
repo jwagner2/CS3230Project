@@ -24,7 +24,7 @@ public class AppointmentDal {
 
     private String doctorApptTimesForDateQuery = "select a.appt_datetime from appointment a where a.doctor_id = ? and DATE(a.appt_datetime) = ?;";
 
-    private String doctorNameAndIdsQuery = "select CONCAT(p.fname, p.lname) as name, d.doctor_id from person p join doctor d on p.pid = d.pid;";
+    private String doctorNameAndIdsQuery = "select CONCAT(p.fname, ' ', p.lname) as name, d.doctor_id from person p join doctor d on p.pid = d.pid;";
 
     private String createApptStatement = "insert into appointment (doctor_id, appt_datetime, patient_id, appt_reason)"
             + "values (?, ?, ?, ?);";
@@ -116,6 +116,6 @@ public class AppointmentDal {
     }
 
     private Timestamp getTimestampFromDatetime(LocalDateTime dateTime) {
-        return new java.sql.Timestamp(dateTime.atZone(ZoneId.systemDefault()).toEpochSecond());
+       return new java.sql.Timestamp(Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()).getTime());
     }
 }
