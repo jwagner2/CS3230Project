@@ -240,9 +240,11 @@ public class ApptView {
     private void bookingListener() {
         this.timeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && this.apptDatePicker.getValue() != null
-                    && this.apptDatePicker.getValue().isAfter(LocalDate.now())) {
+                    && this.apptDatePicker.getValue().isAfter(LocalDate.now()) && this.doctorComboBox.getValue()!= null) {
                 
                 this.bookApptButton.setDisable(false);
+            }else {
+                this.bookApptButton.setDisable(true);
             }
         });
     }
