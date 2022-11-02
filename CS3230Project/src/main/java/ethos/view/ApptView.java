@@ -126,7 +126,8 @@ public class ApptView {
 
     @FXML
     void handleStartVisit(ActionEvent event) {
-        this.manager.changeToVisit((Stage) this.startVisitButton.getScene().getWindow());
+        int doctorId = this.manager.getDoctorIdForAppt(this.apptDataTableView.getSelectionModel().getSelectedIndex());
+        this.manager.changeToVisit((Stage) this.startVisitButton.getScene().getWindow(), doctorId);
     }
 
     /**

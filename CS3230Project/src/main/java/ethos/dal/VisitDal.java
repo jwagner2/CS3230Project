@@ -3,6 +3,7 @@ package main.java.ethos.dal;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -45,10 +46,10 @@ public class VisitDal {
     }
 
     private Timestamp getTimestampFromDatetime(LocalDateTime dateTime) {
-        return new java.sql.Timestamp(dateTime.atZone(ZoneId.systemDefault()).toEpochSecond());
+        return new Timestamp(Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()).getTime());
     }
 
     private BigDecimal getBigDecimalFromDouble(double value) {
-        return new BigDecimal(value, new MathContext(2));
+        return new BigDecimal(value);
     }
 }

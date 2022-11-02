@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class Visit {
+
     private int doctorId;
     private LocalDateTime apptDateTime;
     private int nurseId;
@@ -15,11 +16,10 @@ public class Visit {
     private int pulseBpm;
     private String symptoms;
     private String diagnosis;
-    private List<LabTest> labsOrdered;
+    //private List<LabTest> labsOrdered;
 
     public Visit(int systolicPressure, int diastolicPressure, double bodyWeight, int heightInches, double bodyTemp, int pulseBpm,
-            String symptoms, String diagnosis, List<LabTest> labsOrdered, int doctorId, LocalDateTime apptTime,
-            int nurseId) {
+            String symptoms, String diagnosis, int doctorId, int nurseId, LocalDateTime apptTime) {
         this.systolicPressure = systolicPressure;
         this.diastolicPressure = diastolicPressure;
         this.bodyWeightLbs = bodyWeight;
@@ -28,7 +28,7 @@ public class Visit {
         this.pulseBpm = pulseBpm;
         this.symptoms = symptoms;
         this.diagnosis = diagnosis;
-        this.labsOrdered = labsOrdered;
+        //this.labsOrdered = labsOrdered;
         this.doctorId = doctorId;
         this.nurseId = nurseId;
         this.apptDateTime = apptTime;
@@ -90,13 +90,13 @@ public class Visit {
         this.diagnosis = diagnosis;
     }
 
-    public List<LabTest> getLabsOrdered() {
-        return labsOrdered;
-    }
+    // public List<LabTest> getLabsOrdered() {
+    //     return labsOrdered;
+    // }
 
-    public void setLabsOrdered(List<LabTest> labsOrdered) {
-        this.labsOrdered = labsOrdered;
-    }
+    // public void setLabsOrdered(List<LabTest> labsOrdered) {
+    //     this.labsOrdered = labsOrdered;
+    // }
 
     public int getDoctorId() {
         return doctorId;
@@ -129,6 +129,4 @@ public class Visit {
     public void setHeightInches(int heightInches) {
         this.heightInches = heightInches;
     }
-
-    
 }

@@ -43,8 +43,9 @@ public class LoginDal {
                 String firstName = rs.getString("fname");
                 String lastName = rs.getString("lname");
                 boolean isAdmin = rs.getInt("admin_id") != 0;
+                int userId = rs.getInt("admin_id");
                 if (isAdmin) {
-                    loggedIn = new User(firstName, lastName, username, password, UserRole.ADMIN);
+                    loggedIn = new User(firstName, lastName, username, password, UserRole.ADMIN, userId);
                     return loggedIn;
                 }
             }
@@ -76,9 +77,10 @@ public class LoginDal {
                 
                 String firstName = rs.getString("fname");
                 String lastName = rs.getString("lname");
-                boolean isAdmin = rs.getInt("nurse_id") != 0;
-                if (isAdmin) {
-                    loggedIn = new User(firstName, lastName, username, password, UserRole.NURSE);
+                boolean isNurse = rs.getInt("nurse_id") != 0;
+                int userId = rs.getInt("nurse_id");
+                if (isNurse) {
+                    loggedIn = new User(firstName, lastName, username, password, UserRole.NURSE, userId);
                     return loggedIn;
                 }
             }

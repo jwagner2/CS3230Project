@@ -12,9 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import main.java.ethos.dal.AppointmentDal;
-import main.java.ethos.dal.PatientSearchDal;
 import main.java.ethos.model.Appointment;
-import main.java.ethos.model.Patient;
 
 public class ApptController {
     /** The search results. */

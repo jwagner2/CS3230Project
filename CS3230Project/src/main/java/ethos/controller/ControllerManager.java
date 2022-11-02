@@ -1,8 +1,6 @@
 
 package main.java.ethos.controller;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,18 +8,12 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import main.java.ethos.model.Appointment;
-import main.java.ethos.model.PageType;
 import main.java.ethos.model.Patient;
 import main.java.ethos.model.UserRole;
-import main.java.ethos.view.LoginView;
-import main.java.ethos.view.MainView;
-import main.java.ethos.view.PatientInfoView;
 
 /**
  * The Class ControllerManager.
@@ -33,11 +25,13 @@ public class ControllerManager {
     private MainViewController mainViewController;
     
     private RegisterEditController regEditController;
+
+    private ApptController apptController;
+
+    private VisitController visitController;
     
     private SceneController sceneController;
-    private ApptController apptController;
     
-
     /**
      * Instantiates a new controller manager.
      */
@@ -48,6 +42,7 @@ public class ControllerManager {
         this.regEditController = new RegisterEditController();
         this.sceneController = new SceneController();
         this.apptController = new ApptController();
+        this.visitController = new VisitController();
     }
 
     /**
@@ -82,8 +77,13 @@ public class ControllerManager {
      * @param fields - the fields to check
      * @return true if the data in the fields are valid; false otherwise.
      */
-    public List<String> validateFields(Map<String, String> fields) {
+    public List<String> validatePatientInfo(Map<String, String> fields) {
         return this.regEditController.validateFields(fields);
+    }
+
+    public List<String> validateVisitInfo(Map<String, String> fields) {
+        fields.put("nurseId", String.valueOf(getLoggedInUserId()));
+        return this.visitController.validateVisitFields(fields);
     }
 
     /**
@@ -102,6 +102,14 @@ public class ControllerManager {
      */
     public String getLoggedInUserName() {
         return this.loginController.getLoggedInUserName();
+    }
+
+    /**
+     * Gets the user ID
+     * @return the id
+     */
+    public int getLoggedInUserId() {
+        return this.loginController.getLoggedInUser().getUserId();
     }
 
 
@@ -151,6 +159,15 @@ public class ControllerManager {
     }
 
     /**
+     * Changes the view to the patient visit view
+     * @param currentStage the current stage
+     * @param doctorId the doctor responsible for the visit
+     */
+    public void changeToVisit(Stage currentStage, int doctorId) {
+        this.sceneController.changeToVisitView(currentStage, this, doctorId);
+    }
+
+    /**
      * Execute search.
      *
      * @param firstName the first name
@@ -181,7 +198,10 @@ public class ControllerManager {
         return this.regEditController.patientRegister(patientDetails, isActive);
     }
 
-
+    public boolean enterVisitInfo(Map<String, String> visitInfo) {
+        
+        return this.visitController.submitVisitInfo(visitInfo);
+    }
 
     /**
      * Sets the displayed patient.
@@ -304,10 +324,6 @@ public class ControllerManager {
 
     }
     
-    public void changeToVisit(Stage currentStage) {
-        this.sceneController.changeToVisitView(currentStage, this);
-    }
-    
     public Map<String, Integer> getAllDoctors() {
         this.apptController.getDoctors();
         return this.apptController.getAllDoctors();
@@ -357,6 +373,14 @@ public class ControllerManager {
             return true;
         }
         return false;
+    }
+
+    public int getDoctorIdForAppt(int indexOfAppt) {
+        if (indexOfAppt < 0) {
+            return 0;
+        }
+        Appointment toCheck = this.apptController.getResults().get(indexOfAppt);
+        return toCheck.getDoctorId();
     }
     
     public void bookAppt(int doctorId, LocalDateTime dateTime, String appt_reason) {

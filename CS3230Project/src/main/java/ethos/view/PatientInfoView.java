@@ -118,7 +118,7 @@ public class PatientInfoView {
     void handleSubmit(ActionEvent event) {
         this.populateMap();
         this.resetInvalidLabels();
-        List<String> invalidInputs = this.manager.validateFields(this.patientDetails);
+        List<String> invalidInputs = this.manager.validatePatientInfo(this.patientDetails);
         if (invalidInputs.size() == 0) {
             if (this.manager.patientRegister(this.patientDetails, this.patientActiveChBox.isSelected())) {
                 this.manager.changeToMainView((Stage) this.submitButton.getScene().getWindow());

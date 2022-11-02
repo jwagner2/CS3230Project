@@ -117,7 +117,6 @@ public class AppointmentDal {
     }
 
     private Timestamp getTimestampFromDatetime(LocalDateTime dateTime) {
-
         return new java.sql.Timestamp(Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()).getTime());
     }
 }

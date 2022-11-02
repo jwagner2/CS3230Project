@@ -108,14 +108,14 @@ public class SceneController {
      *
      * @param currentStage - the current stage for the application
      */
-    public void changeToVisitView(Stage currentStage, ControllerManager manager) {
+    public void changeToVisitView(Stage currentStage, ControllerManager manager, int doctorId) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(PageType.class.getResource(PageType.VISIT.label));
             Parent parent = loader.load();
 
             VisitView visitView = loader.<VisitView>getController();
-            visitView.initialize(manager);
+            visitView.initialize(manager, doctorId);
 
             Scene scene = new Scene(parent);
             currentStage.setTitle("ethos");

@@ -33,7 +33,7 @@
       <Separator layoutX="14.0" layoutY="513.0" prefHeight="3.0" prefWidth="570.0" />
       <Button fx:id="logoutButton" layoutX="508.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleLogout" text="Log Out" />
       <ComboBox fx:id="doctorComboBox" layoutX="197.0" layoutY="469.0" prefHeight="25.0" prefWidth="125.0" />
-      <Label fx:id="bookingLabel" layoutX="248.0" layoutY="418.0" opacity="0.47" prefHeight="18.0" prefWidth="104.0" text="Book Appointment" />
+      <Label fx:id="bookingLabel" layoutX="248.0" layoutY="418.0" opacity="0.47" prefHeight="18.0" prefWidth="150.0" text="Book Appointment" />
       <ComboBox fx:id="timeComboBox" layoutX="352.0" layoutY="469.0" prefHeight="25.0" prefWidth="125.0" />
       <Label layoutX="349.0" layoutY="445.0" text="Select Time:" />
       <Button fx:id="bookApptButton" disable="true" layoutX="224.0" layoutY="526.0" mnemonicParsing="false" onAction="#handleBook" prefHeight="59.0" prefWidth="149.0" text="Book Appointment" />

@@ -10,6 +10,7 @@ public class User {
 	private String userName;
 	private String password;
 	private UserRole currentRole;
+	private int userId;
 	
 	/**
 	 * Instantiates a new user.
@@ -20,13 +21,14 @@ public class User {
 	 * @param password the password
 	 * @param role the current user role (admin or nurse)
 	 */
-	public User(String fname, String lname, String userName, String password, UserRole role) {
+	public User(String fname, String lname, String userName, String password, UserRole role, int userId) {
 		
 		this.firstName = fname;
 		this.lastName = lname;
 		this.userName = userName;
 		this.password = password;
 		this.currentRole = role;
+		this.userId = userId;
 	}
 
 	/**
@@ -108,4 +110,12 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}	
 }
