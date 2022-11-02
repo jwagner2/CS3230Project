@@ -374,6 +374,16 @@ public class ControllerManager {
         }
         return false;
     }
+    public boolean isAppointmentTodayWithin15(int indexOfAppt) {
+        if (indexOfAppt < 0) {
+            return false;
+        }
+        if (this.isDateToday(indexOfAppt) && this.apptController.compareDates(indexOfAppt)) {
+            return true;
+        }
+        return false;
+        
+    }
 
     public int getDoctorIdForAppt(int indexOfAppt) {
         if (indexOfAppt < 0) {
@@ -382,7 +392,7 @@ public class ControllerManager {
         Appointment toCheck = this.apptController.getResults().get(indexOfAppt);
         return toCheck.getDoctorId();
     }
-    
+
     public void bookAppt(int doctorId, LocalDateTime dateTime, String appt_reason) {
         Appointment toBook = new Appointment(doctorId, this.getSelectedPatientId(), dateTime, appt_reason);
         this.apptController.bookAppt(toBook);
@@ -390,6 +400,15 @@ public class ControllerManager {
 
     public void editAppt(int selectedIndex, LocalDate newDate, String doctorName, LocalTime newTime) {
        this.apptController.editAppt(selectedIndex, newDate, doctorName, newTime);
+    }
+    
+    public List<String> validateVitals(Map<String, String> fields) {
+        return this.visitController.validateFields(fields);
+    }
+
+    public boolean endVisit(Map<String, String> visitDetails) {
+        return this.visitController.endVisit(visitDetails);
+        
     }
 
 }
