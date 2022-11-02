@@ -198,22 +198,22 @@ public class VisitView {
         for (String result : invalidInputs) {
             if (result.equals("systolic")) {
                 this.systolicField.setStyle("-fx-text-box-border:red");
-                this.invalidSysLabel.setVisible(false);
+                this.invalidSysLabel.setVisible(true);
             } else if (result.equals("diastolic")) {
                 this.diastolicField.setStyle("-fx-text-box-border:red");
-                this.invalidDiaLabel.setVisible(false);
+                this.invalidDiaLabel.setVisible(true);
             } else if (result.equals("weight")) {
                 this.weightField.setStyle("-fx-text-box-border:red");
-                this.invalidWeightLabel.setVisible(false);
+                this.invalidWeightLabel.setVisible(true);
             } else if (result.equals("temperature")) {
                 this.tempField.setStyle("-fx-text-box-border:red");
-                this.invalidTempLabel.setVisible(false);
+                this.invalidTempLabel.setVisible(true);
             } else if (result.equals("height")) {
                 this.heightField.setStyle("-fx-text-box-border:red");
-                this.invalidHeightLabel.setVisible(false);
+                this.invalidHeightLabel.setVisible(true);
             } else if (result.equals("pulse")) {
                 this.pulseField.setStyle("-fx-text-box-border:red");
-                this.invalidPulseLabel.setVisible(false);
+                this.invalidPulseLabel.setVisible(true);
             }
         }
     }
