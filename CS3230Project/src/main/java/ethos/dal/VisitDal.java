@@ -1,7 +1,6 @@
 package main.java.ethos.dal;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;

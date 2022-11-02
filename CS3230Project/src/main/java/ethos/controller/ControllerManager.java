@@ -401,14 +401,4 @@ public class ControllerManager {
     public void editAppt(int selectedIndex, LocalDate newDate, String doctorName, LocalTime newTime) {
        this.apptController.editAppt(selectedIndex, newDate, doctorName, newTime);
     }
-    
-    public List<String> validateVitals(Map<String, String> fields) {
-        return this.visitController.validateFields(fields);
-    }
-
-    public boolean endVisit(Map<String, String> visitDetails) {
-        return this.visitController.endVisit(visitDetails);
-        
-    }
-
 }
