@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -16,6 +17,8 @@ public class VisitDal {
 
     private String submitVisitInfoStatement = "insert into visit (doctor_id, appt_datetime, nurse_id, systolic_pressure, diastolic_pressure, body_temp_degreesF, height_inches, weight_pounds, pulse_bpm, symptoms, diagnosis)"
             + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    
+    private String getVisitStatement = "select * from visit where doctor_id = ? and appt_datetime = ? ";
 
     //TODO: Implement update diagnosis (not required for Iteration 3)
     // private String updateDiagnosisStatement = "update visit set diagnosis = ? where visit_id = ?";
@@ -28,6 +31,31 @@ public class VisitDal {
             int rs = stmt.executeUpdate();
             System.out.println("visit -- rows affected = " + rs);
         }
+    }
+    
+    public Visit getVisitInfo(int doctorId, Date apptDate) {
+        try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
+                PreparedStatement stmt = connection.prepareStatement(getVisitStatement)) {
+            
+            stmt.setInt(1, doctorId);
+            stmt.setDate(2, apptDate);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                
+                int doctorId = rs.getInt("doctor_id")
+                Date apptDateTime = rs.getDate("appt_datetime");
+                private int nurseId;
+                private int systolicPressure;
+                private int diastolicPressure;
+                private double bodyTempDegreesF;
+                private int heightInches;
+                private double bodyWeightLbs;
+                private int pulseBpm;
+                private String symptoms;
+                private String diagnosis;
+            }
+        }
+            return null;
     }
 
     private void setStatement(Visit visit, PreparedStatement stmt) throws SQLException {
