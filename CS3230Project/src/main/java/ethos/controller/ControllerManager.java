@@ -153,9 +153,7 @@ public class ControllerManager {
      * @param currentStage - the current stage for the application
      */
     public void changeToPatientInfoView(Stage currentStage) {
-
         this.sceneController.changeToPatientInfoView(currentStage, this);
-
     }
 
     /**
@@ -165,6 +163,10 @@ public class ControllerManager {
      */
     public void changeToVisit(Stage currentStage, int doctorId) {
         this.sceneController.changeToVisitView(currentStage, this, doctorId);
+    }
+
+    public void changeToPastVisitsView(Stage currentStage) {
+        this.sceneController.changeToPastVisitsView(currentStage, this);
     }
 
     /**
@@ -332,11 +334,18 @@ public class ControllerManager {
     public List<Map<String, Object>> getPatientAppts(){
        return this.apptController.getPatientAppts(this.getSelectedPatientId());
     }
+
+    /**
+     * Gets a list of past visits for the currently selected patient.
+     * @return a list of visits.
+     */
+    public List<Map<String, Object>> getPatientVisits() {
+        return this.visitController.getPatientVisits(this.getSelectedPatientId());
+    }
     
     public List<Map<String,Object>> buildApptResultsForTable() {
         return this.apptController.buildResultsForTable();
-    }
-    
+    }    
 
     /**
      * Populates the states ComboBox for patient register/edit.
@@ -400,5 +409,17 @@ public class ControllerManager {
 
     public void editAppt(int selectedIndex, LocalDate newDate, String doctorName, LocalTime newTime) {
        this.apptController.editAppt(selectedIndex, newDate, doctorName, newTime);
+    }
+
+    public String getDoctorName(int doctorId) {
+        Map<String, Integer> docs = this.getAllDoctors();
+        Object[] names = docs.keySet().toArray();
+        String match = "";
+        for (int i = 0; i < names.length; i++) {
+            if (docs.get((String) names[i]).equals(doctorId)) {
+                match = (String) names[i];
+            }
+        }
+        return match;
     }
 }

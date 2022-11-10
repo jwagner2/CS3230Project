@@ -65,6 +65,9 @@ public class MainView {
     private Button bookAppointment;
 
     @FXML
+    private Button viewPastVisitsButton;
+
+    @FXML
     void handleLogout(ActionEvent event) {
         this.manager.changeToLogin((Stage) this.logoutButton.getScene().getWindow());
     }
@@ -109,8 +112,12 @@ public class MainView {
 
     @FXML
     void handleViewInfo(ActionEvent event) {
-        
         this.manager.changeToPatientInfoView((Stage) this.registerPatientButton.getScene().getWindow());
+    }
+
+    @FXML
+    void handleViewPastVisits(ActionEvent event) {
+        this.manager.changeToPastVisitsView((Stage) this.viewPastVisitsButton.getScene().getWindow());
     }
 
     /**
@@ -180,6 +187,7 @@ public class MainView {
                     if (newValue != null) {
                         this.viewPatientButton.setDisable(false);
                         this.bookAppointment.setDisable(false);
+                        this.viewPastVisitsButton.setDisable(false);
                         this.manager.setDisplayedPatient(this.patientDataTableView.getSelectionModel().getSelectedIndex());
                     } else {
                         this.searchButton.setDisable(true);

@@ -3,6 +3,7 @@ package main.java.ethos.controller;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -11,6 +12,8 @@ import main.java.ethos.dal.VisitDal;
 import main.java.ethos.model.Visit;
 
 public class VisitController {
+
+    private List<Visit> searchResults;
 
     public boolean submitVisitInfo(Map<String, String> visitInfo) {
         VisitDal vDal = new VisitDal();
@@ -78,5 +81,46 @@ public class VisitController {
         }       
 
         return invalidFields;
+    }
+
+    public List<Map<String, Object>> getPatientVisits(int selectedPatientId) {
+        this.searchResults = new ArrayList<Visit>();
+        VisitDal visitDal = new VisitDal();
+        try {
+            this.searchResults = visitDal.getVisitsForPatient(selectedPatientId);
+            System.out.println("Visits: " + this.searchResults.size());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return this.buildResultsForPastVisitsTable();
+    }
+
+    /**
+     * Builds the results for table.
+     *
+     * @return the list
+     */
+    public List<Map<String, Object>> buildResultsForPastVisitsTable() {
+        if (this.searchResults == null) {
+            return null;
+        }
+        List<Map<String, Object>> visits = new ArrayList<Map<String, Object>>();
+        String doctorName = "";
+        try {
+            doctorName = new VisitDal().getDoctorForVisit(this.searchResults.get(0).getDoctorId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        for (Visit currVisit : this.searchResults) {
+            Map<String, Object> visitInfo = new HashMap<String, Object>();
+            visitInfo.put("doctor", doctorName);
+            visitInfo.put("date", currVisit.getApptDateTime().toLocalDate());
+            visitInfo.put("time", currVisit.getApptDateTime().toLocalTime());
+            visits.add(visitInfo);
+        }
+
+        return visits;
     }
 }

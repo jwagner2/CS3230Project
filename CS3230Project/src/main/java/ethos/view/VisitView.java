@@ -1,5 +1,6 @@
 package main.java.ethos.view;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,12 +23,16 @@ public class VisitView {
     private List<TextInputControl> editableControls = new ArrayList<TextInputControl>();
     private Map<String, String> visitDetails = new HashMap<String, String>();
     private int doctorId;
+    private LocalDateTime appDateTime;
 
     @FXML
     private Button backButton;
 
     @FXML
     private Label currentPatientField;
+    
+    @FXML
+    private Label drNameLabel;
 
     @FXML
     private Label currentUserField;
@@ -131,7 +136,9 @@ public class VisitView {
     public void initialize(ControllerManager manager, int doctorId) {
         this.manager = manager;
         this.doctorId = doctorId;
+        //TODO: this.appDateTime = appDateTime;
         this.currentPatientField.textProperty().set("Patient: " + manager.getPatientFirstName() + " " + manager.getPatientLastName());
+        this.drNameLabel.textProperty().set("Attending Physician: " + manager.getDoctorName(doctorId));
         this.currentUserField.textProperty().set(manager.getLoggedInName() + " (" + manager.getLoggedInUserName() + ")");
         this.invalidDataLabel.disableProperty().set(true);
         this.addEditableControls();

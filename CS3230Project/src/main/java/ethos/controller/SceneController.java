@@ -12,6 +12,7 @@ import main.java.ethos.view.ApptView;
 import main.java.ethos.view.LoginView;
 import main.java.ethos.view.MainView;
 import main.java.ethos.view.PatientInfoView;
+import main.java.ethos.view.PriorVisitView;
 import main.java.ethos.view.VisitView;
 
 public class SceneController {
@@ -131,7 +132,6 @@ public class SceneController {
 
     }
 
-
     /**
      * Changes the view to the patient info view.
      *
@@ -159,6 +159,28 @@ public class SceneController {
             ioerr.printStackTrace();
         }
 
+    }
+
+    public void changeToPastVisitsView(Stage currentStage, ControllerManager manager) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PageType.class.getResource(PageType.PAST_VISIT.label));
+            Parent parent = loader.load();
+
+            PriorVisitView priorVisitView = loader.<PriorVisitView>getController();
+            priorVisitView.initialize(manager);
+
+            Scene scene = new Scene(parent);
+            currentStage.setTitle("ethos");
+            currentStage.setScene(scene);
+            currentStage.show();
+        } catch (MalformedURLException murlerr) {
+            System.err.println("Bad FXML URL");
+            murlerr.printStackTrace();
+        } catch (IOException ioerr) {
+            System.err.println("Bad file");
+            ioerr.printStackTrace();
+        }
     }
 
 }

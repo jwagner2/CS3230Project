@@ -5,10 +5,12 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 import main.java.ethos.model.Visit;
 
@@ -17,8 +19,30 @@ public class VisitDal {
     private String submitVisitInfoStatement = "insert into visit (doctor_id, appt_datetime, nurse_id, systolic_pressure, diastolic_pressure, body_temp_degreesF, height_inches, weight_pounds, pulse_bpm, symptoms, diagnosis)"
             + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
+    private String getVisitsQuery = "select * from appointment a join visit v on a.doctor_id = v.doctor_id and a.appt_datetime = v.appt_datetime"
+            + "where a.patient_id = ? and v.appt_datetime < NOW()";
+
+    private String getDoctorById = "select fname, lname from doctor d join person p on d.pid = p.pid where d.doctor_id = ?";
+    
     //TODO: Implement update diagnosis (not required for Iteration 3)
     // private String updateDiagnosisStatement = "update visit set diagnosis = ? where visit_id = ?";
+
+
+    public String getDoctorForVisit(int doctorId) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
+                PreparedStatement stmt = connection.prepareStatement(getDoctorById)) {
+
+            stmt.setInt(1, doctorId);
+            ResultSet rs = stmt.executeQuery();
+            String doctorName = "";
+            while (rs.next()) {
+                String fname = rs.getString("fname");
+                String lname = rs.getString("lname");
+                doctorName = fname + " " + lname;
+            }
+            return doctorName;
+        }
+    }
 
     public void enterVisitInfo(Visit visit) throws SQLException {
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
@@ -28,6 +52,29 @@ public class VisitDal {
             int rs = stmt.executeUpdate();
             System.out.println("visit -- rows affected = " + rs);
         }
+    }
+
+    public List<Visit> getVisitsForPatient(int selectedPatientId) throws SQLException{
+
+        // try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
+        //         PreparedStatement stmt = connection.prepareStatement(patientApptsQuery)) {
+
+        //     stmt.setInt(1, patientID);
+        //     ResultSet rs = stmt.executeQuery();
+        //     List<Appointment> appts = new ArrayList<Appointment>();
+        //     while (rs.next()) {
+
+        //         String firstName = rs.getString("fname");
+        //         String lastName = rs.getString("lname");
+        //         int doctorId = rs.getInt("doctor_id");
+        //         LocalDateTime apptDatetime = rs.getTimestamp("appt_datetime").toLocalDateTime();
+        //         String apptReason = rs.getString("appt_reason");
+        //         Appointment appt = new Appointment(firstName, lastName, doctorId, patientID, apptDatetime, apptReason);
+        //         appts.add(appt);
+        //     }
+        //     return appts;
+        // }
+        return null;
     }
 
     private void setStatement(Visit visit, PreparedStatement stmt) throws SQLException {

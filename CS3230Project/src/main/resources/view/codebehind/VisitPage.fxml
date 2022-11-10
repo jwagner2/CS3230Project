@@ -7,12 +7,16 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ethos.view.VisitView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ethos.view.VisitView">
    <children>
       <TextField fx:id="systolicField" layoutX="74.0" layoutY="62.0" prefHeight="26.0" prefWidth="46.0" />
       <TextField fx:id="diastolicField" layoutX="74.0" layoutY="106.0" prefHeight="26.0" prefWidth="46.0" />
       <TextField fx:id="weightField" layoutX="74.0" layoutY="149.0" prefHeight="26.0" prefWidth="46.0" />
       <TextField fx:id="tempField" layoutX="74.0" layoutY="191.0" prefHeight="26.0" prefWidth="46.0" />
+      <TextField fx:id="heightField" layoutX="74.0" layoutY="240.0" prefHeight="26.0" prefWidth="46.0" />
+      <TextField fx:id="pulseField" layoutX="74.0" layoutY="284.0" prefHeight="26.0" prefWidth="46.0" />
+      <TextArea fx:id="symptomsTextArea" layoutX="160.0" layoutY="55.0" prefHeight="135.0" prefWidth="246.0" />
+      <TextArea fx:id="diagnosisTextArea" layoutX="160.0" layoutY="217.0" prefHeight="91.0" prefWidth="246.0" />
       <Button fx:id="endVisit" layoutX="223.0" layoutY="368.0" mnemonicParsing="false" onAction="#handleEnd" prefHeight="25.0" prefWidth="149.0" text="End Visit" />
       <Label layoutX="49.0" layoutY="40.0" opacity="0.5" prefHeight="18.0" prefWidth="74.0" text="Systolic" />
       <Label layoutX="48.0" layoutY="88.0" opacity="0.5" text="Diastolic" />
@@ -20,12 +24,10 @@
       <Label layoutX="52.0" layoutY="174.0" opacity="0.5" text="Temperature" />
       <Label layoutX="57.0" layoutY="267.0" opacity="0.5" text="Pulse" />
       <Label layoutX="160.0" layoutY="40.0" opacity="0.5" text="Symptoms" />
-      <Label fx:id="currentUserField" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="443.0" layoutY="5.0" opacity="0.6" prefHeight="17.0" prefWidth="150.0" text="user (uname)" textAlignment="RIGHT" />
+      <Label fx:id="currentUserField" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="428.0" layoutY="5.0" opacity="0.6" prefHeight="17.0" prefWidth="165.0" text="user (uname)" textAlignment="RIGHT" />
       <Label fx:id="invalidDataLabel" layoutX="188.0" layoutY="343.0" text="Invalid data entered (Inputs with * invalid)" textFill="RED" visible="false" />
       <Button fx:id="backButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleGoBack" text="&lt;- Back" />
-      <Label fx:id="currentPatientField" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="246.0" layoutY="17.0" opacity="0.6" prefHeight="18.0" prefWidth="150.0" text="Patient Name" />
-      <TextField fx:id="pulseField" layoutX="74.0" layoutY="284.0" prefHeight="26.0" prefWidth="46.0" />
-      <TextArea fx:id="symptomsTextArea" layoutX="160.0" layoutY="55.0" prefHeight="135.0" prefWidth="246.0" />
+      <Label fx:id="currentPatientField" alignment="CENTER" contentDisplay="CENTER" layoutX="160.0" layoutY="27.0" opacity="0.6" prefHeight="18.0" prefWidth="246.0" text="Patient Name" />
       <Label layoutX="428.0" layoutY="39.0" opacity="0.5" prefHeight="18.0" prefWidth="74.0" text="Lab Selection" />
       <ListView fx:id="labsToOrderBox" layoutX="428.0" layoutY="56.0" prefHeight="135.0" prefWidth="149.0" />
       <Button fx:id="viewResults" disable="true" layoutX="427.0" layoutY="284.0" mnemonicParsing="false" onAction="#handleViewResults" prefHeight="25.0" prefWidth="149.0" text="Lab Results" />
@@ -36,11 +38,10 @@
       <Label fx:id="invalidTempLabel" layoutX="144.0" layoutY="166.0" text="*" textFill="#e61c1c" visible="false" />
       <Label fx:id="invalidPulseLabel" layoutX="105.0" layoutY="267.0" text="*" textFill="#e61c1c" visible="false" />
       <Label fx:id="invalidSympLabel" layoutX="220.0" layoutY="39.0" text="*" textFill="#e61c1c" visible="false" />
-      <TextField fx:id="heightField" layoutX="74.0" layoutY="240.0" prefHeight="26.0" prefWidth="46.0" />
       <Label fx:id="heightLabel" layoutX="50.0" layoutY="221.0" opacity="0.5" text="Height (in)" />
       <Label fx:id="invalidHeightLabel" layoutX="113.0" layoutY="221.0" text="*" textFill="#e61c1c" visible="false" />
-      <TextArea fx:id="diagnosisTextArea" layoutX="160.0" layoutY="217.0" prefHeight="91.0" prefWidth="246.0" />
       <Label layoutX="160.0" layoutY="195.0" opacity="0.5" text="Diagnosis" />
       <Label fx:id="invalidDiagLabel" layoutX="217.0" layoutY="195.0" text="*" textFill="#e61c1c" visible="false" />
+      <Label fx:id="drNameLabel" alignment="CENTER" layoutX="160.0" layoutY="8.0" opacity="0.6" prefHeight="17.0" prefWidth="246.0" text="Doctor Name" />
    </children>
 </AnchorPane>
