@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public class Visit {
 
     private int doctorId;
+    private int visitId;
     private LocalDateTime apptDateTime;
     private int nurseId;
     private int systolicPressure;
@@ -127,5 +128,11 @@ public class Visit {
 
     public void setHeightInches(int heightInches) {
         this.heightInches = heightInches;
+    }
+    public void setVisitId(int visitId) {
+        this.visitId = visitId;
+    }
+    public int getVisitId() {
+        return this.visitId;
     }
 }
