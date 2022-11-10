@@ -17,11 +17,12 @@ public class VisitDal {
 
     private String submitVisitInfoStatement = "insert into visit (doctor_id, appt_datetime, nurse_id, systolic_pressure, diastolic_pressure, body_temp_degreesF, height_inches, weight_pounds, pulse_bpm, symptoms, diagnosis)"
             + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-    
+
     private String getVisitStatement = "select * from visit where doctor_id = ? and appt_datetime = ? ";
 
-    //TODO: Implement update diagnosis (not required for Iteration 3)
-    // private String updateDiagnosisStatement = "update visit set diagnosis = ? where visit_id = ?";
+    // TODO: Implement update diagnosis (not required for Iteration 3)
+    // private String updateDiagnosisStatement = "update visit set diagnosis = ?
+    // where visit_id = ?";
 
     public void enterVisitInfo(Visit visit) throws SQLException {
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
@@ -32,7 +33,7 @@ public class VisitDal {
             System.out.println("visit -- rows affected = " + rs);
         }
     }
-    
+
     public Visit getVisitInfo(int doctorId, Date apptDate) {
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
                 PreparedStatement stmt = connection.prepareStatement(getVisitStatement)) {
@@ -42,18 +43,19 @@ public class VisitDal {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 
-                int doctorId = rs.getInt("doctor_id")
+                int doctorId = rs.getInt("doctor_id");
                 Date apptDateTime = rs.getDate("appt_datetime");
-                private int nurseId;
-                private int systolicPressure;
-                private int diastolicPressure;
-                private double bodyTempDegreesF;
-                private int heightInches;
-                private double bodyWeightLbs;
-                private int pulseBpm;
-                private String symptoms;
-                private String diagnosis;
+                int nurseId = rs.getInt("nurse_id");
+                int systolicPressure = rs.getInt("systolic_pressure");
+                int diastolicPressure = rs.getInt("diastolic_pressure");
+                double bodyTempDegreesF = rs.getDouble("body_temp_degreesF");
+                int heightInches = rs.getInt("height_inches");
+                double bodyWeightLbs = rs.getDouble("weight_pounds");
+                int pulseBpm = rs.getInt("pulse_bpm");
+                String symptoms = rs.getString("symptoms");
+                String diagnosis = rs.getString("diagnosis");
             }
+          //  Visit current = new Visit(doctorId, apptDateTime, nurseId, systolicPressure, diastolicPressure, bodyTempDegreesF, heightInches, bodyWeightLbs, pulseBpm, symptoms, diagnosis);
         }
             return null;
     }
