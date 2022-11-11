@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import main.java.ethos.dal.LabDal;
 import main.java.ethos.dal.VisitDal;
+import main.java.ethos.model.LabTest;
 import main.java.ethos.model.Visit;
 
 public class VisitController {
 
     private List<Visit> searchResults;
+    private List<LabTest> currentLabs;
+    private List<LabTest> testsToOrder;
 
     public boolean submitVisitInfo(Map<String, String> visitInfo) {
         VisitDal vDal = new VisitDal();
@@ -47,7 +51,7 @@ public class VisitController {
         Visit visit = new Visit(sysPressure, diasPressure, weight, height, temp, pulse, symptoms, diagnosis, doctorId, nurseId, apptTime, isFinal);
         return visit;
     }
-
+    
     public List<String> validateVisitFields(Map<String, String> fields) {
         List<String> invalidFields = new ArrayList<String>();
         if (fields.get("systolic") == null || fields.get("systolic").isEmpty()
@@ -89,7 +93,6 @@ public class VisitController {
         VisitDal visitDal = new VisitDal();
         try {
             this.searchResults = visitDal.getVisitsForPatient(selectedPatientId);
-            System.out.println("Visits: " + this.searchResults.size());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -135,10 +138,11 @@ public class VisitController {
             visitInfo = new HashMap<String, String>();
             visitInfo.put("systolic", String.valueOf(visit.getSystolicPressure()));
             visitInfo.put("diastolic", String.valueOf(visit.getDiastolicPressure()));
-            visitInfo.put("weight", String.valueOf(visit.getBodyWeightLbs()));
+            visitInfo.put("weight", Double.toString(visit.getBodyWeightLbs()));
+            System.out.println("visit Con " + Double.toString(visit.getBodyWeightLbs()));
             visitInfo.put("temperature", String.valueOf(visit.getBodyTempDegreesF()));
             visitInfo.put("height", String.valueOf(visit.getHeightInches()));
-            visitInfo.put("pulse", String.valueOf(visit.getPulseBpm()));
+            visitInfo.put("pulse", Integer.toString(visit.getPulseBpm()));
             visitInfo.put("symptoms", visit.getSymptoms());
             visitInfo.put("diagnosis", visit.getDiagnosis());
             visitInfo.put("doctorId", String.valueOf(visit.getDoctorId()));
@@ -147,6 +151,9 @@ public class VisitController {
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         }
+        System.out.println("visit Con " + visitInfo.get("pulse"));
+        System.out.println("visit Con " + visitInfo.get("weight"));
+        this.setLabsAvailable();
         return visitInfo;
     }
 
@@ -159,5 +166,27 @@ public class VisitController {
             System.out.println("Error updating diagnosis --");
             e.printStackTrace();
         }
+    }
+    
+    private void setLabsAvailable() {
+        LabDal labDal = new LabDal();
+        try {
+            this.currentLabs = labDal.getCurrentLabs();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+   
+    
+    public List<Map<String, Object>>getCurrentLabs() {
+        List<Map<String, Object>> currentLabs = new ArrayList<Map<String, Object>>();
+        for (LabTest current : this.currentLabs) {
+            Map<String, Object> lab = new HashMap<String, Object>();
+            lab.put("testId", current.getTestId());
+            lab.put("testName", current.getTestName());
+            lab.put("testDescriptions", current.getDescription());
+            currentLabs.add(lab);
+        }
+        return currentLabs;
     }
 }

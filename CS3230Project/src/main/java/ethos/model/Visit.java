@@ -53,6 +53,7 @@ public class Visit {
     }
 
     public double getBodyWeightLbs() {
+        System.out.println(this.bodyWeightLbs);
         return bodyWeightLbs;
     }
 
@@ -61,7 +62,7 @@ public class Visit {
     }
 
     public double getBodyTempDegreesF() {
-        return bodyTempDegreesF;
+        return this.bodyTempDegreesF;
     }
 
     public void setBodyTempDegreesF(double bodyTempDegreesF) {
@@ -69,7 +70,8 @@ public class Visit {
     }
 
     public int getPulseBpm() {
-        return pulseBpm;
+        System.out.println(this.pulseBpm);
+        return this.pulseBpm;
     }
 
     public void setPulseBpm(int pulseBpm) {

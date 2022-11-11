@@ -1,5 +1,6 @@
 package main.java.ethos.view;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +10,9 @@ import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -19,6 +23,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
@@ -30,6 +35,7 @@ public class VisitView {
     private int doctorId;
     private LocalDateTime appDateTime;
     private boolean readOnly;
+
 
     @FXML
     private Button backButton;
@@ -149,7 +155,24 @@ public class VisitView {
 
     @FXML
     void handleOrder(ActionEvent event) {
-        // lab ordering to come later
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LabOrderDialog.fxml"));
+            Parent parent;
+            try {
+                parent = fxmlLoader.load();
+                LabOrderDialog order = fxmlLoader.<LabOrderDialog>getController();
+                order.initialize(this.manager);
+                
+                Scene scene = new Scene(parent, 300, 200);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(scene);
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        
     }
 
     @FXML
@@ -162,13 +185,13 @@ public class VisitView {
         this.doctorId = doctorId;
         this.appDateTime = appDateTime;
         this.readOnly = false;
-        this.currentPatientField.textProperty().set("Patient: " + manager.getPatientFirstName() + " " + manager.getPatientLastName());
-        this.drNameLabel.textProperty().set("Attending Physician: " + manager.getDoctorName(doctorId));
-        this.currentUserField.textProperty().set(manager.getLoggedInName() + " (" + manager.getLoggedInUserName() + ")");
+        this.currentPatientField.textProperty().set("Patient: " + this.manager.getPatientFirstName() + " " + this.manager.getPatientLastName());
+        this.drNameLabel.textProperty().set("Attending Physician: " + this.manager.getDoctorName(doctorId));
+        this.currentUserField.textProperty().set(this.manager.getLoggedInName() + " (" + this.manager.getLoggedInUserName() + ")");
         this.invalidDataLabel.disableProperty().set(true);
         this.addEditableControls();
         this.enableControls();
-        if (manager.visitExists(doctorId, appDateTime)) {
+        if (this.manager.visitExists(doctorId, appDateTime)) {
             this.populateFields();
             this.readOnly = true;
             this.disableInputs();
@@ -261,10 +284,10 @@ public class VisitView {
         Map<String, String> visitInfo = this.manager.getVisitInfo(this.doctorId, this.appDateTime);
         this.systolicField.textProperty().set(visitInfo.get("systolic"));
         this.diastolicField.textProperty().set(visitInfo.get("diastolic"));
-        this.weightField.textProperty().set(visitInfo.get(visitInfo.get("weight")));
+        this.weightField.textProperty().set(visitInfo.get("weight"));
         this.tempField.textProperty().set(visitInfo.get("temperature"));
         this.heightField.textProperty().set(visitInfo.get("height"));
-        this.pulseField.textProperty().set(visitInfo.get(visitInfo.get("pulse")));
+        this.pulseField.textProperty().set(visitInfo.get("pulse"));
         this.symptomsTextArea.textProperty().set(visitInfo.get("symptoms"));
         this.diagnosisTextArea.textProperty().set(visitInfo.get("diagnosis"));
         this.finalDiagnosisChkBx.selectedProperty().set(Boolean.parseBoolean(visitInfo.get("isFinal")));

@@ -372,6 +372,10 @@ public class ControllerManager {
         return this.visitController.getPatientVisits(this.getSelectedPatientId());
     }
     
+    public Map<Integer, Object> getAvailableLabs(){
+        return this.visitController.getCurrentLabs();
+    }
+    
     public List<Map<String,Object>> buildApptResultsForTable() {
         return this.apptController.buildResultsForTable();
     }    

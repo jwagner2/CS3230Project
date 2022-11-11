@@ -3,10 +3,15 @@ package main.java.ethos.model;
 public class LabTest {
     private String testName;
     private int testId;
+    private String testDescription;
+    private String results;
+    private boolean isAbnormal;
+    
 
-    public LabTest(int testId, String testName) {
+    public LabTest(int testId, String testName, String testDescription) {
         this.testId = testId;
         this.testName = testName;
+        this.testDescription = testDescription;
     }
 
     public String getTestName() {
@@ -23,6 +28,26 @@ public class LabTest {
 
     public void setTestId(int testId) {
         this.testId = testId;
+    }
+    
+    public String getDescription() {
+        return this.testDescription;
+    }
+    
+    public String getResults() {
+        return this.results;
+    }
+    
+    public void setResults(String results) {
+        this.results = results;
+    }
+    
+    public boolean isAbnormal() {
+        return this.isAbnormal;
+    }
+    
+    public void setIsAbnormal(boolean isAbnormal) {
+        this.isAbnormal = isAbnormal;
     }
 
 }
