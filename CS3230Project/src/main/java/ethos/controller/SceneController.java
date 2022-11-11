@@ -2,6 +2,8 @@ package main.java.ethos.controller;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -91,7 +93,7 @@ public class SceneController {
             apptView.initialize(manager);
 
             Scene scene = new Scene(parent);
-            currentStage.setTitle("ethos");
+            currentStage.setTitle("ethos -- Scheduled Appointments");
             currentStage.setScene(scene);
             currentStage.show();
         } catch (MalformedURLException murlerr) {
@@ -109,17 +111,17 @@ public class SceneController {
      *
      * @param currentStage - the current stage for the application
      */
-    public void changeToVisitView(Stage currentStage, ControllerManager manager, int doctorId) {
+    public void changeToVisitView(Stage currentStage, ControllerManager manager, int doctorId, LocalDateTime apptDateTime) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(PageType.class.getResource(PageType.VISIT.label));
             Parent parent = loader.load();
 
             VisitView visitView = loader.<VisitView>getController();
-            visitView.initialize(manager, doctorId);
-
+            visitView.initialize(manager, doctorId, apptDateTime);
+            
             Scene scene = new Scene(parent);
-            currentStage.setTitle("ethos");
+            currentStage.setTitle("ethos -- Visit");
             currentStage.setScene(scene);
             currentStage.show();
         } catch (MalformedURLException murlerr) {
@@ -148,7 +150,7 @@ public class SceneController {
             infoView.initialize(manager);
 
             Scene scene = new Scene(parent);
-            currentStage.setTitle("ethos");
+            currentStage.setTitle("ethos -- Patient Info");
             currentStage.setScene(scene);
             currentStage.show();
         } catch (MalformedURLException murlerr) {
@@ -171,7 +173,7 @@ public class SceneController {
             priorVisitView.initialize(manager);
 
             Scene scene = new Scene(parent);
-            currentStage.setTitle("ethos");
+            currentStage.setTitle("ethos -- Prior Visit History");
             currentStage.setScene(scene);
             currentStage.show();
         } catch (MalformedURLException murlerr) {

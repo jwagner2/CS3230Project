@@ -9,12 +9,14 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -96,8 +98,11 @@ public class ApptView {
         inputdialog.setContentText("Reason: ");
         inputdialog.setHeaderText("Enter Reason");
         inputdialog.setWidth(500);
-        inputdialog.showAndWait();
-        reason.setText(inputdialog.getEditor().getText());
+        Optional<String> result = inputdialog.showAndWait();
+        if (!result.isPresent()) {
+            return;
+        }
+        reason.setText(result.get());
         this.manager.bookAppt(this.doctors.get(this.doctorComboBox.getSelectionModel().getSelectedItem()), apptTime,
                 reason.getText());
         this.timeComboBox.getSelectionModel().clearSelection();
@@ -126,7 +131,10 @@ public class ApptView {
     @FXML
     void handleStartVisit(ActionEvent event) {
         int doctorId = this.manager.getDoctorIdForAppt(this.apptDataTableView.getSelectionModel().getSelectedIndex());
-        this.manager.changeToVisit((Stage) this.startVisitButton.getScene().getWindow(), doctorId);
+        LocalDate apptDate = (LocalDate) this.apptDataTableView.getSelectionModel().getSelectedItem().get("date");
+        LocalTime apptTime = (LocalTime) this.apptDataTableView.getSelectionModel().getSelectedItem().get("time");
+        LocalDateTime apptDT = LocalDateTime.of(apptDate, apptTime);
+        this.manager.changeToVisit((Stage) this.startVisitButton.getScene().getWindow(), doctorId, apptDT);
     }
 
     /**
@@ -168,7 +176,7 @@ public class ApptView {
         doctorColumn.setCellValueFactory(new MapValueFactory<>("doctor"));
         TableColumn<Map, String> dateColumn = new TableColumn<>("Date");
         dateColumn.setCellValueFactory(new MapValueFactory<>("date"));
-        TableColumn<Map, String> timeColumn = new TableColumn<>("time");
+        TableColumn<Map, String> timeColumn = new TableColumn<>("Time");
         timeColumn.setCellValueFactory(new MapValueFactory<>("time"));
         TableColumn<Map, String> reasonColumn = new TableColumn<>("Reason");
         reasonColumn.setCellValueFactory(new MapValueFactory<>("reason"));

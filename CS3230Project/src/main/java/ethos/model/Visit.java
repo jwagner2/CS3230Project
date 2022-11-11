@@ -16,10 +16,11 @@ public class Visit {
     private int pulseBpm;
     private String symptoms;
     private String diagnosis;
+    private boolean isFinal;
     //private List<LabTest> labsOrdered;
 
     public Visit(int systolicPressure, int diastolicPressure, double bodyWeight, int heightInches, double bodyTemp, int pulseBpm,
-            String symptoms, String diagnosis, int doctorId, int nurseId, LocalDateTime apptTime) {
+            String symptoms, String diagnosis, int doctorId, int nurseId, LocalDateTime apptTime, boolean isFinal) {
         this.systolicPressure = systolicPressure;
         this.diastolicPressure = diastolicPressure;
         this.bodyWeightLbs = bodyWeight;
@@ -32,6 +33,7 @@ public class Visit {
         this.doctorId = doctorId;
         this.nurseId = nurseId;
         this.apptDateTime = apptTime;
+        this.isFinal = isFinal;
     }
 
     public int getSystolicPressure() {
@@ -135,4 +137,14 @@ public class Visit {
     public int getVisitId() {
         return this.visitId;
     }
+
+    public boolean isFinal() {
+        return isFinal;
+    }
+
+    public void setFinal(boolean isFinal) {
+        this.isFinal = isFinal;
+    }
+
+    
 }

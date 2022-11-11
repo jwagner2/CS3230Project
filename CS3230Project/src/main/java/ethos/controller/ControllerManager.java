@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +53,34 @@ public class ControllerManager {
      */
     public boolean hasSelectedPatient() {
         return this.regEditController.hasSelectedPatient();
+    }
+
+    /**
+     * Determines if a visit has already been made for the specified doctor
+     * and datetime
+     * @param doctorId -- the doctor's id
+     * @param apptDatetime -- the datetime of the appointment
+     * @return true if the visit has taken place; false otherwise
+     */
+    public boolean visitExists(int doctorId, LocalDateTime apptDatetime) {
+        Map<String, String> stuff = this.visitController.getVisitInfo(doctorId, apptDatetime);
+        System.out.println("visit exist size: " + stuff.size());
+        return this.visitController.getVisitInfo(doctorId, apptDatetime) != null;
+    }
+
+    /**
+     * 
+     * @param doctorId
+     * @param apptDateTime
+     * @return
+     */
+    public Map<String, String> getVisitInfo(int doctorId, LocalDateTime apptDateTime) {
+        Map<String, String> visitInfo = this.visitController.getVisitInfo(doctorId, apptDateTime);
+        return visitInfo;
+    }
+
+    public void updateDiagnosis(int doctorId, LocalDateTime apptDatetime, String diagnosis, boolean isFinal) {
+        this.visitController.updateDiagnosis(doctorId, apptDatetime, diagnosis, isFinal);
     }
     
     /**
@@ -161,8 +190,8 @@ public class ControllerManager {
      * @param currentStage the current stage
      * @param doctorId the doctor responsible for the visit
      */
-    public void changeToVisit(Stage currentStage, int doctorId) {
-        this.sceneController.changeToVisitView(currentStage, this, doctorId);
+    public void changeToVisit(Stage currentStage, int doctorId, LocalDateTime appDateTime) {
+        this.sceneController.changeToVisitView(currentStage, this, doctorId, appDateTime);
     }
 
     public void changeToPastVisitsView(Stage currentStage) {
@@ -411,6 +440,12 @@ public class ControllerManager {
        this.apptController.editAppt(selectedIndex, newDate, doctorName, newTime);
     }
 
+    /**
+     * Gets the name of a doctor by looking up the doctor ID
+     * 
+     * @param doctorId the doctor ID
+     * @return the matching doctor's name
+     */
     public String getDoctorName(int doctorId) {
         Map<String, Integer> docs = this.getAllDoctors();
         Object[] names = docs.keySet().toArray();

@@ -5,15 +5,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
@@ -24,6 +29,7 @@ public class VisitView {
     private Map<String, String> visitDetails = new HashMap<String, String>();
     private int doctorId;
     private LocalDateTime appDateTime;
+    private boolean readOnly;
 
     @FXML
     private Button backButton;
@@ -104,17 +110,35 @@ public class VisitView {
     private TextField weightField;
 
     @FXML
+    private CheckBox finalDiagnosisChkBx;
+
+    @FXML
     void handleEnd(ActionEvent event) {
-        this.populateMap();
-        this.resetInvalidLabels();
-        List<String> invalidInputs = this.manager.validateVisitInfo(visitDetails);
-        if (invalidInputs.size() == 0) {
-            if (this.manager.enterVisitInfo(visitDetails)) {
-                this.manager.changeToMainView((Stage) this.endVisit.getScene().getWindow());
+        if (!this.readOnly) {
+            this.populateMap();
+            this.resetInvalidLabels();
+            List<String> invalidInputs = this.manager.validateVisitInfo(this.visitDetails);
+            if (invalidInputs.size() == 0) {
+                if (this.manager.enterVisitInfo(this.visitDetails)) {
+                    this.manager.changeToMainView((Stage) this.endVisit.getScene().getWindow());
+                }
+            } else {
+                this.invalidDataLabel.setVisible(true);
+                this.showInvalidLabels(invalidInputs);
             }
         } else {
-            this.invalidDataLabel.setVisible(true);
-            this.showInvalidLabels(invalidInputs);
+            if (this.finalDiagnosisChkBx.isSelected()) {
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Confirm final diagnosis");
+                alert.setContentText("You are about to sumbit the final diagnosis.\nThis action cannot be undone.\nDo you wish to continue?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.CANCEL) {
+                    return;
+                }
+            }
+            this.manager.updateDiagnosis(this.doctorId, this.appDateTime, this.diagnosisTextArea.getText(), this.finalDiagnosisChkBx.isSelected());
+            this.manager.changeToMainView((Stage) this.endVisit.getScene().getWindow());
         }
     }
 
@@ -133,16 +157,22 @@ public class VisitView {
         // lab result viewing to come later
     }
 
-    public void initialize(ControllerManager manager, int doctorId) {
+    public void initialize(ControllerManager manager, int doctorId, LocalDateTime appDateTime) {
         this.manager = manager;
         this.doctorId = doctorId;
-        //TODO: this.appDateTime = appDateTime;
+        this.appDateTime = appDateTime;
+        this.readOnly = false;
         this.currentPatientField.textProperty().set("Patient: " + manager.getPatientFirstName() + " " + manager.getPatientLastName());
         this.drNameLabel.textProperty().set("Attending Physician: " + manager.getDoctorName(doctorId));
         this.currentUserField.textProperty().set(manager.getLoggedInName() + " (" + manager.getLoggedInUserName() + ")");
         this.invalidDataLabel.disableProperty().set(true);
         this.addEditableControls();
         this.enableControls();
+        if (manager.visitExists(doctorId, appDateTime)) {
+            this.populateFields();
+            this.readOnly = true;
+            this.disableInputs();
+        }
     }
 
     private void enableControls() {
@@ -175,6 +205,8 @@ public class VisitView {
             this.visitDetails.put("symptoms", this.symptomsTextArea.getText());
             this.visitDetails.put("diagnosis", this.diagnosisTextArea.getText());
             this.visitDetails.put("doctorId", String.valueOf(this.doctorId));
+            this.visitDetails.put("apptDatetime", this.appDateTime.toString());
+            this.visitDetails.put("isFinal", String.valueOf(this.finalDiagnosisChkBx.isSelected()));
             // add lab order later
         } catch (Exception e) {
             this.invalidDataLabel.setVisible(true);
@@ -222,6 +254,45 @@ public class VisitView {
                 this.pulseField.setStyle("-fx-text-box-border:red");
                 this.invalidPulseLabel.setVisible(true);
             }
+        }
+    }
+
+    private void populateFields() {
+        Map<String, String> visitInfo = this.manager.getVisitInfo(this.doctorId, this.appDateTime);
+        this.systolicField.textProperty().set(visitInfo.get("systolic"));
+        this.diastolicField.textProperty().set(visitInfo.get("diastolic"));
+        this.weightField.textProperty().set(visitInfo.get(visitInfo.get("weight")));
+        this.tempField.textProperty().set(visitInfo.get("temperature"));
+        this.heightField.textProperty().set(visitInfo.get("height"));
+        this.pulseField.textProperty().set(visitInfo.get(visitInfo.get("pulse")));
+        this.symptomsTextArea.textProperty().set(visitInfo.get("symptoms"));
+        this.diagnosisTextArea.textProperty().set(visitInfo.get("diagnosis"));
+        this.finalDiagnosisChkBx.selectedProperty().set(Boolean.parseBoolean(visitInfo.get("isFinal")));
+    }
+
+    //doesn't disable diagnosis field
+    private void disableInputs() {
+        this.systolicField.disableProperty().set(true);
+        this.diastolicField.disableProperty().set(true);
+        this.weightField.disableProperty().set(true);
+        this.tempField.disableProperty().set(true);
+        this.heightField.disableProperty().set(true);
+        this.pulseField.disableProperty().set(true);
+        this.symptomsTextArea.disableProperty().set(true);
+
+        this.systolicField.setStyle("-fx-opacity:0.8");
+        this.diastolicField.setStyle("-fx-opacity:0.8");
+        this.weightField.setStyle("-fx-opacity:0.8");
+        this.tempField.setStyle("-fx-opacity:0.8");
+        this.heightField.setStyle("-fx-opacity:0.8");
+        this.pulseField.setStyle("-fx-opacity:0.8");
+        this.symptomsTextArea.setStyle("-fx-opacity:0.8");
+
+        if (this.finalDiagnosisChkBx.isSelected()) {
+            this.finalDiagnosisChkBx.disableProperty().set(true);
+            this.diagnosisTextArea.disableProperty().set(true);
+            this.diagnosisTextArea.setStyle("-fx-opacity:0.8");
+            this.endVisit.disableProperty().set(true);
         }
     }
 }

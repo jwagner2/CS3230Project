@@ -38,12 +38,13 @@ public class VisitController {
         int pulse = Integer.parseInt(visitInfo.get("pulse"));
         String symptoms = visitInfo.get("symptoms");
         String diagnosis = visitInfo.get("diagnosis");
-        LocalDateTime apptTime = LocalDateTime.now();
+        LocalDateTime apptTime = LocalDateTime.parse(visitInfo.get("apptDatetime"));
         int nurseId = Integer.parseInt(visitInfo.get("nurseId"));
         int doctorId = Integer.parseInt(visitInfo.get("doctorId"));
+        boolean isFinal = Boolean.parseBoolean(visitInfo.get("isFinal"));
 
         System.out.println("\nCreating new visit from data:" + "\n" + sysPressure + "\n" + diasPressure + "\n" + weight + "\n" + height + "\n" + temp + "\n" + pulse + "\n" + symptoms + "\n" + diagnosis + "\n" + height + "\n" + apptTime + "\n" + pulse);
-        Visit visit = new Visit(sysPressure, diasPressure, weight, height, temp, pulse, symptoms, diagnosis, doctorId, nurseId, apptTime);
+        Visit visit = new Visit(sysPressure, diasPressure, weight, height, temp, pulse, symptoms, diagnosis, doctorId, nurseId, apptTime, isFinal);
         return visit;
     }
 
@@ -96,6 +97,7 @@ public class VisitController {
         return this.buildResultsForPastVisitsTable();
     }
 
+
     /**
      * Builds the results for table.
      *
@@ -106,21 +108,56 @@ public class VisitController {
             return null;
         }
         List<Map<String, Object>> visits = new ArrayList<Map<String, Object>>();
-        String doctorName = "";
-        try {
-            doctorName = new VisitDal().getDoctorForVisit(this.searchResults.get(0).getDoctorId());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        
         for (Visit currVisit : this.searchResults) {
             Map<String, Object> visitInfo = new HashMap<String, Object>();
+            String doctorName = "";
+            try {
+                doctorName = new VisitDal().getDoctorForVisit(this.searchResults.get(0).getDoctorId());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             visitInfo.put("doctor", doctorName);
             visitInfo.put("date", currVisit.getApptDateTime().toLocalDate());
             visitInfo.put("time", currVisit.getApptDateTime().toLocalTime());
+            visitInfo.put("doctorId", currVisit.getDoctorId());
             visits.add(visitInfo);
         }
 
         return visits;
+    }
+
+    public Map<String, String> getVisitInfo(int doctorId, LocalDateTime apptDatetime) {
+        VisitDal visitDal = new VisitDal();
+        Map<String, String> visitInfo = null;
+        try {
+            Visit visit = visitDal.getVisitByDoctorAndDatetime(doctorId, apptDatetime);
+            visitInfo = new HashMap<String, String>();
+            visitInfo.put("systolic", String.valueOf(visit.getSystolicPressure()));
+            visitInfo.put("diastolic", String.valueOf(visit.getDiastolicPressure()));
+            visitInfo.put("weight", String.valueOf(visit.getBodyWeightLbs()));
+            visitInfo.put("temperature", String.valueOf(visit.getBodyTempDegreesF()));
+            visitInfo.put("height", String.valueOf(visit.getHeightInches()));
+            visitInfo.put("pulse", String.valueOf(visit.getPulseBpm()));
+            visitInfo.put("symptoms", visit.getSymptoms());
+            visitInfo.put("diagnosis", visit.getDiagnosis());
+            visitInfo.put("doctorId", String.valueOf(visit.getDoctorId()));
+            visitInfo.put("apptDatetime", visit.getApptDateTime().toString());
+            visitInfo.put("isFinal", String.valueOf(visit.isFinal()));
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+        }
+        return visitInfo;
+    }
+
+    public void updateDiagnosis(int doctorId, LocalDateTime apptDatetime, String diagnosis, boolean isFinal) {
+        VisitDal vDal = new VisitDal();
+
+        try {
+            vDal.updateDiagnosis(doctorId, apptDatetime, diagnosis, isFinal);
+        } catch (SQLException e) {
+            System.out.println("Error updating diagnosis --");
+            e.printStackTrace();
+        }
     }
 }
