@@ -30,13 +30,14 @@ public class LoginDal {
      */
     public User loginAdmin(String username, String password) throws SQLException {
 
-        String queryToUse = "select * from login l join person p on l.pid = p.pid left outer join admin a on p.pid = a.pid left outer join nurse n on p.pid = n.pid where username = binary ? and password = binary ?";
+        String queryToUse = "select * from login l join person p on l.pid = p.pid left outer join admin a on p.pid = a.pid left outer join nurse n on p.pid = n.pid where username = binary ? and password = password = binary AES_ENCRYPT(?, ?)";
         User loggedIn = null;
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
                 PreparedStatement stmt = connection.prepareStatement(queryToUse)) {
 
             stmt.setString(1, username);
             stmt.setString(2, password);
+            stmt.setString(3, "ETHOS");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 
@@ -65,13 +66,14 @@ public class LoginDal {
      */
     public User loginNurse(String username, String password) throws SQLException {
 
-        String queryToUse = "select * from login l join person p on l.pid = p.pid left outer join nurse n on p.pid = n.pid where username = binary ? and password = binary ?";
+        String queryToUse = "select * from login l join person p on l.pid = p.pid left outer join nurse n on p.pid = n.pid where username = binary ? and password = binary AES_ENCRYPT(?, ?)";
         User loggedIn = null;
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
                 PreparedStatement stmt = connection.prepareStatement(queryToUse)) {
 
             stmt.setString(1, username);
             stmt.setString(2, password);
+            stmt.setString(3, "ETHOS");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 
