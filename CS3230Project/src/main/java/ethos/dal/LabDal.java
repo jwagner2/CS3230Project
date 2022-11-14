@@ -16,6 +16,8 @@ public class LabDal {
 
     private String submitLabOrder = "insert into lab_order (test_id, visit_id, order_datetime) values (?,?,?)";
 
+    private String getLabsForVisit = "select lo.test_id, lo.results, lo.isAbnormal, lt.name, lt.description from lab_order lo, lab_test_type lt where lt.test_id = lo.test_id and visit_id = ?";
+    
     public List<LabTest> getCurrentLabs() throws SQLException {
         List<LabTest> currentLabs = new ArrayList<LabTest>();
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
@@ -45,5 +47,28 @@ public class LabDal {
                 }
         }
 
+    }
+    
+    public List<LabTest> getLabsForVisit(int visitId) throws SQLException {
+        List<LabTest> currentLabs = new ArrayList<LabTest>();
+        try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
+                PreparedStatement stmt = connection.prepareStatement(this.getLabsForVisit)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int labId = rs.getInt("test_id");
+                String testName = rs.getString("name");
+                String description = rs.getString("description");
+                LabTest newLab = new LabTest(labId, testName, description);
+                String results = rs.getString("results");
+                if (results != null) {
+                    newLab.setResults(results);
+                    newLab.setIsAbnormal(rs.getBoolean("isAbnormal"));
+                }
+                currentLabs.add(newLab);
+            }
+
+        }
+        return currentLabs;
+    }
     }
 }

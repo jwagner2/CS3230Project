@@ -19,6 +19,7 @@ public class VisitController {
     private List<Visit> searchResults;
     private List<LabTest> currentLabs;
     private List<LabTest> testsToOrder;
+    int visitId;
 
     public boolean submitVisitInfo(Map<String, String> visitInfo) {
         VisitDal vDal = new VisitDal();
@@ -50,10 +51,6 @@ public class VisitController {
         int nurseId = Integer.parseInt(visitInfo.get("nurseId"));
         int doctorId = Integer.parseInt(visitInfo.get("doctorId"));
         boolean isFinal = Boolean.parseBoolean(visitInfo.get("isFinal"));
-
-        System.out.println("\nCreating new visit from data:" + "\n" + sysPressure + "\n" + diasPressure + "\n" + weight
-                + "\n" + height + "\n" + temp + "\n" + pulse + "\n" + symptoms + "\n" + diagnosis + "\n" + height + "\n"
-                + apptTime + "\n" + pulse);
         Visit visit = new Visit(sysPressure, diasPressure, weight, height, temp, pulse, symptoms, diagnosis, doctorId,
                 nurseId, apptTime, isFinal);
         return visit;
@@ -155,6 +152,7 @@ public class VisitController {
                 visitInfo.put("doctorId", String.valueOf(visit.getDoctorId()));
                 visitInfo.put("apptDatetime", visit.getApptDateTime().toString());
                 visitInfo.put("isFinal", String.valueOf(visit.isFinal()));
+                this.visitId = visit.getVisitId();
             }
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
@@ -181,6 +179,10 @@ public class VisitController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    public int getCurrentId() {
+        return this.visitId;
     }
 
     public List<Map<String, Object>> getCurrentLabs() {

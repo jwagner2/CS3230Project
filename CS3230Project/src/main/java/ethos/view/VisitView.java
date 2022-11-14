@@ -168,7 +168,7 @@ public class VisitView {
 
     @FXML
     void handleViewResults(ActionEvent event) {
-        // lab result viewing to come later
+        this.manager.changeToLabView((Stage) this.viewResults.getScene().getWindow());
     }
 
     public void initialize(ControllerManager manager, int doctorId, LocalDateTime appDateTime) {

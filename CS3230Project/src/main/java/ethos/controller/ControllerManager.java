@@ -35,6 +35,8 @@ public class ControllerManager {
     
     private SceneController sceneController;
     
+    private LabController labController;
+    
     /**
      * Instantiates a new controller manager.
      */
@@ -165,6 +167,10 @@ public class ControllerManager {
         }
         this.sceneController.changeToLogin(currentStage, this);
 
+    }
+    
+    public void changeToLabView(Stage currentStage) {
+        this.sceneController.changeToLabView(currentStage, this);
     }
     
     public void launchLabDialog(Stage currentStage) {
@@ -473,6 +479,10 @@ public class ControllerManager {
         this.visitController.setLabOrder(selectedItems);
         
     }
+    
+    public int getSelectedVisitId() {
+        return this.visitController.getCurrentId();
+    }
     public List<String> getCurrentOrderNames() {
         List<String> names = new ArrayList<String>();
         for (LabTest currentLab : this.visitController.getCurrentOrder()) {
@@ -483,5 +493,10 @@ public class ControllerManager {
     }
     public void clearLabOrder() {
         this.visitController.clearLabOrder();
+    }
+
+    public List<Map<String, Object>> getVisitLabs() {
+        
+        return null;
     }
 }

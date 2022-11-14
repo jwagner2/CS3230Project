@@ -186,6 +186,28 @@ public class SceneController {
             ioerr.printStackTrace();
         }
     }
+    
+    public void changeToLabView(Stage currentStage, ControllerManager manager) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PageType.class.getResource(PageType.LAB.label));
+            Parent parent = loader.load();
+
+            PriorVisitView priorVisitView = loader.<PriorVisitView>getController();
+            priorVisitView.initialize(manager);
+
+            Scene scene = new Scene(parent);
+            currentStage.setTitle("ethos -- Prior Visit History");
+            currentStage.setScene(scene);
+            currentStage.show();
+        } catch (MalformedURLException murlerr) {
+            System.err.println("Bad FXML URL");
+            murlerr.printStackTrace();
+        } catch (IOException ioerr) {
+            System.err.println("Bad file");
+            ioerr.printStackTrace();
+        }
+    }
 
     public void launchLabOrderDialog(Stage currentStage, ControllerManager manager) {
         try {

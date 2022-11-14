@@ -35,6 +35,9 @@ public class LabTest {
     }
     
     public String getResults() {
+        if (this.results == null) {
+            return "";
+        }
         return this.results;
     }
     

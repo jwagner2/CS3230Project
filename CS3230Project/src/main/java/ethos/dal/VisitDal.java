@@ -165,6 +165,7 @@ public class VisitDal {
                 boolean isFinal = rs.getBoolean("is_final");
                 visit = new Visit(systolicPressure, diastolicPressure, bodyWeightLbs, heightInches,
                         bodyTempDegreesF, pulseBpm, symptoms, diagnosis, rDoctorId, nurseId, apptDateTime, isFinal);
+                visit.setVisitId(rs.getInt("visit_id"));
             }
             return visit;
         }
