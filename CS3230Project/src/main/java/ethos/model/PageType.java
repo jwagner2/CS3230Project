@@ -11,7 +11,8 @@ public enum PageType {
     VISIT("/view/codebehind/VisitPage.fxml"),
     APPT("/view/codebehind/AppointmentPage.fxml"),
     LAB("/view/codebehind/LabPage.fxml"),
-    PAST_VISIT("/view/codebehind/PriorVisitView.fxml");
+    PAST_VISIT("/view/codebehind/PriorVisitView.fxml"),
+    LAB_DIALOG("/view/codebehind/LabOrderDialog.fxml");
 
     /** The label. */
     public final String label;

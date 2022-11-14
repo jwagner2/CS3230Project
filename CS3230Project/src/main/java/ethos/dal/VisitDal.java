@@ -27,6 +27,7 @@ public class VisitDal {
     private String getVisitsByDoctorAndDatetimeQuery = "select * from visit where doctor_id = ? and appt_datetime = ?";
 
     private String updateDiagnosisStatement = "update visit set diagnosis = ?, is_final = ? where doctor_id = ? and appt_datetime = ?";
+    private String getVisitId = "SELECT MAX(visit_id) from visit;";
 
     public void updateDiagnosis(int doctorId, LocalDateTime apptDatetime, String diagnosis, boolean isFinal) throws SQLException {
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
@@ -63,8 +64,22 @@ public class VisitDal {
 
             this.setStatement(visit, stmt);
             int rs = stmt.executeUpdate();
+            
             System.out.println("visit -- rows affected = " + rs);
         }
+    }
+    
+    public int getLastVisitId() throws SQLException {
+        try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
+                PreparedStatement stmt = connection.prepareStatement(this.getVisitId)) {
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                int id = rs.getInt(1);
+                return id;
+             }
+           
+        }
+        return -1; 
     }
 
     private void setStatement(Visit visit, PreparedStatement stmt) throws SQLException {

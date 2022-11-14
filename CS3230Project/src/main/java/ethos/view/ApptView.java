@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -216,7 +217,8 @@ public class ApptView {
         this.doctorComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             this.timeComboBox.getItems().clear();
             if (newValue != null && this.apptDatePicker.getValue() != null
-                    && this.apptDatePicker.getValue().isAfter(LocalDate.now())) {
+                    //Changed to yesterday for testing purposes.
+                    && this.apptDatePicker.getValue().isAfter(LocalDate.now().minus(1, ChronoUnit.DAYS))) {
                 java.util.Date date = Date
                         .from(this.apptDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
                 java.sql.Date sqlDate = new java.sql.Date(date.getTime());
@@ -248,7 +250,8 @@ public class ApptView {
     private void bookingListener() {
         this.timeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && this.apptDatePicker.getValue() != null
-                    && this.apptDatePicker.getValue().isAfter(LocalDate.now()) && this.doctorComboBox.getValue()!= null) {
+                    // changed to yesterday for testing
+                    && this.apptDatePicker.getValue().isAfter(LocalDate.now().minus(1, ChronoUnit.DAYS)) && this.doctorComboBox.getValue()!= null) {
                 
                 this.bookApptButton.setDisable(false);
             }else {

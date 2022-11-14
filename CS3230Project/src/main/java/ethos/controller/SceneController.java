@@ -8,9 +8,11 @@ import java.time.LocalDateTime;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.java.ethos.model.PageType;
 import main.java.ethos.view.ApptView;
+import main.java.ethos.view.LabOrderDialog;
 import main.java.ethos.view.LoginView;
 import main.java.ethos.view.MainView;
 import main.java.ethos.view.PatientInfoView;
@@ -176,6 +178,29 @@ public class SceneController {
             currentStage.setTitle("ethos -- Prior Visit History");
             currentStage.setScene(scene);
             currentStage.show();
+        } catch (MalformedURLException murlerr) {
+            System.err.println("Bad FXML URL");
+            murlerr.printStackTrace();
+        } catch (IOException ioerr) {
+            System.err.println("Bad file");
+            ioerr.printStackTrace();
+        }
+    }
+
+    public void launchLabOrderDialog(Stage currentStage, ControllerManager manager) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PageType.class.getResource(PageType.LAB_DIALOG.label));
+            Parent parent = loader.load();
+
+            LabOrderDialog order = loader.<LabOrderDialog>getController();
+            order.initialize(manager);
+
+            Scene scene = new Scene(parent, 500, 400);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
         } catch (MalformedURLException murlerr) {
             System.err.println("Bad FXML URL");
             murlerr.printStackTrace();

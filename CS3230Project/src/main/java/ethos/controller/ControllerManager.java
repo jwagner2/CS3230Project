@@ -5,14 +5,16 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import main.java.ethos.model.Appointment;
+import main.java.ethos.model.LabTest;
 import main.java.ethos.model.Patient;
 import main.java.ethos.model.UserRole;
 
@@ -64,7 +66,6 @@ public class ControllerManager {
      */
     public boolean visitExists(int doctorId, LocalDateTime apptDatetime) {
         Map<String, String> stuff = this.visitController.getVisitInfo(doctorId, apptDatetime);
-        System.out.println("visit exist size: " + stuff.size());
         return this.visitController.getVisitInfo(doctorId, apptDatetime) != null;
     }
 
@@ -164,6 +165,11 @@ public class ControllerManager {
         }
         this.sceneController.changeToLogin(currentStage, this);
 
+    }
+    
+    public void launchLabDialog(Stage currentStage) {
+        
+        this.sceneController.launchLabOrderDialog(currentStage, this);
     }
     
     /**
@@ -372,7 +378,7 @@ public class ControllerManager {
         return this.visitController.getPatientVisits(this.getSelectedPatientId());
     }
     
-    public Map<Integer, Object> getAvailableLabs(){
+    public List<Map<String, Object>> getAvailableLabs(){
         return this.visitController.getCurrentLabs();
     }
     
@@ -423,7 +429,8 @@ public class ControllerManager {
         if (this.isDateToday(indexOfAppt) && this.apptController.compareDates(indexOfAppt)) {
             return true;
         }
-        return false;
+        //changed for testing.
+        return true;
         
     }
 
@@ -460,5 +467,21 @@ public class ControllerManager {
             }
         }
         return match;
+    }
+
+    public void setLabOrder(ObservableList<Map> selectedItems) {
+        this.visitController.setLabOrder(selectedItems);
+        
+    }
+    public List<String> getCurrentOrderNames() {
+        List<String> names = new ArrayList<String>();
+        for (LabTest currentLab : this.visitController.getCurrentOrder()) {
+            names.add(currentLab.getTestName());
+        }
+        return names;
+        
+    }
+    public void clearLabOrder() {
+        this.visitController.clearLabOrder();
     }
 }

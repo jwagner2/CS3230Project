@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +34,7 @@ public class VisitView {
     private ControllerManager manager;
     private List<TextInputControl> editableControls = new ArrayList<TextInputControl>();
     private Map<String, String> visitDetails = new HashMap<String, String>();
+    ObservableList<String> labsToOrder = FXCollections.<String>observableArrayList();
     private int doctorId;
     private LocalDateTime appDateTime;
     private boolean readOnly;
@@ -92,7 +95,7 @@ public class VisitView {
     private Label invalidWeightLabel;
 
     @FXML
-    private ListView<?> labsToOrderBox;
+    private ListView<String> labsToOrderBox;
 
     @FXML
     private Button orderLabButton;
@@ -155,23 +158,11 @@ public class VisitView {
 
     @FXML
     void handleOrder(ActionEvent event) {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LabOrderDialog.fxml"));
-            Parent parent;
-            try {
-                parent = fxmlLoader.load();
-                LabOrderDialog order = fxmlLoader.<LabOrderDialog>getController();
-                order.initialize(this.manager);
-                
-                Scene scene = new Scene(parent, 300, 200);
-                Stage stage = new Stage();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setScene(scene);
-                stage.showAndWait();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
+         this.manager.clearLabOrder();
+         this.labsToOrder.clear();
+         this.manager.launchLabDialog((Stage) this.orderLabButton.getScene().getWindow());
+         this.labsToOrder.addAll(this.manager.getCurrentOrderNames());
+         this.labsToOrderBox.setItems(this.labsToOrder);
         
     }
 

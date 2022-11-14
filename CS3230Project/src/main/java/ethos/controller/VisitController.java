@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javafx.collections.ObservableList;
 import main.java.ethos.dal.LabDal;
 import main.java.ethos.dal.VisitDal;
 import main.java.ethos.model.LabTest;
@@ -21,10 +22,13 @@ public class VisitController {
 
     public boolean submitVisitInfo(Map<String, String> visitInfo) {
         VisitDal vDal = new VisitDal();
-        
+        LabDal labDal = new LabDal();
         Visit visit = this.createVisitFromInfo(visitInfo);
         try {
             vDal.enterVisitInfo(visit);
+            int visitId = vDal.getLastVisitId();
+            labDal.orderLabs(this.testsToOrder, visitId);
+            
         } catch (SQLException e) {
             System.out.println("Error saving visit info --");
             e.printStackTrace();
@@ -47,43 +51,46 @@ public class VisitController {
         int doctorId = Integer.parseInt(visitInfo.get("doctorId"));
         boolean isFinal = Boolean.parseBoolean(visitInfo.get("isFinal"));
 
-        System.out.println("\nCreating new visit from data:" + "\n" + sysPressure + "\n" + diasPressure + "\n" + weight + "\n" + height + "\n" + temp + "\n" + pulse + "\n" + symptoms + "\n" + diagnosis + "\n" + height + "\n" + apptTime + "\n" + pulse);
-        Visit visit = new Visit(sysPressure, diasPressure, weight, height, temp, pulse, symptoms, diagnosis, doctorId, nurseId, apptTime, isFinal);
+        System.out.println("\nCreating new visit from data:" + "\n" + sysPressure + "\n" + diasPressure + "\n" + weight
+                + "\n" + height + "\n" + temp + "\n" + pulse + "\n" + symptoms + "\n" + diagnosis + "\n" + height + "\n"
+                + apptTime + "\n" + pulse);
+        Visit visit = new Visit(sysPressure, diasPressure, weight, height, temp, pulse, symptoms, diagnosis, doctorId,
+                nurseId, apptTime, isFinal);
         return visit;
     }
-    
+
     public List<String> validateVisitFields(Map<String, String> fields) {
         List<String> invalidFields = new ArrayList<String>();
         if (fields.get("systolic") == null || fields.get("systolic").isEmpty()
-            || !Pattern.matches("[0-9]{2,}", fields.get("systolic"))) {
+                || !Pattern.matches("[0-9]{2,}", fields.get("systolic"))) {
             System.out.println("Bad systolic pressure input");
             invalidFields.add("systolic");
         }
         if (fields.get("diastolic") == null || fields.get("diastolic").isEmpty()
-            || !Pattern.matches("[0-9]{2,}", fields.get("diastolic"))) {
+                || !Pattern.matches("[0-9]{2,}", fields.get("diastolic"))) {
             System.out.println("Bad diastolic pressure input");
             invalidFields.add("diastolic");
         }
         if (fields.get("weight") == null || fields.get("weight").isEmpty()
-            || !Pattern.matches("[0-9]+\\.*[0-9]?", fields.get("weight"))) {
+                || !Pattern.matches("[0-9]+\\.*[0-9]?", fields.get("weight"))) {
             System.out.println("Bad body weight input");
             invalidFields.add("weight");
         }
         if (fields.get("temperature") == null || fields.get("temperature").isEmpty()
-            || !Pattern.matches("[0-9]{2,}\\.*[0-9]?", fields.get("temperature"))) {
+                || !Pattern.matches("[0-9]{2,}\\.*[0-9]?", fields.get("temperature"))) {
             System.out.println("Bad body temp input");
             invalidFields.add("temperature");
         }
         if (fields.get("height") == null || fields.get("height").isEmpty()
-            || !Pattern.matches("[0-9]+", fields.get("height"))) {
+                || !Pattern.matches("[0-9]+", fields.get("height"))) {
             System.out.println("Bad height input");
             invalidFields.add("height");
         }
         if (fields.get("pulse") == null || fields.get("pulse").isEmpty()
-            || !Pattern.matches("[0-9]{2,}", fields.get("pulse"))) {
+                || !Pattern.matches("[0-9]{2,}", fields.get("pulse"))) {
             System.out.println("Bad pulse input");
             invalidFields.add("pulse");
-        }       
+        }
 
         return invalidFields;
     }
@@ -100,7 +107,6 @@ public class VisitController {
         return this.buildResultsForPastVisitsTable();
     }
 
-
     /**
      * Builds the results for table.
      *
@@ -111,7 +117,7 @@ public class VisitController {
             return null;
         }
         List<Map<String, Object>> visits = new ArrayList<Map<String, Object>>();
-        
+
         for (Visit currVisit : this.searchResults) {
             Map<String, Object> visitInfo = new HashMap<String, Object>();
             String doctorName = "";
@@ -135,24 +141,24 @@ public class VisitController {
         Map<String, String> visitInfo = null;
         try {
             Visit visit = visitDal.getVisitByDoctorAndDatetime(doctorId, apptDatetime);
-            visitInfo = new HashMap<String, String>();
-            visitInfo.put("systolic", String.valueOf(visit.getSystolicPressure()));
-            visitInfo.put("diastolic", String.valueOf(visit.getDiastolicPressure()));
-            visitInfo.put("weight", Double.toString(visit.getBodyWeightLbs()));
-            System.out.println("visit Con " + Double.toString(visit.getBodyWeightLbs()));
-            visitInfo.put("temperature", String.valueOf(visit.getBodyTempDegreesF()));
-            visitInfo.put("height", String.valueOf(visit.getHeightInches()));
-            visitInfo.put("pulse", Integer.toString(visit.getPulseBpm()));
-            visitInfo.put("symptoms", visit.getSymptoms());
-            visitInfo.put("diagnosis", visit.getDiagnosis());
-            visitInfo.put("doctorId", String.valueOf(visit.getDoctorId()));
-            visitInfo.put("apptDatetime", visit.getApptDateTime().toString());
-            visitInfo.put("isFinal", String.valueOf(visit.isFinal()));
+            if (visit != null) {
+                visitInfo = new HashMap<String, String>();
+                visitInfo.put("systolic", String.valueOf(visit.getSystolicPressure()));
+                visitInfo.put("diastolic", String.valueOf(visit.getDiastolicPressure()));
+                visitInfo.put("weight", Double.toString(visit.getBodyWeightLbs()));
+                System.out.println("visit Con " + Double.toString(visit.getBodyWeightLbs()));
+                visitInfo.put("temperature", String.valueOf(visit.getBodyTempDegreesF()));
+                visitInfo.put("height", String.valueOf(visit.getHeightInches()));
+                visitInfo.put("pulse", Integer.toString(visit.getPulseBpm()));
+                visitInfo.put("symptoms", visit.getSymptoms());
+                visitInfo.put("diagnosis", visit.getDiagnosis());
+                visitInfo.put("doctorId", String.valueOf(visit.getDoctorId()));
+                visitInfo.put("apptDatetime", visit.getApptDateTime().toString());
+                visitInfo.put("isFinal", String.valueOf(visit.isFinal()));
+            }
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         }
-        System.out.println("visit Con " + visitInfo.get("pulse"));
-        System.out.println("visit Con " + visitInfo.get("weight"));
         this.setLabsAvailable();
         return visitInfo;
     }
@@ -167,7 +173,7 @@ public class VisitController {
             e.printStackTrace();
         }
     }
-    
+
     private void setLabsAvailable() {
         LabDal labDal = new LabDal();
         try {
@@ -176,17 +182,40 @@ public class VisitController {
             e.printStackTrace();
         }
     }
-   
-    
-    public List<Map<String, Object>>getCurrentLabs() {
+
+    public List<Map<String, Object>> getCurrentLabs() {
         List<Map<String, Object>> currentLabs = new ArrayList<Map<String, Object>>();
         for (LabTest current : this.currentLabs) {
             Map<String, Object> lab = new HashMap<String, Object>();
             lab.put("testId", current.getTestId());
             lab.put("testName", current.getTestName());
-            lab.put("testDescriptions", current.getDescription());
+            lab.put("testDescription", current.getDescription());
             currentLabs.add(lab);
         }
         return currentLabs;
     }
+
+    public void setLabOrder(ObservableList<Map> selectedItems) {
+        this.testsToOrder = new ArrayList<LabTest>();
+        for (Map<String, Object> currentLabInfo : selectedItems) {
+            int labId = (int) currentLabInfo.get("testId");
+            String name = (String) currentLabInfo.get("testName");
+            String description = (String) currentLabInfo.get("testDescription");
+            LabTest currentLab = new LabTest(labId, name, description);
+            this.testsToOrder.add(currentLab);
+        }
+
+    }
+
+    public List<LabTest> getCurrentOrder() {
+        return this.testsToOrder;
+    }
+
+    public void clearLabOrder() {
+        if (this.testsToOrder != null) {
+            this.testsToOrder.clear();
+        }
+
+    }
+
 }

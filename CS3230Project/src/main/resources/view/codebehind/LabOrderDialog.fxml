@@ -15,12 +15,17 @@
             <TableColumn prefWidth="75.0" text="C2" />
          </columns>
       </TableView>
-      <Label fx:id="orderLabsLabel" layoutX="184.0" layoutY="36.0" prefHeight="32.0" prefWidth="127.0" text="Select Labs To Order">
+      <Label fx:id="orderLabsLabel" layoutX="184.0" layoutY="14.0" prefHeight="32.0" prefWidth="127.0" text="Select Labs To Order">
          <font>
             <Font name="Agency FB" size="18.0" />
          </font>
       </Label>
       <Button fx:id="setOrderButton" layoutX="107.0" layoutY="308.0" mnemonicParsing="false" onAction="#setOrder" prefHeight="25.0" prefWidth="94.0" text="Set Order" />
       <Button fx:id="cancelOrderButton" layoutX="285.0" layoutY="308.0" mnemonicParsing="false" onAction="#cancelOrderDialog" prefHeight="25.0" prefWidth="94.0" text="Cancel" />
+      <Label fx:id="orderLabsLabel1" layoutX="176.0" layoutY="46.0" prefHeight="32.0" prefWidth="143.0" text="Hold CTRL to Select Multiple Labs">
+         <font>
+            <Font name="Agency FB" size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
