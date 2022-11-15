@@ -17,103 +17,150 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class PatientInfoView.
  */
 public class PatientInfoView {
 
+    /** The manager. */
     private ControllerManager manager;
+    
+    /** The patient details. */
     private Map<String, String> patientDetails = new HashMap<String, String>();
+    
+    /** The editable controls. */
     private List<TextInputControl> editableControls;
 
+    /** The a 1 invalid label. */
     @FXML
     private Label a1InvalidLabel;
 
+    /** The a 2 invalid label. */
     @FXML
     private Label a2InvalidLabel;
 
+    /** The back button. */
     @FXML
     private Button backButton;
 
+    /** The current user field. */
     @FXML
     private Label currentUserField;
 
+    /** The dob invalid label. */
     @FXML
     private Label dobInvalidLabel;
 
+    /** The edit button. */
     @FXML
     private Button editButton;
 
+    /** The fname invalid label. */
     @FXML
     private Label fnameInvalidLabel;
 
+    /** The gender invalid label. */
     @FXML
     private Label genderInvalidLabel;
 
+    /** The invalid data label. */
     @FXML
     private Label invalidDataLabel;
 
+    /** The lname invalid label. */
     @FXML
     private Label lnameInvalidLabel;
 
+    /** The patient active ch box. */
     @FXML
     private CheckBox patientActiveChBox;
 
+    /** The patient addr 1 field. */
     @FXML
     private TextField patientAddr1Field;
 
+    /** The patient addr 2 field. */
     @FXML
     private TextField patientAddr2Field;
 
+    /** The patient addr state combo box. */
     @FXML
     private ComboBox<String> patientAddrStateComboBox;
 
+    /** The patient addr zipcode field. */
     @FXML
     private TextField patientAddrZipcodeField;
 
+    /** The patient dob picker. */
     @FXML
     private DatePicker patientDobPicker;
 
+    /** The patient fname field. */
     @FXML
     private TextField patientFnameField;
 
+    /** The patient gender combo box. */
     @FXML
     private ComboBox<String> patientGenderComboBox;
 
+    /** The patient lname field. */
     @FXML
     private TextField patientLnameField;
 
+    /** The patient phone field. */
     @FXML
     private TextField patientPhoneField;
 
+    /** The patient ssn field. */
     @FXML
     private TextField patientSsnField;
 
+    /** The phone invalid label. */
     @FXML
     private Label phoneInvalidLabel;
 
+    /** The ssn invalid label. */
     @FXML
     private Label ssnInvalidLabel;
 
+    /** The state invalid label. */
     @FXML
     private Label stateInvalidLabel;
 
+    /** The submit button. */
     @FXML
     private Button submitButton;
 
+    /** The zip invalid label. */
     @FXML
     private Label zipInvalidLabel;
 
+    /**
+     * Handle go back.
+     *
+     * @param event the event
+     */
     @FXML
     void handleGoBack(ActionEvent event) {
         this.manager.changeToMainView((Stage) this.backButton.getScene().getWindow());
     }
 
+    /**
+     * Enable editing.
+     *
+     * @param event the event
+     */
     @FXML
     void enableEditing(ActionEvent event) {
         this.enableControls();
     }
 
+    /**
+     * Handle submit.
+     *
+     * @param event the event
+     */
     @FXML
     void handleSubmit(ActionEvent event) {
         this.populateMap();
@@ -129,6 +176,11 @@ public class PatientInfoView {
         }
     }
 
+    /**
+     * Show invalid labels.
+     *
+     * @param invalidInputs the invalid inputs
+     */
     private void showInvalidLabels(List<String> invalidInputs) {
         for (String result : invalidInputs) {
             if (result.equals("fname")) {
@@ -165,6 +217,9 @@ public class PatientInfoView {
         }
     }
 
+    /**
+     * Reset invalid labels.
+     */
     private void resetInvalidLabels() {
         this.patientFnameField.setStyle("-fx-border-width: 0px");
         this.fnameInvalidLabel.setVisible(false);
@@ -238,6 +293,9 @@ public class PatientInfoView {
         }
     }
 
+    /**
+     * Adds the editable controls.
+     */
     private void addEditableControls() {
         this.editableControls.add(this.patientFnameField);
         this.editableControls.add(this.patientLnameField);
@@ -248,6 +306,9 @@ public class PatientInfoView {
         this.editableControls.add(this.patientAddrZipcodeField);
     }
 
+    /**
+     * Populate map.
+     */
     private void populateMap() {
         this.invalidDataLabel.setVisible(false);
         try {
@@ -267,6 +328,9 @@ public class PatientInfoView {
 
     }
 
+    /**
+     * Populate fields.
+     */
     private void populateFields() {
         this.patientFnameField.textProperty().set(this.manager.getPatientFirstName());
         this.patientLnameField.textProperty().set(this.manager.getPatientLastName());

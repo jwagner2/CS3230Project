@@ -14,14 +14,20 @@ import java.util.Map;
 import main.java.ethos.dal.AppointmentDal;
 import main.java.ethos.model.Appointment;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ApptController.
+ */
 public class ApptController {
     /** The search results. */
     private List<Appointment> searchResults;
+    
+    /** The all doctors. */
     private Map<String, Integer> allDoctors;
 
     /**
-     * gets the search results
-     * 
+     * gets the search results.
+     *
      * @return the search results
      */
     public List<Appointment> getResults() {
@@ -29,6 +35,12 @@ public class ApptController {
     }
 
 
+    /**
+     * Gets the patient appts.
+     *
+     * @param patientId the patient id
+     * @return the patient appts
+     */
     public List<Map<String, Object>> getPatientAppts(int patientId) {
         this.searchResults = new ArrayList<Appointment>();
         AppointmentDal apptDal = new AppointmentDal();
@@ -65,6 +77,12 @@ public class ApptController {
         return apptInfo;
     }
 
+    /**
+     * Gets the times.
+     *
+     * @param drAppts the dr appts
+     * @return the times
+     */
     public List<LocalTime> getTimes(List<LocalTime> drAppts) {
         List<LocalTime> result = new ArrayList<>();
         String start = "08:00:00";
@@ -88,6 +106,13 @@ public class ApptController {
         return result;
     }
 
+    /**
+     * Gets the doctors availability.
+     *
+     * @param doctorName the doctor name
+     * @param date the date
+     * @return the doctors availability
+     */
     public List<LocalTime> getDoctorsAvailability(String doctorName, Date date) {
         int doctorID = this.allDoctors.get(doctorName);
         AppointmentDal apptDal = new AppointmentDal();
@@ -100,10 +125,21 @@ public class ApptController {
         return null;
     }
     
+    /**
+     * Gets the all doctors.
+     *
+     * @return the all doctors
+     */
     public Map<String, Integer> getAllDoctors(){
         return this.allDoctors;
     }
     
+    /**
+     * Compare dates.
+     *
+     * @param apptIndex the appt index
+     * @return true, if successful
+     */
     public boolean compareDates(int apptIndex) {
         Appointment toGetDateFrom = this.searchResults.get(apptIndex);
         if (toGetDateFrom.getApptDateTime().isBefore(LocalDateTime.now().minusMinutes(20))) {
@@ -113,7 +149,9 @@ public class ApptController {
     }
 
     /**
-     * populates with doctors and doctor ids
+     * populates with doctors and doctor ids.
+     *
+     * @return the doctors
      */
     public void getDoctors() {
         this.allDoctors = new HashMap<>();
@@ -126,6 +164,14 @@ public class ApptController {
         }
     }
     
+    /**
+     * Edits the appt.
+     *
+     * @param indexToEdit the index to edit
+     * @param newDate the new date
+     * @param doctorName the doctor name
+     * @param newTime the new time
+     */
     public void editAppt(int indexToEdit, LocalDate newDate, String doctorName, LocalTime newTime) {
         Appointment toEdit = this.searchResults.get(indexToEdit);
         LocalDateTime originalTime = toEdit.getApptDateTime();
@@ -143,6 +189,11 @@ public class ApptController {
       
     }
     
+    /**
+     * Book appt.
+     *
+     * @param toBook the to book
+     */
     public void bookAppt(Appointment toBook) {
         AppointmentDal apptDal = new AppointmentDal();
         try {

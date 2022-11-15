@@ -17,23 +17,31 @@ import main.java.ethos.model.LabTest;
 import main.java.ethos.model.Patient;
 import main.java.ethos.model.UserRole;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ControllerManager.
  */
 public class ControllerManager {
     
+    /** The login controller. */
     private LoginController loginController;
     
+    /** The main view controller. */
     private MainViewController mainViewController;
     
+    /** The reg edit controller. */
     private RegisterEditController regEditController;
 
+    /** The appt controller. */
     private ApptController apptController;
 
+    /** The visit controller. */
     private VisitController visitController;
     
+    /** The scene controller. */
     private SceneController sceneController;
     
+    /** The lab controller. */
     private LabController labController;
     
     /**
@@ -61,7 +69,8 @@ public class ControllerManager {
 
     /**
      * Determines if a visit has already been made for the specified doctor
-     * and datetime
+     * and datetime.
+     *
      * @param doctorId -- the doctor's id
      * @param apptDatetime -- the datetime of the appointment
      * @return true if the visit has taken place; false otherwise
@@ -72,16 +81,25 @@ public class ControllerManager {
     }
 
     /**
-     * 
-     * @param doctorId
-     * @param apptDateTime
-     * @return
+     * Gets the visit info.
+     *
+     * @param doctorId the doctor id
+     * @param apptDateTime the appt date time
+     * @return the visit info
      */
     public Map<String, String> getVisitInfo(int doctorId, LocalDateTime apptDateTime) {
         Map<String, String> visitInfo = this.visitController.getVisitInfo(doctorId, apptDateTime);
         return visitInfo;
     }
 
+    /**
+     * Update diagnosis.
+     *
+     * @param doctorId the doctor id
+     * @param apptDatetime the appt datetime
+     * @param diagnosis the diagnosis
+     * @param isFinal the is final
+     */
     public void updateDiagnosis(int doctorId, LocalDateTime apptDatetime, String diagnosis, boolean isFinal) {
         this.visitController.updateDiagnosis(doctorId, apptDatetime, diagnosis, isFinal);
     }
@@ -91,6 +109,8 @@ public class ControllerManager {
      *
      * @param username the username
      * @param password the password
+     * @param isAdmin the is admin
+     * @param isNurse the is nurse
      * @return true, if successful
      */
     public boolean validateLogin(String username, String password, boolean isAdmin, boolean isNurse) {
@@ -113,6 +133,12 @@ public class ControllerManager {
         return this.regEditController.validateFields(fields);
     }
 
+    /**
+     * Validate visit info.
+     *
+     * @param fields the fields
+     * @return the list
+     */
     public List<String> validateVisitInfo(Map<String, String> fields) {
         fields.put("nurseId", String.valueOf(getLoggedInUserId()));
         return this.visitController.validateVisitFields(fields);
@@ -137,7 +163,8 @@ public class ControllerManager {
     }
 
     /**
-     * Gets the user ID
+     * Gets the user ID.
+     *
      * @return the id
      */
     public int getLoggedInUserId() {
@@ -169,10 +196,20 @@ public class ControllerManager {
 
     }
     
+    /**
+     * Change to lab view.
+     *
+     * @param currentStage the current stage
+     */
     public void changeToLabView(Stage currentStage) {
         this.sceneController.changeToLabView(currentStage, this);
     }
     
+    /**
+     * Launch lab dialog.
+     *
+     * @param currentStage the current stage
+     */
     public void launchLabDialog(Stage currentStage) {
         
         this.sceneController.launchLabOrderDialog(currentStage, this);
@@ -198,14 +235,21 @@ public class ControllerManager {
     }
 
     /**
-     * Changes the view to the patient visit view
+     * Changes the view to the patient visit view.
+     *
      * @param currentStage the current stage
      * @param doctorId the doctor responsible for the visit
+     * @param appDateTime the app date time
      */
     public void changeToVisit(Stage currentStage, int doctorId, LocalDateTime appDateTime) {
         this.sceneController.changeToVisitView(currentStage, this, doctorId, appDateTime);
     }
 
+    /**
+     * Change to past visits view.
+     *
+     * @param currentStage the current stage
+     */
     public void changeToPastVisitsView(Stage currentStage) {
         this.sceneController.changeToPastVisitsView(currentStage, this);
     }
@@ -236,11 +280,18 @@ public class ControllerManager {
      *
      * @param patientDetails the patient details
      * @param isActive       the is active
+     * @return true, if successful
      */
     public boolean patientRegister(Map<String, String> patientDetails, boolean isActive) {
         return this.regEditController.patientRegister(patientDetails, isActive);
     }
 
+    /**
+     * Enter visit info.
+     *
+     * @param visitInfo the visit info
+     * @return true, if successful
+     */
     public boolean enterVisitInfo(Map<String, String> visitInfo) {
         
         return this.visitController.submitVisitInfo(visitInfo);
@@ -283,6 +334,11 @@ public class ControllerManager {
         return this.regEditController.getPatientSsn();
     }
     
+    /**
+     * Gets the selected patient id.
+     *
+     * @return the selected patient id
+     */
     public int getSelectedPatientId() {
         return this.regEditController.getSelectedPatientId();
     }
@@ -367,11 +423,21 @@ public class ControllerManager {
 
     }
     
+    /**
+     * Gets the all doctors.
+     *
+     * @return the all doctors
+     */
     public Map<String, Integer> getAllDoctors() {
         this.apptController.getDoctors();
         return this.apptController.getAllDoctors();
     }
     
+    /**
+     * Gets the patient appts.
+     *
+     * @return the patient appts
+     */
     public List<Map<String, Object>> getPatientAppts(){
        return this.apptController.getPatientAppts(this.getSelectedPatientId());
     }
@@ -384,10 +450,20 @@ public class ControllerManager {
         return this.visitController.getPatientVisits(this.getSelectedPatientId());
     }
     
+    /**
+     * Gets the available labs.
+     *
+     * @return the available labs
+     */
     public List<Map<String, Object>> getAvailableLabs(){
         return this.visitController.getCurrentLabs();
     }
     
+    /**
+     * Builds the appt results for table.
+     *
+     * @return the list
+     */
     public List<Map<String,Object>> buildApptResultsForTable() {
         return this.apptController.buildResultsForTable();
     }    
@@ -402,11 +478,24 @@ public class ControllerManager {
         this.regEditController.populateStatesComboBox(statesCombo);
     }
     
+    /**
+     * Gets the appt times.
+     *
+     * @param doctorName the doctor name
+     * @param date the date
+     * @return the appt times
+     */
     public List<LocalTime> getApptTimes(String doctorName, Date date) {
         
         return this.apptController.getDoctorsAvailability(doctorName, date);
     }
 
+    /**
+     * Checks if is date after today.
+     *
+     * @param indexOfAppt the index of appt
+     * @return true, if is date after today
+     */
     public boolean isDateAfterToday(int indexOfAppt) {
         if (indexOfAppt < 0) {
             return false;
@@ -418,6 +507,12 @@ public class ControllerManager {
         return false;
     }
     
+    /**
+     * Checks if is date today.
+     *
+     * @param indexOfAppt the index of appt
+     * @return true, if is date today
+     */
     public boolean isDateToday(int indexOfAppt) {
         if (indexOfAppt < 0) {
             return false;
@@ -428,6 +523,13 @@ public class ControllerManager {
         }
         return false;
     }
+    
+    /**
+     * Checks if is appointment today within 15.
+     *
+     * @param indexOfAppt the index of appt
+     * @return true, if is appointment today within 15
+     */
     public boolean isAppointmentTodayWithin15(int indexOfAppt) {
         if (indexOfAppt < 0) {
             return false;
@@ -440,6 +542,12 @@ public class ControllerManager {
         
     }
 
+    /**
+     * Gets the doctor id for appt.
+     *
+     * @param indexOfAppt the index of appt
+     * @return the doctor id for appt
+     */
     public int getDoctorIdForAppt(int indexOfAppt) {
         if (indexOfAppt < 0) {
             return 0;
@@ -448,18 +556,33 @@ public class ControllerManager {
         return toCheck.getDoctorId();
     }
 
+    /**
+     * Book appt.
+     *
+     * @param doctorId the doctor id
+     * @param dateTime the date time
+     * @param appt_reason the appt reason
+     */
     public void bookAppt(int doctorId, LocalDateTime dateTime, String appt_reason) {
         Appointment toBook = new Appointment(doctorId, this.getSelectedPatientId(), dateTime, appt_reason);
         this.apptController.bookAppt(toBook);
     }
 
+    /**
+     * Edits the appt.
+     *
+     * @param selectedIndex the selected index
+     * @param newDate the new date
+     * @param doctorName the doctor name
+     * @param newTime the new time
+     */
     public void editAppt(int selectedIndex, LocalDate newDate, String doctorName, LocalTime newTime) {
        this.apptController.editAppt(selectedIndex, newDate, doctorName, newTime);
     }
 
     /**
-     * Gets the name of a doctor by looking up the doctor ID
-     * 
+     * Gets the name of a doctor by looking up the doctor ID.
+     *
      * @param doctorId the doctor ID
      * @return the matching doctor's name
      */
@@ -475,14 +598,30 @@ public class ControllerManager {
         return match;
     }
 
+    /**
+     * Sets the lab order.
+     *
+     * @param selectedItems the new lab order
+     */
     public void setLabOrder(ObservableList<Map> selectedItems) {
         this.visitController.setLabOrder(selectedItems);
         
     }
     
+    /**
+     * Gets the selected visit id.
+     *
+     * @return the selected visit id
+     */
     public int getSelectedVisitId() {
         return this.visitController.getCurrentId();
     }
+    
+    /**
+     * Gets the current order names.
+     *
+     * @return the current order names
+     */
     public List<String> getCurrentOrderNames() {
         List<String> names = new ArrayList<String>();
         for (LabTest currentLab : this.visitController.getCurrentOrder()) {
@@ -491,14 +630,52 @@ public class ControllerManager {
         return names;
         
     }
+    
+    /**
+     * Clear lab order.
+     */
     public void clearLabOrder() {
         this.visitController.clearLabOrder();
     }
 
+    /**
+     * Gets the visit labs.
+     *
+     * @return the visit labs
+     */
     public List<Map<String, Object>> getVisitLabs() {
         System.out.println("visit num: " + this.getSelectedVisitId());
         List<Map<String, Object>> labs = this.labController.getVisitLabs(this.getSelectedVisitId());
         System.out.println("num labs: " + labs.size());
         return labs;
+    }
+
+    /**
+     * Gets the visit dr.
+     *
+     * @return the visit dr
+     */
+    public int getVisitDr() {
+        return this.visitController.getCurrentDr();
+    }
+    
+    /**
+     * Gets the visit date time.
+     *
+     * @return the visit date time
+     */
+    public LocalDateTime getVisitDateTime() {
+        return this.visitController.getCurrentDateTime();
+    }
+    
+    /**
+     * Enter test result.
+     *
+     * @param result the result
+     * @param isAbnormal the is abnormal
+     * @param name the name
+     */
+    public void enterTestResult(String result, boolean isAbnormal, String name) {
+        this.labController.enterTestResult(result, isAbnormal, name);
     }
 }

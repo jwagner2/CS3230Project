@@ -23,66 +23,102 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class MainView.
  */
 public class MainView {
 
+    /** The manager. */
     private ControllerManager manager = new ControllerManager();
+    
+    /** The patients. */
     ObservableList<Map<String, Object>> patients = FXCollections.<Map<String, Object>>observableArrayList();
 
+    /** The patient data table view. */
     @FXML
     private TableView<Map> patientDataTableView;
 
+    /** The register patient button. */
     @FXML
     private Button registerPatientButton;
 
+    /** The current date label. */
     @FXML
     private Label currentDateLabel;
 
+    /** The current time label. */
     @FXML
     private Label currentTimeLabel;
 
+    /** The current user label. */
     @FXML
     private Label currentUserLabel;
 
+    /** The patient name search field. */
     @FXML
     private TextField patientNameSearchField;
 
+    /** The patient dob picker. */
     @FXML
     private DatePicker patientDobPicker;
 
+    /** The search button. */
     @FXML
     private Button searchButton;
 
+    /** The view patient button. */
     @FXML
     private Button viewPatientButton;
 
+    /** The logout button. */
     @FXML
     private Button logoutButton;
     
+    /** The book appointment. */
     @FXML
     private Button bookAppointment;
 
+    /** The view past visits button. */
     @FXML
     private Button viewPastVisitsButton;
 
+    /**
+     * Handle logout.
+     *
+     * @param event the event
+     */
     @FXML
     void handleLogout(ActionEvent event) {
         this.manager.changeToLogin((Stage) this.logoutButton.getScene().getWindow());
     }
     
+    /**
+     * Handle book.
+     *
+     * @param event the event
+     */
     @FXML
     void handleBook(ActionEvent event) {
         this.manager.changeToApptView((Stage) this.bookAppointment.getScene().getWindow());
     }
 
+    /**
+     * Handle register.
+     *
+     * @param event the event
+     */
     @FXML
     void handleRegister(ActionEvent event) {
         this.manager.clearDisplayedPatient();
         this.manager.changeToPatientInfoView((Stage) this.registerPatientButton.getScene().getWindow());
     }
 
+    /**
+     * Handle search.
+     *
+     * @param event the event
+     */
     @FXML
     void handleSearch(ActionEvent event) {
         this.patientDataTableView.getItems().clear();
@@ -110,18 +146,28 @@ public class MainView {
         this.patientDataTableView.getItems().addAll(this.patients);
     }
 
+    /**
+     * Handle view info.
+     *
+     * @param event the event
+     */
     @FXML
     void handleViewInfo(ActionEvent event) {
         this.manager.changeToPatientInfoView((Stage) this.registerPatientButton.getScene().getWindow());
     }
 
+    /**
+     * Handle view past visits.
+     *
+     * @param event the event
+     */
     @FXML
     void handleViewPastVisits(ActionEvent event) {
         this.manager.changeToPastVisitsView((Stage) this.viewPastVisitsButton.getScene().getWindow());
     }
 
     /**
-     * Initialize the mainview
+     * Initialize the mainview.
      *
      * @param manager the manager
      */
@@ -139,6 +185,9 @@ public class MainView {
         this.tableListener();
     }
 
+    /**
+     * Initialize table view.
+     */
     @SuppressWarnings("rawtypes")
     private void initializeTableView() {
         this.patientDataTableView.getColumns().clear();
@@ -161,6 +210,9 @@ public class MainView {
         }
     }
 
+    /**
+     * Patient name listener.
+     */
     private void patientNameListener() {
         this.patientNameSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isBlank() && this.patientDobPicker.valueProperty() == null) {
@@ -171,6 +223,9 @@ public class MainView {
         });
     }
 
+    /**
+     * Patient dob listener.
+     */
     private void patientDobListener() {
         this.patientDobPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null && this.patientNameSearchField.getText().isBlank()) {
@@ -181,6 +236,9 @@ public class MainView {
         });
     }
 
+    /**
+     * Table listener.
+     */
     private void tableListener() {
         this.patientDataTableView.getSelectionModel().selectedIndexProperty()
                 .addListener((observable, oldValue, newValue) -> {

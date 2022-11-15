@@ -11,14 +11,20 @@ import java.util.List;
 
 import main.java.ethos.model.Patient;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class PatientSearchDal.
  */
 public class PatientSearchDal {
     
 
+    /** The name query. */
     private boolean nameQuery = false;
+    
+    /** The date query. */
     private boolean dateQuery = false;
+    
+    /** The combo query. */
     private boolean comboQuery = false;
 
     /**

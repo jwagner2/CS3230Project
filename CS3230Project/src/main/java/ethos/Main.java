@@ -10,11 +10,13 @@ import main.java.ethos.controller.ControllerManager;
 import main.java.ethos.model.PageType;
 import main.java.ethos.view.LoginView;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Main.
  */
 public class Main extends Application {
     
+    /** The Constant ICON_PATH. */
     public static final String ICON_PATH = "view/codebehind/test_logo.png";
 
     /**

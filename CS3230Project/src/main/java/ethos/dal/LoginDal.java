@@ -9,22 +9,24 @@ import java.sql.SQLException;
 import main.java.ethos.model.User;
 import main.java.ethos.model.UserRole;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class LoginDal.
  */
 public class LoginDal {
 
+    /**
+     * Instantiates a new login dal.
+     */
     public LoginDal() {
 
     }
 
     /**
-     * Connects to the database and authenticates the user
+     * Connects to the database and authenticates the user.
      *
      * @param username   the username
      * @param password   the password
-     * @param adminLogin the admin login
-     * @param nurseLogin the nurse login
      * @return the user
      * @throws SQLException the SQL exception
      */
@@ -55,12 +57,10 @@ public class LoginDal {
     }
 
     /**
-     * Connects to the database and authenticates the user
+     * Connects to the database and authenticates the user.
      *
      * @param username   the username
      * @param password   the password
-     * @param adminLogin the admin login
-     * @param nurseLogin the nurse login
      * @return the user
      * @throws SQLException the SQL exception
      */

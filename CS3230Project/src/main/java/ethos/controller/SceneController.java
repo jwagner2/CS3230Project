@@ -19,6 +19,10 @@ import main.java.ethos.view.PatientInfoView;
 import main.java.ethos.view.PriorVisitView;
 import main.java.ethos.view.VisitView;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SceneController.
+ */
 public class SceneController {
     
 
@@ -26,6 +30,7 @@ public class SceneController {
      * Changes the current view to the main screen.
      *
      * @param currentStage - the current stage for the application
+     * @param manager the manager
      */
     public void changeToMainView(Stage currentStage,  ControllerManager manager) {
         try {
@@ -54,6 +59,7 @@ public class SceneController {
      * Change to login.
      *
      * @param currentStage the current stage
+     * @param manager the manager
      */
     public void changeToLogin(Stage currentStage, ControllerManager manager) {
    
@@ -84,6 +90,7 @@ public class SceneController {
      * Changes the current view to the appointment screen.
      *
      * @param currentStage - the current stage for the application
+     * @param manager the manager
      */
     public void changeToApptView(Stage currentStage, ControllerManager manager) {
         try {
@@ -112,6 +119,9 @@ public class SceneController {
      * Changes the current view to the appointment screen.
      *
      * @param currentStage - the current stage for the application
+     * @param manager the manager
+     * @param doctorId the doctor id
+     * @param apptDateTime the appt date time
      */
     public void changeToVisitView(Stage currentStage, ControllerManager manager, int doctorId, LocalDateTime apptDateTime) {
         try {
@@ -140,6 +150,7 @@ public class SceneController {
      * Changes the view to the patient info view.
      *
      * @param currentStage - the current stage for the application
+     * @param manager the manager
      */
     public void changeToPatientInfoView(Stage currentStage,  ControllerManager manager) {
 
@@ -165,6 +176,12 @@ public class SceneController {
 
     }
 
+    /**
+     * Change to past visits view.
+     *
+     * @param currentStage the current stage
+     * @param manager the manager
+     */
     public void changeToPastVisitsView(Stage currentStage, ControllerManager manager) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -187,6 +204,12 @@ public class SceneController {
         }
     }
     
+    /**
+     * Change to lab view.
+     *
+     * @param currentStage the current stage
+     * @param manager the manager
+     */
     public void changeToLabView(Stage currentStage, ControllerManager manager) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -209,6 +232,12 @@ public class SceneController {
         }
     }
 
+    /**
+     * Launch lab order dialog.
+     *
+     * @param currentStage the current stage
+     * @param manager the manager
+     */
     public void launchLabOrderDialog(Stage currentStage, ControllerManager manager) {
         try {
             FXMLLoader loader = new FXMLLoader();

@@ -14,13 +14,21 @@ import javafx.scene.control.ComboBox;
 import main.java.ethos.dal.PatientRegEditDal;
 import main.java.ethos.model.Patient;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RegisterEditController.
+ */
 public class RegisterEditController {
     
     /** The displayed patient. */
     private Patient displayedPatient;
     
+    /** The states. */
     private ArrayList<String> states;
     
+    /**
+     * Instantiates a new register edit controller.
+     */
     public RegisterEditController() {
         String[] states = { "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC",
                 "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
@@ -89,6 +97,8 @@ public class RegisterEditController {
     
     /**
      * Register edit patient.
+     *
+     * @return true, if successful
      */
     public boolean registerPatient() {
         PatientRegEditDal regEdit = new PatientRegEditDal();
@@ -101,6 +111,11 @@ public class RegisterEditController {
         return true;
     }
 
+    /**
+     * Edits the patient.
+     *
+     * @return true, if successful
+     */
     public boolean editPatient() {
         PatientRegEditDal regEdit = new PatientRegEditDal();
         try {
@@ -117,6 +132,7 @@ public class RegisterEditController {
      *
      * @param patientDetails the patient details
      * @param isActive       the is active
+     * @return true, if successful
      */
     public boolean patientRegister(Map<String, String> patientDetails, boolean isActive) {
         java.util.Date langDate;
@@ -164,6 +180,7 @@ public class RegisterEditController {
      * @param patientDetails the patient details
      * @param isActive the is active
      * @param sqlDate the sql date
+     * @return true, if successful
      */
     private boolean registerNewPatient(Map<String, String> patientDetails, boolean isActive, Date sqlDate) {
 
@@ -179,7 +196,7 @@ public class RegisterEditController {
     /**
      * Sets the displayed patient.
      *
-     * @param indexOfPatient the new displayed patient
+     * @param displayed the new displayed patient
      */
     public void setDisplayedPatient(Patient displayed) {
         System.out.println(displayed.getFirstName());
@@ -305,6 +322,11 @@ public class RegisterEditController {
     }
 
 
+    /**
+     * Gets the selected patient id.
+     *
+     * @return the selected patient id
+     */
     public int getSelectedPatientId() {
         return this.displayedPatient.getPatientId();
     }

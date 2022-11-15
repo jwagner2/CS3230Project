@@ -10,14 +10,20 @@ import java.util.Map;
 import main.java.ethos.dal.PatientSearchDal;
 import main.java.ethos.model.Patient;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MainViewController.
+ */
 public class MainViewController {
     
 
     
     /** The search results. */
     private List<Patient> searchResults;
+    
     /**
-     * gets the search results
+     * gets the search results.
+     *
      * @return the search results
      */
     public List<Patient> getResults() {

@@ -11,31 +11,40 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import main.java.ethos.controller.ControllerManager;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class LoginController.
  */
 public class LoginView {
 
+	/** The manager. */
 	private ControllerManager manager;
 
+	/** The uname text field. */
 	@FXML
 	private TextField unameTextField;
 
+	/** The pwd text field. */
 	@FXML
 	private TextField pwdTextField;
 
+	/** The login button. */
 	@FXML
 	private Button loginButton;
 	
+	/** The invalid credentials label. */
 	@FXML
 	private Label invalidCredentialsLabel;
 
+	/** The nurse radio button. */
 	@FXML
     private RadioButton nurseRadioButton;
 
+    /** The user role. */
     @FXML
     private ToggleGroup user_role;
 
+    /** The admin radio button. */
     @FXML
     private RadioButton adminRadioButton;
 

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ethos.view.PriorVisitView">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ethos.view.PriorVisitView">
    <children>
       <TableView fx:id="priorVisitsTableView" layoutX="30.0" layoutY="89.0" prefHeight="309.0" prefWidth="539.0">
          <columns>
@@ -26,5 +26,6 @@
       <Button fx:id="logoutButton" layoutX="508.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleLogout" text="Log Out" />
       <Button fx:id="showVisitDetailsButton" disable="true" layoutX="225.0" layoutY="470.0" mnemonicParsing="false" onAction="#handleShowDetails" prefHeight="59.0" prefWidth="149.0" text="Show Visit Details" />
       <Button fx:id="backButton" layoutX="7.0" layoutY="5.0" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="59.0" text="&lt;- Back" />
+      <Label fx:id="priorLabel" layoutX="223.0" layoutY="21.0" text="Prior Visits for jordan wagner" />
    </children>
 </AnchorPane>

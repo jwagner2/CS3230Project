@@ -29,53 +29,84 @@ import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 import main.java.ethos.dal.AppointmentDal;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ApptView.
+ */
 public class ApptView {
 
+    /** The manager. */
     private ControllerManager manager;
+    
+    /** The appt dal. */
     AppointmentDal apptDal;
+    
+    /** The appts. */
     ObservableList<Map<String, Object>> appts = FXCollections.<Map<String, Object>>observableArrayList();
+    
+    /** The doctors. */
     Map<String, Integer> doctors;
+    
+    /** The editing. */
     String editing = "Editing Appointment";
 
+    /** The appt data table view. */
     @FXML
     private TableView<Map> apptDataTableView;
 
+    /** The appt date picker. */
     @FXML
     private DatePicker apptDatePicker;
 
+    /** The book appt button. */
     @FXML
     private Button bookApptButton;
 
+    /** The current date label. */
     @FXML
     private Label currentDateLabel;
 
+    /** The current user label. */
     @FXML
     private Label currentUserLabel;
 
+    /** The doctor combo box. */
     @FXML
     private ComboBox<String> doctorComboBox;
 
+    /** The edit appt. */
     @FXML
     private Button editAppt;
 
+    /** The submit edit button. */
     @FXML
     private Button submitEditButton;
 
+    /** The logout button. */
     @FXML
     private Button logoutButton;
 
+    /** The start visit button. */
     @FXML
     private Button startVisitButton;
 
+    /** The time combo box. */
     @FXML
     private ComboBox<LocalTime> timeComboBox;
 
+    /** The booking label. */
     @FXML
     private Label bookingLabel;
 
+    /** The back button. */
     @FXML
     private Button backButton;
 
+    /**
+     * Submit edit.
+     *
+     * @param event the event
+     */
     @FXML
     void submitEdit(ActionEvent event) {
         this.manager.editAppt(this.apptDataTableView.getSelectionModel().getSelectedIndex(), this.apptDatePicker.getValue(), this.doctorComboBox.getValue(), this.timeComboBox.getValue());
@@ -90,6 +121,11 @@ public class ApptView {
         this.apptDataTableView.getItems().addAll(this.appts);
     }
 
+    /**
+     * Handle book.
+     *
+     * @param event the event
+     */
     @FXML
     void handleBook(ActionEvent event) {
         LocalDateTime apptTime = this.apptDatePicker.valueProperty().get().atTime(this.timeComboBox.getValue());
@@ -115,6 +151,11 @@ public class ApptView {
         
     }
 
+    /**
+     * Handle edit appt.
+     *
+     * @param event the event
+     */
     @FXML
     void handleEditAppt(ActionEvent event) {
         this.bookingLabel.setText(this.editing);
@@ -124,11 +165,21 @@ public class ApptView {
         this.apptDataTableView.setDisable(true);
     }
 
+    /**
+     * Handle logout.
+     *
+     * @param event the event
+     */
     @FXML
     void handleLogout(ActionEvent event) {
         this.manager.changeToLogin((Stage) this.logoutButton.getScene().getWindow());
     }
 
+    /**
+     * Handle start visit.
+     *
+     * @param event the event
+     */
     @FXML
     void handleStartVisit(ActionEvent event) {
         int doctorId = this.manager.getDoctorIdForAppt(this.apptDataTableView.getSelectionModel().getSelectedIndex());
@@ -139,7 +190,7 @@ public class ApptView {
     }
 
     /**
-     * Initialize the mainview
+     * Initialize the mainview.
      *
      * @param manager the manager
      */
@@ -164,12 +215,18 @@ public class ApptView {
 
     }
 
+    /**
+     * Reset table.
+     */
     private void resetTable() {
         this.apptDataTableView.getItems().clear();
         this.appts.clear();
 
     }
 
+    /**
+     * Initialize table view.
+     */
     @SuppressWarnings("rawtypes")
     private void initializeTableView() {
         this.apptDataTableView.getColumns().clear();
@@ -192,6 +249,9 @@ public class ApptView {
         }
     }
 
+    /**
+     * Table listener.
+     */
     private void tableListener() {
         this.apptDataTableView.getSelectionModel().selectedIndexProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -213,6 +273,9 @@ public class ApptView {
                 });
     }
 
+    /**
+     * Doctor selection listener.
+     */
     private void doctorSelectionListener() {
         this.doctorComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             this.timeComboBox.getItems().clear();
@@ -232,6 +295,9 @@ public class ApptView {
         });
     }
 
+    /**
+     * Date listener.
+     */
     private void dateListener() {
         this.apptDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             this.timeComboBox.getItems().clear();
@@ -247,6 +313,9 @@ public class ApptView {
         });
     }
 
+    /**
+     * Booking listener.
+     */
     private void bookingListener() {
         this.timeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && this.apptDatePicker.getValue() != null
@@ -260,12 +329,20 @@ public class ApptView {
         });
     }
 
+    /**
+     * Populate doctors.
+     */
     private void populateDoctors() {
         for (String docName : this.doctors.keySet()) {
             this.doctorComboBox.getItems().add(docName);
         }
     }
 
+    /**
+     * Go back.
+     *
+     * @param event the event
+     */
     @FXML
     void goBack(ActionEvent event) {
         this.manager.changeToMainView((Stage) this.backButton.getScene().getWindow());

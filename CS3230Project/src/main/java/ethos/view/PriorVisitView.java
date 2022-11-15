@@ -20,39 +20,71 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PriorVisitView.
+ */
 public class PriorVisitView {
 
+    /** The manager. */
     private ControllerManager manager;
+    
+    /** The past visits. */
     private ObservableList<Map<String, Object>> pastVisits = FXCollections.<Map<String, Object>> observableArrayList();
 
+    /** The prior visits table view. */
     @FXML
     private TableView<Map> priorVisitsTableView;
 
+    /** The current date label. */
     @FXML
     private Label currentDateLabel;
 
+    /** The current user label. */
     @FXML
     private Label currentUserLabel;
 
+    /** The logout button. */
     @FXML
     private Button logoutButton;
 
+    /** The show visit details button. */
     @FXML
     private Button showVisitDetailsButton;
 
+    /** The back button. */
     @FXML
     private Button backButton;
 
+    /** The prior label. */
+    @FXML
+    private Label priorLabel;
+
+    /**
+     * Go back.
+     *
+     * @param event the event
+     */
     @FXML
     void goBack(ActionEvent event) {
         this.manager.changeToMainView((Stage) this.backButton.getScene().getWindow());
     }
 
+    /**
+     * Handle logout.
+     *
+     * @param event the event
+     */
     @FXML
     void handleLogout(ActionEvent event) {
         this.manager.changeToLogin((Stage) this.logoutButton.getScene().getWindow());
     }
 
+    /**
+     * Handle show details.
+     *
+     * @param event the event
+     */
     @FXML
     void handleShowDetails(ActionEvent event) {
         int doctorId = (int) this.pastVisits.get(this.priorVisitsTableView.getSelectionModel().getSelectedIndex()).get("doctorId");
@@ -62,6 +94,11 @@ public class PriorVisitView {
         this.manager.changeToVisit((Stage) this.showVisitDetailsButton.getScene().getWindow(), doctorId, apptDT);
     }
 
+    /**
+     * Initialize.
+     *
+     * @param manager the manager
+     */
     public void initialize(ControllerManager manager) {
         this.manager = manager;
         this.currentUserLabel.textProperty()
@@ -71,16 +108,23 @@ public class PriorVisitView {
         this.currentDateLabel.textProperty().set(format.format(calendar.getTime()));
         this.initializeTableView();
         this.resetTable();
+        this.priorLabel.textProperty().set("Prior Visits for " + this.manager.getPatientFirstName() + " " + this.manager.getPatientLastName());
         this.pastVisits.addAll(this.manager.getPatientVisits());
         this.priorVisitsTableView.getItems().addAll(this.pastVisits);
         this.addTableListener();
     }
 
+    /**
+     * Reset table.
+     */
     private void resetTable() {
         this.priorVisitsTableView.getItems().clear();
         this.pastVisits.clear();
     }
 
+    /**
+     * Initialize table view.
+     */
     @SuppressWarnings("rawtypes")
     private void initializeTableView() {
         this.priorVisitsTableView.getColumns().clear();
@@ -100,6 +144,9 @@ public class PriorVisitView {
         }
     }
 
+    /**
+     * Adds the table listener.
+     */
     private void addTableListener() {
         this.priorVisitsTableView.getSelectionModel().selectedIndexProperty()
                 .addListener((observable, oldValue, newValue) -> {

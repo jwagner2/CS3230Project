@@ -6,8 +6,13 @@ import main.java.ethos.dal.LoginDal;
 import main.java.ethos.model.User;
 import main.java.ethos.model.UserRole;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LoginController.
+ */
 public class LoginController {
     
+    /** The logged in user. */
     private User loggedInUser;
 
     /**
@@ -15,6 +20,7 @@ public class LoginController {
      *
      * @param username the username
      * @param password the password
+     * @param role the role
      * @return true, if successful
      */
     public boolean validateLogin(String username, String password, UserRole role) {
@@ -36,6 +42,11 @@ public class LoginController {
         return false;
     }
 
+    /**
+     * Gets the logged in user.
+     *
+     * @return the logged in user
+     */
     public User getLoggedInUser() {
         return this.loggedInUser;
     }

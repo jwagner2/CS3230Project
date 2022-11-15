@@ -24,98 +24,147 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VisitView.
+ */
 public class VisitView {
 
+    /** The manager. */
     private ControllerManager manager;
+    
+    /** The editable controls. */
     private List<TextInputControl> editableControls = new ArrayList<TextInputControl>();
+    
+    /** The visit details. */
     private Map<String, String> visitDetails = new HashMap<String, String>();
+    
+    /** The labs to order. */
     ObservableList<String> labsToOrder = FXCollections.<String>observableArrayList();
+    
+    /** The doctor id. */
     private int doctorId;
+    
+    /** The app date time. */
     private LocalDateTime appDateTime;
+    
+    /** The read only. */
     private boolean readOnly;
 
 
+    /** The back button. */
     @FXML
     private Button backButton;
 
+    /** The current patient field. */
     @FXML
     private Label currentPatientField;
     
+    /** The dr name label. */
     @FXML
     private Label drNameLabel;
 
+    /** The current user field. */
     @FXML
     private Label currentUserField;
 
+    /** The diagnosis text area. */
     @FXML
     private TextArea diagnosisTextArea;
 
+    /** The diastolic field. */
     @FXML
     private TextField diastolicField;
 
+    /** The end visit. */
     @FXML
     private Button endVisit;
 
+    /** The height field. */
     @FXML
     private TextField heightField;
 
+    /** The height label. */
     @FXML
     private Label heightLabel;
 
+    /** The invalid data label. */
     @FXML
     private Label invalidDataLabel;
 
+    /** The invalid dia label. */
     @FXML
     private Label invalidDiaLabel;
 
+    /** The invalid diag label. */
     @FXML
     private Label invalidDiagLabel;
 
+    /** The invalid height label. */
     @FXML
     private Label invalidHeightLabel;
 
+    /** The invalid pulse label. */
     @FXML
     private Label invalidPulseLabel;
 
+    /** The invalid symp label. */
     @FXML
     private Label invalidSympLabel;
 
+    /** The invalid sys label. */
     @FXML
     private Label invalidSysLabel;
 
+    /** The invalid temp label. */
     @FXML
     private Label invalidTempLabel;
 
+    /** The invalid weight label. */
     @FXML
     private Label invalidWeightLabel;
 
+    /** The labs to order box. */
     @FXML
     private ListView<String> labsToOrderBox;
 
+    /** The order lab button. */
     @FXML
     private Button orderLabButton;
 
+    /** The pulse field. */
     @FXML
     private TextField pulseField;
 
+    /** The symptoms text area. */
     @FXML
     private TextArea symptomsTextArea;
 
+    /** The systolic field. */
     @FXML
     private TextField systolicField;
 
+    /** The temp field. */
     @FXML
     private TextField tempField;
 
+    /** The view results. */
     @FXML
     private Button viewResults;
 
+    /** The weight field. */
     @FXML
     private TextField weightField;
 
+    /** The final diagnosis chk bx. */
     @FXML
     private CheckBox finalDiagnosisChkBx;
 
+    /**
+     * Handle end.
+     *
+     * @param event the event
+     */
     @FXML
     void handleEnd(ActionEvent event) {
         if (!this.readOnly) {
@@ -146,11 +195,21 @@ public class VisitView {
         }
     }
 
+    /**
+     * Handle go back.
+     *
+     * @param event the event
+     */
     @FXML
     void handleGoBack(ActionEvent event) {
         this.manager.changeToMainView((Stage) this.backButton.getScene().getWindow());
     }
 
+    /**
+     * Handle order.
+     *
+     * @param event the event
+     */
     @FXML
     void handleOrder(ActionEvent event) {
          this.manager.clearLabOrder();
@@ -160,11 +219,23 @@ public class VisitView {
          this.labsToOrderBox.setItems(this.labsToOrder);        
     }
 
+    /**
+     * Handle view results.
+     *
+     * @param event the event
+     */
     @FXML
     void handleViewResults(ActionEvent event) {
         this.manager.changeToLabView((Stage) this.viewResults.getScene().getWindow());
     }
 
+    /**
+     * Initialize.
+     *
+     * @param manager the manager
+     * @param doctorId the doctor id
+     * @param appDateTime the app date time
+     */
     public void initialize(ControllerManager manager, int doctorId, LocalDateTime appDateTime) {
         this.manager = manager;
         this.doctorId = doctorId;
@@ -185,6 +256,9 @@ public class VisitView {
         }
     }
 
+    /**
+     * Enable controls.
+     */
     private void enableControls() {
         this.orderLabButton.disableProperty().set(false);
         this.viewResults.disableProperty().set(true);
@@ -193,6 +267,9 @@ public class VisitView {
         }
     }
 
+    /**
+     * Adds the editable controls.
+     */
     private void addEditableControls() {
         this.editableControls.add(this.systolicField);
         this.editableControls.add(this.diastolicField);
@@ -204,6 +281,9 @@ public class VisitView {
         this.editableControls.add(this.diagnosisTextArea);
     }
 
+    /**
+     * Populate map.
+     */
     private void populateMap() {
         this.invalidDataLabel.setVisible(false);
         try {
@@ -224,6 +304,9 @@ public class VisitView {
         }
     }
 
+    /**
+     * Reset invalid labels.
+     */
     private void resetInvalidLabels() {
         this.systolicField.setStyle("-fx-border-width: 0px");
         this.invalidSysLabel.setVisible(false);
@@ -244,6 +327,11 @@ public class VisitView {
         this.invalidPulseLabel.setVisible(false);
     }
 
+    /**
+     * Show invalid labels.
+     *
+     * @param invalidInputs the invalid inputs
+     */
     private void showInvalidLabels(List<String> invalidInputs) {
         for (String result : invalidInputs) {
             if (result.equals("systolic")) {
@@ -268,6 +356,9 @@ public class VisitView {
         }
     }
 
+    /**
+     * Populate fields.
+     */
     private void populateFields() {
         Map<String, String> visitInfo = this.manager.getVisitInfo(this.doctorId, this.appDateTime);
         this.systolicField.textProperty().set(visitInfo.get("systolic"));
@@ -290,6 +381,9 @@ public class VisitView {
     }
 
 
+    /**
+     * Disable inputs.
+     */
     //doesn't disable diagnosis field
     private void disableInputs() {
         this.systolicField.disableProperty().set(true);

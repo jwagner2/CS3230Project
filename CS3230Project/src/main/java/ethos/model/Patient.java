@@ -2,6 +2,7 @@ package main.java.ethos.model;
 
 import java.sql.Date;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Patient.
  */

@@ -14,13 +14,36 @@ import main.java.ethos.dal.VisitDal;
 import main.java.ethos.model.LabTest;
 import main.java.ethos.model.Visit;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VisitController.
+ */
 public class VisitController {
 
+    /** The search results. */
     private List<Visit> searchResults;
+    
+    /** The current labs. */
     private List<LabTest> currentLabs;
+    
+    /** The tests to order. */
     private List<LabTest> testsToOrder;
+    
+    /** The current visit doctor id. */
+    private int currentVisitDoctorId;
+    
+    /** The current visit appt datetime. */
+    LocalDateTime currentVisitApptDatetime;
+    
+    /** The visit id. */
     int visitId;
 
+    /**
+     * Submit visit info.
+     *
+     * @param visitInfo the visit info
+     * @return true, if successful
+     */
     public boolean submitVisitInfo(Map<String, String> visitInfo) {
         VisitDal vDal = new VisitDal();
         LabDal labDal = new LabDal();
@@ -29,7 +52,7 @@ public class VisitController {
             vDal.enterVisitInfo(visit);
             int visitId = vDal.getLastVisitId();
             labDal.orderLabs(this.testsToOrder, visitId);
-            
+
         } catch (SQLException e) {
             System.out.println("Error saving visit info --");
             e.printStackTrace();
@@ -38,6 +61,12 @@ public class VisitController {
         return true;
     }
 
+    /**
+     * Creates the visit from info.
+     *
+     * @param visitInfo the visit info
+     * @return the visit
+     */
     private Visit createVisitFromInfo(Map<String, String> visitInfo) {
         int sysPressure = Integer.parseInt(visitInfo.get("systolic"));
         int diasPressure = Integer.parseInt(visitInfo.get("diastolic"));
@@ -56,6 +85,12 @@ public class VisitController {
         return visit;
     }
 
+    /**
+     * Validate visit fields.
+     *
+     * @param fields the fields
+     * @return the list
+     */
     public List<String> validateVisitFields(Map<String, String> fields) {
         List<String> invalidFields = new ArrayList<String>();
         if (fields.get("systolic") == null || fields.get("systolic").isEmpty()
@@ -92,6 +127,12 @@ public class VisitController {
         return invalidFields;
     }
 
+    /**
+     * Gets the patient visits.
+     *
+     * @param selectedPatientId the selected patient id
+     * @return the patient visits
+     */
     public List<Map<String, Object>> getPatientVisits(int selectedPatientId) {
         this.searchResults = new ArrayList<Visit>();
         VisitDal visitDal = new VisitDal();
@@ -133,7 +174,16 @@ public class VisitController {
         return visits;
     }
 
+    /**
+     * Gets the visit info.
+     *
+     * @param doctorId the doctor id
+     * @param apptDatetime the appt datetime
+     * @return the visit info
+     */
     public Map<String, String> getVisitInfo(int doctorId, LocalDateTime apptDatetime) {
+        this.currentVisitDoctorId = doctorId;
+        this.currentVisitApptDatetime = apptDatetime;
         VisitDal visitDal = new VisitDal();
         Map<String, String> visitInfo = null;
         try {
@@ -161,6 +211,32 @@ public class VisitController {
         return visitInfo;
     }
 
+    /**
+     * Gets the current dr.
+     *
+     * @return the current dr
+     */
+    public int getCurrentDr() {
+        return this.currentVisitDoctorId;
+    }
+
+    /**
+     * Gets the current date time.
+     *
+     * @return the current date time
+     */
+    public LocalDateTime getCurrentDateTime() {
+        return this.currentVisitApptDatetime;
+    }
+
+    /**
+     * Update diagnosis.
+     *
+     * @param doctorId the doctor id
+     * @param apptDatetime the appt datetime
+     * @param diagnosis the diagnosis
+     * @param isFinal the is final
+     */
     public void updateDiagnosis(int doctorId, LocalDateTime apptDatetime, String diagnosis, boolean isFinal) {
         VisitDal vDal = new VisitDal();
 
@@ -172,6 +248,9 @@ public class VisitController {
         }
     }
 
+    /**
+     * Sets the labs available.
+     */
     private void setLabsAvailable() {
         LabDal labDal = new LabDal();
         try {
@@ -180,11 +259,21 @@ public class VisitController {
             e.printStackTrace();
         }
     }
-    
+
+    /**
+     * Gets the current id.
+     *
+     * @return the current id
+     */
     public int getCurrentId() {
         return this.visitId;
     }
 
+    /**
+     * Gets the current labs.
+     *
+     * @return the current labs
+     */
     public List<Map<String, Object>> getCurrentLabs() {
         List<Map<String, Object>> currentLabs = new ArrayList<Map<String, Object>>();
         for (LabTest current : this.currentLabs) {
@@ -197,6 +286,11 @@ public class VisitController {
         return currentLabs;
     }
 
+    /**
+     * Sets the lab order.
+     *
+     * @param selectedItems the new lab order
+     */
     public void setLabOrder(ObservableList<Map> selectedItems) {
         this.testsToOrder = new ArrayList<LabTest>();
         for (Map<String, Object> currentLabInfo : selectedItems) {
@@ -209,10 +303,18 @@ public class VisitController {
 
     }
 
+    /**
+     * Gets the current order.
+     *
+     * @return the current order
+     */
     public List<LabTest> getCurrentOrder() {
         return this.testsToOrder;
     }
 
+    /**
+     * Clear lab order.
+     */
     public void clearLabOrder() {
         if (this.testsToOrder != null) {
             this.testsToOrder.clear();

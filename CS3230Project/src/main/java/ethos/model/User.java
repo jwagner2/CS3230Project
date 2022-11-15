@@ -1,15 +1,27 @@
 package main.java.ethos.model;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class User.
  */
 public class User {
 	
+	/** The first name. */
 	private String firstName;
+	
+	/** The last name. */
 	private String lastName;
+	
+	/** The user name. */
 	private String userName;
+	
+	/** The password. */
 	private String password;
+	
+	/** The current role. */
 	private UserRole currentRole;
+	
+	/** The user id. */
 	private int userId;
 	
 	/**
@@ -20,6 +32,7 @@ public class User {
 	 * @param userName the user name
 	 * @param password the password
 	 * @param role the current user role (admin or nurse)
+	 * @param userId the user id
 	 */
 	public User(String fname, String lname, String userName, String password, UserRole role, int userId) {
 		
@@ -32,7 +45,8 @@ public class User {
 	}
 
 	/**
-	 * Gets the user role
+	 * Gets the user role.
+	 *
 	 * @return the role
 	 */
 	public UserRole getUserRole() {
@@ -111,10 +125,20 @@ public class User {
 		this.password = password;
 	}
 
+	/**
+	 * Gets the user id.
+	 *
+	 * @return the user id
+	 */
 	public int getUserId() {
 		return userId;
 	}
 
+	/**
+	 * Sets the user id.
+	 *
+	 * @param userId the new user id
+	 */
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}	

@@ -15,20 +15,40 @@ import java.util.List;
 
 import main.java.ethos.model.Visit;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VisitDal.
+ */
 public class VisitDal {
 
+    /** The submit visit info statement. */
     private String submitVisitInfoStatement = "insert into visit (is_final, doctor_id, appt_datetime, nurse_id, systolic_pressure, diastolic_pressure, body_temp_degreesF, height_inches, weight_pounds, pulse_bpm, symptoms, diagnosis)"
             + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
+    /** The get doctor by id. */
     private String getDoctorById = "select fname, lname from doctor d join person p on d.pid = p.pid where d.doctor_id = ?";
 
+    /** The get patient visits. */
     private String getPatientVisits = "select v.* from appointment a join visit v on a.doctor_id = v.doctor_id and a.appt_datetime = v.appt_datetime where a.patient_id = ? and v.appt_datetime < NOW()";
 
+    /** The get visits by doctor and datetime query. */
     private String getVisitsByDoctorAndDatetimeQuery = "select * from visit where doctor_id = ? and appt_datetime = ?";
 
+    /** The update diagnosis statement. */
     private String updateDiagnosisStatement = "update visit set diagnosis = ?, is_final = ? where doctor_id = ? and appt_datetime = ?";
+    
+    /** The get visit id. */
     private String getVisitId = "SELECT MAX(visit_id) from visit;";
 
+    /**
+     * Update diagnosis.
+     *
+     * @param doctorId the doctor id
+     * @param apptDatetime the appt datetime
+     * @param diagnosis the diagnosis
+     * @param isFinal the is final
+     * @throws SQLException the SQL exception
+     */
     public void updateDiagnosis(int doctorId, LocalDateTime apptDatetime, String diagnosis, boolean isFinal) throws SQLException {
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
                 PreparedStatement stmt = connection.prepareStatement(updateDiagnosisStatement)) {
@@ -42,6 +62,13 @@ public class VisitDal {
         }
     }
 
+    /**
+     * Gets the doctor for visit.
+     *
+     * @param doctorId the doctor id
+     * @return the doctor for visit
+     * @throws SQLException the SQL exception
+     */
     public String getDoctorForVisit(int doctorId) throws SQLException {
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
                 PreparedStatement stmt = connection.prepareStatement(getDoctorById)) {
@@ -58,6 +85,12 @@ public class VisitDal {
         }
     }
 
+    /**
+     * Enter visit info.
+     *
+     * @param visit the visit
+     * @throws SQLException the SQL exception
+     */
     public void enterVisitInfo(Visit visit) throws SQLException {
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
                 PreparedStatement stmt = connection.prepareStatement(submitVisitInfoStatement)) {
@@ -69,6 +102,12 @@ public class VisitDal {
         }
     }
     
+    /**
+     * Gets the last visit id.
+     *
+     * @return the last visit id
+     * @throws SQLException the SQL exception
+     */
     public int getLastVisitId() throws SQLException {
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
                 PreparedStatement stmt = connection.prepareStatement(this.getVisitId)) {
@@ -82,6 +121,13 @@ public class VisitDal {
         return -1; 
     }
 
+    /**
+     * Sets the statement.
+     *
+     * @param visit the visit
+     * @param stmt the stmt
+     * @throws SQLException the SQL exception
+     */
     private void setStatement(Visit visit, PreparedStatement stmt) throws SQLException {
         stmt.setBoolean(1, visit.isFinal());
         stmt.setInt(2, visit.getDoctorId());
@@ -97,14 +143,33 @@ public class VisitDal {
         stmt.setString(12, visit.getDiagnosis());
     }
 
+    /**
+     * Gets the timestamp from datetime.
+     *
+     * @param dateTime the date time
+     * @return the timestamp from datetime
+     */
     private Timestamp getTimestampFromDatetime(LocalDateTime dateTime) {
         return new Timestamp(Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()).getTime());
     }
 
+    /**
+     * Gets the big decimal from double.
+     *
+     * @param value the value
+     * @return the big decimal from double
+     */
     private BigDecimal getBigDecimalFromDouble(double value) {
         return new BigDecimal(value);
     }
 
+    /**
+     * Gets the visits for patient.
+     *
+     * @param selectedPatientId the selected patient id
+     * @return the visits for patient
+     * @throws SQLException the SQL exception
+     */
     public List<Visit> getVisitsForPatient(int selectedPatientId) throws SQLException {
 
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
@@ -135,11 +200,12 @@ public class VisitDal {
     }
 
     /**
-     * Gets the visit that matches the specified doctor id and datetime
+     * Gets the visit that matches the specified doctor id and datetime.
+     *
      * @param doctorId -- the doctor's id
      * @param apptDT -- the appointment datetime
      * @return the matching visit if it exists, null otherwise
-     * @throws SQLException
+     * @throws SQLException the SQL exception
      */
     public Visit getVisitByDoctorAndDatetime(int doctorId, LocalDateTime apptDT) throws SQLException {
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);

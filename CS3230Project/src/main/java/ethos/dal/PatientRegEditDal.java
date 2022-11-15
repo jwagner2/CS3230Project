@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 import main.java.ethos.model.Patient;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class PatientRegEditDal.
  */
@@ -30,6 +31,12 @@ public class PatientRegEditDal {
         }
     }
 
+    /**
+     * Register patient.
+     *
+     * @param patient the patient
+     * @throws SQLException the SQL exception
+     */
     public void registerPatient(Patient patient) throws SQLException {
 
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
@@ -41,6 +48,14 @@ public class PatientRegEditDal {
         }
     }
 
+    /**
+     * Sets the statement.
+     *
+     * @param patient the patient
+     * @param edit the edit
+     * @param stmt the stmt
+     * @throws SQLException the SQL exception
+     */
     private void setStatement(Patient patient, boolean edit, CallableStatement stmt) throws SQLException {
         stmt.setString(1, patient.getFirstName());
         stmt.setString(2, patient.getLastName());

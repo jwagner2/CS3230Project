@@ -21,21 +21,32 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LabOrderDialog.
+ */
 public class LabOrderDialog {
 
+    /** The current labs. */
     ObservableList<Map<String, Object>> currentLabs = FXCollections.<Map<String, Object>>observableArrayList();
+    
+    /** The manager. */
     private ControllerManager manager;
 
+    /** The cancel order button. */
     @FXML
     private Button cancelOrderButton;
 
+    /** The available labs table. */
     @SuppressWarnings("rawtypes")
     @FXML
     private TableView<Map> availableLabsTable;
 
+    /** The order labs label. */
     @FXML
     private Label orderLabsLabel;
 
+    /** The set order button. */
     @FXML
     private Button setOrderButton;
 
@@ -52,6 +63,11 @@ public class LabOrderDialog {
 
     }
 
+    /**
+     * Cancel order dialog.
+     *
+     * @param event the event
+     */
     @FXML
     void cancelOrderDialog(ActionEvent event) {
       Stage stage = (Stage) this.cancelOrderButton.getScene().getWindow();
@@ -59,6 +75,11 @@ public class LabOrderDialog {
 
     }
 
+    /**
+     * Sets the order.
+     *
+     * @param event the new order
+     */
     @FXML
     void setOrder(ActionEvent event) {
         
@@ -68,6 +89,9 @@ public class LabOrderDialog {
 
     }
 
+    /**
+     * Initialize table view.
+     */
     @SuppressWarnings("rawtypes")
     private void initializeTableView() {
         this.availableLabsTable.getColumns().clear();
