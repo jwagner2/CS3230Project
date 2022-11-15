@@ -10,10 +10,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
+import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
 public class LabView {
@@ -45,19 +45,20 @@ public class LabView {
 
     @FXML
     void handleGoBack(ActionEvent event) {
-
+        this.manager.changeToMainView((Stage) this.backButton.getScene().getWindow());
     }
 
     @FXML
     void handleLogout(ActionEvent event) {
-
+        this.manager.changeToLogin((Stage) this.logoutButton.getScene().getWindow());
     }
 
     public void initialize(ControllerManager manager) {
         this.manager = manager;
         this.visitLabs.addAll(this.manager.getVisitLabs());
         this.initializeTableView();
-
+        this.currentUserLabel.textProperty().set("Hello, " + manager.getLoggedInName() + " (" + manager.getLoggedInUserName() + ")");
+        this.labResultsLabel.textProperty().set("Lab Results For " + manager.getPatientFirstName() + " " + manager.getPatientLastName());
     }
 
     private void initializeTableView() {

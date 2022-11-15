@@ -12,8 +12,13 @@ import main.java.ethos.model.LabTest;
 public class LabController {
     
     private List<LabTest> currentLabs;
+
+    public LabController() {
+        this.currentLabs = new ArrayList<LabTest>();
+    }
     
     public List<Map<String, Object>> getVisitLabs(int visitId) {
+        
         List<Map<String, Object>> labsForTable = new ArrayList<Map<String, Object>>();
         LabDal labDal = new LabDal();
         try {
@@ -22,7 +27,7 @@ public class LabController {
            
             e.printStackTrace();
         }
-        for (LabTest current: this.currentLabs) {
+        for (LabTest current : this.currentLabs) {
             Map<String, Object> labInfo = new HashMap<String, Object>();
             labInfo.put("testName", current.getTestName());
             labInfo.put("testResults", current.getResults());

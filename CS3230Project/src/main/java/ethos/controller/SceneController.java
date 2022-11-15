@@ -2,7 +2,6 @@ package main.java.ethos.controller;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javafx.fxml.FXMLLoader;
@@ -13,6 +12,7 @@ import javafx.stage.Stage;
 import main.java.ethos.model.PageType;
 import main.java.ethos.view.ApptView;
 import main.java.ethos.view.LabOrderDialog;
+import main.java.ethos.view.LabView;
 import main.java.ethos.view.LoginView;
 import main.java.ethos.view.MainView;
 import main.java.ethos.view.PatientInfoView;
@@ -193,11 +193,11 @@ public class SceneController {
             loader.setLocation(PageType.class.getResource(PageType.LAB.label));
             Parent parent = loader.load();
 
-            PriorVisitView priorVisitView = loader.<PriorVisitView>getController();
-            priorVisitView.initialize(manager);
+            LabView labView = loader.<LabView>getController();
+            labView.initialize(manager);
 
             Scene scene = new Scene(parent);
-            currentStage.setTitle("ethos -- Prior Visit History");
+            currentStage.setTitle("ethos -- Lab Results");
             currentStage.setScene(scene);
             currentStage.show();
         } catch (MalformedURLException murlerr) {

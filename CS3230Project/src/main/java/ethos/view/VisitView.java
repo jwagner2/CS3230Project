@@ -1,6 +1,5 @@
 package main.java.ethos.view;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,9 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -25,7 +21,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
@@ -162,8 +157,7 @@ public class VisitView {
          this.labsToOrder.clear();
          this.manager.launchLabDialog((Stage) this.orderLabButton.getScene().getWindow());
          this.labsToOrder.addAll(this.manager.getCurrentOrderNames());
-         this.labsToOrderBox.setItems(this.labsToOrder);
-        
+         this.labsToOrderBox.setItems(this.labsToOrder);        
     }
 
     @FXML
@@ -186,11 +180,14 @@ public class VisitView {
             this.populateFields();
             this.readOnly = true;
             this.disableInputs();
+            this.orderLabButton.disableProperty().set(true);
+            this.viewResults.disableProperty().set(false);
         }
     }
 
     private void enableControls() {
         this.orderLabButton.disableProperty().set(false);
+        this.viewResults.disableProperty().set(true);
         for (TextInputControl control : this.editableControls) {
             control.setEditable(true);
         }
@@ -282,7 +279,16 @@ public class VisitView {
         this.symptomsTextArea.textProperty().set(visitInfo.get("symptoms"));
         this.diagnosisTextArea.textProperty().set(visitInfo.get("diagnosis"));
         this.finalDiagnosisChkBx.selectedProperty().set(Boolean.parseBoolean(visitInfo.get("isFinal")));
+
+        this.labsToOrder.clear();
+        List<String> labs = new ArrayList<String>();
+        for (Map<String, Object> currLab : this.manager.getVisitLabs()) {
+            labs.add((String) currLab.get("testName"));
+        }
+        this.labsToOrder.setAll(labs);
+        this.labsToOrderBox.setItems(this.labsToOrder);
     }
+
 
     //doesn't disable diagnosis field
     private void disableInputs() {

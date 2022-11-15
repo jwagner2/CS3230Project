@@ -17,7 +17,7 @@ public class LabDal {
     private String submitLabOrder = "insert into lab_order (test_id, visit_id, order_datetime) values (?,?,?)";
 
     private String getLabsForVisit = "select lo.test_id, lo.results, lo.isAbnormal, lt.name, lt.description from lab_order lo, lab_test_type lt where lt.test_id = lo.test_id and visit_id = ?";
-    
+
     public List<LabTest> getCurrentLabs() throws SQLException {
         List<LabTest> currentLabs = new ArrayList<LabTest>();
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
@@ -38,21 +38,23 @@ public class LabDal {
     public void orderLabs(List<LabTest> tests, int visitId) throws SQLException {
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
                 PreparedStatement stmt = connection.prepareStatement(this.submitLabOrder)) {
-                for (LabTest current : tests) {
-                    stmt.setInt(1, current.getTestId());
-                    stmt.setInt(2, visitId);
-                    java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-                    stmt.setTimestamp(3, date);
-                    stmt.executeUpdate();
-                }
+            for (LabTest current : tests) {
+                stmt.setInt(1, current.getTestId());
+                stmt.setInt(2, visitId);
+                java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+                stmt.setTimestamp(3, date);
+                stmt.executeUpdate();
+            }
         }
 
     }
-    
+
     public List<LabTest> getLabsForVisit(int visitId) throws SQLException {
         List<LabTest> currentLabs = new ArrayList<LabTest>();
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
                 PreparedStatement stmt = connection.prepareStatement(this.getLabsForVisit)) {
+    
+            stmt.setInt(1, visitId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 int labId = rs.getInt("test_id");
@@ -69,6 +71,5 @@ public class LabDal {
 
         }
         return currentLabs;
-    }
     }
 }

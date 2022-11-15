@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +47,7 @@ public class ControllerManager {
         this.sceneController = new SceneController();
         this.apptController = new ApptController();
         this.visitController = new VisitController();
+        this.labController = new LabController();
     }
 
     /**
@@ -496,7 +496,9 @@ public class ControllerManager {
     }
 
     public List<Map<String, Object>> getVisitLabs() {
-        
-        return null;
+        System.out.println("visit num: " + this.getSelectedVisitId());
+        List<Map<String, Object>> labs = this.labController.getVisitLabs(this.getSelectedVisitId());
+        System.out.println("num labs: " + labs.size());
+        return labs;
     }
 }

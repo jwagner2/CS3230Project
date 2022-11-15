@@ -25,17 +25,16 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-    	//login page size: 600w400h
-    	//main page size: 600w700h
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(PageType.class.getResource(PageType.LOGIN.label));
         Parent root = loader.load();
         LoginView loginView = loader.<LoginView>getController();
         loginView.initialize(new ControllerManager());
         primaryStage.getIcons().add(new Image(Main.ICON_PATH));
-        primaryStage.setTitle("ethOS");
+        primaryStage.setTitle("ethos");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
+        primaryStage.setY(10);
     }
 
     /**

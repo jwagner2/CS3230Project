@@ -10,7 +10,7 @@ public enum PageType {
     EDIT_INFO("/view/codebehind/PatientInfoPage.fxml"),
     VISIT("/view/codebehind/VisitPage.fxml"),
     APPT("/view/codebehind/AppointmentPage.fxml"),
-    LAB("/view/codebehind/LabPage.fxml"),
+    LAB("/view/codebehind/LabView.fxml"),
     PAST_VISIT("/view/codebehind/PriorVisitView.fxml"),
     LAB_DIALOG("/view/codebehind/LabOrderDialog.fxml");
 

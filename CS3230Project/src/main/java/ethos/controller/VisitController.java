@@ -119,7 +119,7 @@ public class VisitController {
             Map<String, Object> visitInfo = new HashMap<String, Object>();
             String doctorName = "";
             try {
-                doctorName = new VisitDal().getDoctorForVisit(this.searchResults.get(0).getDoctorId());
+                doctorName = new VisitDal().getDoctorForVisit(currVisit.getDoctorId());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
