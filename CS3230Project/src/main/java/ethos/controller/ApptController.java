@@ -71,6 +71,8 @@ public class ApptController {
             appts.put("date", currentAppt.getApptDateTime().toLocalDate());
             appts.put("time", currentAppt.getApptTime());
             appts.put("reason", currentAppt.getAppointmentReason());
+            appts.put("id", currentAppt.getDoctorId());
+            appts.put("dateTime", currentAppt.getApptDateTime());
             apptInfo.add(appts);
         }
 
@@ -140,12 +142,21 @@ public class ApptController {
      * @param apptIndex the appt index
      * @return true, if successful
      */
-    public boolean compareDates(int apptIndex) {
-        Appointment toGetDateFrom = this.searchResults.get(apptIndex);
+    public boolean compareDates(int doctorId, LocalDateTime time) {
+        Appointment toGetDateFrom = this.getByKey(doctorId, time);
         if (toGetDateFrom.getApptDateTime().isBefore(LocalDateTime.now().minusMinutes(20))) {
             return false;
         }
         return true;
+    }
+    
+    private Appointment getByKey(int doctorId, LocalDateTime time) {
+        for (Appointment current: this.searchResults) {
+            if (doctorId == current.getDoctorId() && time == current.getApptDateTime()) {
+                return current;
+            }
+        }
+        return null;
     }
 
     /**

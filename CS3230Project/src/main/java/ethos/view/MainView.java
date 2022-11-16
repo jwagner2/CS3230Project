@@ -246,7 +246,7 @@ public class MainView {
                         this.viewPatientButton.setDisable(false);
                         this.bookAppointment.setDisable(false);
                         this.viewPastVisitsButton.setDisable(false);
-                        this.manager.setDisplayedPatient(this.patientDataTableView.getSelectionModel().getSelectedIndex());
+                        this.manager.setDisplayedPatient((int) this.patientDataTableView.getSelectionModel().getSelectedItem().get("id"));
                     } else {
                         this.searchButton.setDisable(true);
                     }

@@ -29,7 +29,6 @@ import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 import main.java.ethos.dal.AppointmentDal;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ApptView.
  */
@@ -255,15 +254,17 @@ public class ApptView {
     private void tableListener() {
         this.apptDataTableView.getSelectionModel().selectedIndexProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    int selectedIndex = this.apptDataTableView.getSelectionModel().getSelectedIndex();
-                    if (newValue != null && this.manager.isAppointmentTodayWithin15(selectedIndex)) {
+                    int doctorId = (int) this.apptDataTableView.getSelectionModel().getSelectedItem().get("id");
+                    LocalDateTime time = (LocalDateTime) this.apptDataTableView.getSelectionModel().getSelectedItem().get("dateTime");
+
+                    if (newValue != null && this.manager.isAppointmentTodayWithin15(doctorId, time)) {
                         this.startVisitButton.setDisable(false);
 
                     } else {
                         this.startVisitButton.setDisable(true);
                     }
-                    if (newValue != null && this.manager.isDateAfterToday(selectedIndex)
-                            || this.manager.isDateToday(selectedIndex)) {
+                    if (newValue != null && this.manager.isDateAfterToday(time)
+                            || this.manager.isDateToday(time)) {
                         this.editAppt.setDisable(false);
                     } else {
 

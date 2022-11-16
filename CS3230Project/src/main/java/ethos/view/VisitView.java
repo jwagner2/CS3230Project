@@ -32,25 +32,24 @@ public class VisitView {
 
     /** The manager. */
     private ControllerManager manager;
-    
+
     /** The editable controls. */
     private List<TextInputControl> editableControls = new ArrayList<TextInputControl>();
-    
+
     /** The visit details. */
     private Map<String, String> visitDetails = new HashMap<String, String>();
-    
+
     /** The labs to order. */
     ObservableList<String> labsToOrder = FXCollections.<String>observableArrayList();
-    
+
     /** The doctor id. */
     private int doctorId;
-    
+
     /** The app date time. */
     private LocalDateTime appDateTime;
-    
+
     /** The read only. */
     private boolean readOnly;
-
 
     /** The back button. */
     @FXML
@@ -59,7 +58,7 @@ public class VisitView {
     /** The current patient field. */
     @FXML
     private Label currentPatientField;
-    
+
     /** The dr name label. */
     @FXML
     private Label drNameLabel;
@@ -184,13 +183,15 @@ public class VisitView {
                 Alert alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Dialog");
                 alert.setHeaderText("Confirm final diagnosis");
-                alert.setContentText("You are about to sumbit the final diagnosis.\nThis action cannot be undone.\nDo you wish to continue?");
+                alert.setContentText(
+                        "You are about to sumbit the final diagnosis.\nThis action cannot be undone.\nDo you wish to continue?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.CANCEL) {
                     return;
                 }
             }
-            this.manager.updateDiagnosis(this.doctorId, this.appDateTime, this.diagnosisTextArea.getText(), this.finalDiagnosisChkBx.isSelected());
+            this.manager.updateDiagnosis(this.doctorId, this.appDateTime, this.diagnosisTextArea.getText(),
+                    this.finalDiagnosisChkBx.isSelected());
             this.manager.changeToMainView((Stage) this.endVisit.getScene().getWindow());
         }
     }
@@ -212,11 +213,11 @@ public class VisitView {
      */
     @FXML
     void handleOrder(ActionEvent event) {
-         this.manager.clearLabOrder();
-         this.labsToOrder.clear();
-         this.manager.launchLabDialog((Stage) this.orderLabButton.getScene().getWindow());
-         this.labsToOrder.addAll(this.manager.getCurrentOrderNames());
-         this.labsToOrderBox.setItems(this.labsToOrder);        
+        this.manager.clearLabOrder();
+        this.labsToOrder.clear();
+        this.manager.launchLabDialog((Stage) this.orderLabButton.getScene().getWindow());
+        this.labsToOrder.addAll(this.manager.getCurrentOrderNames());
+        this.labsToOrderBox.setItems(this.labsToOrder);
     }
 
     /**
@@ -232,8 +233,8 @@ public class VisitView {
     /**
      * Initialize.
      *
-     * @param manager the manager
-     * @param doctorId the doctor id
+     * @param manager     the manager
+     * @param doctorId    the doctor id
      * @param appDateTime the app date time
      */
     public void initialize(ControllerManager manager, int doctorId, LocalDateTime appDateTime) {
@@ -241,9 +242,11 @@ public class VisitView {
         this.doctorId = doctorId;
         this.appDateTime = appDateTime;
         this.readOnly = false;
-        this.currentPatientField.textProperty().set("Patient: " + this.manager.getPatientFirstName() + " " + this.manager.getPatientLastName());
+        this.currentPatientField.textProperty()
+                .set("Patient: " + this.manager.getPatientFirstName() + " " + this.manager.getPatientLastName());
         this.drNameLabel.textProperty().set("Attending Physician: " + this.manager.getDoctorName(doctorId));
-        this.currentUserField.textProperty().set(this.manager.getLoggedInName() + " (" + this.manager.getLoggedInUserName() + ")");
+        this.currentUserField.textProperty()
+                .set(this.manager.getLoggedInName() + " (" + this.manager.getLoggedInUserName() + ")");
         this.invalidDataLabel.disableProperty().set(true);
         this.addEditableControls();
         this.enableControls();
@@ -380,11 +383,10 @@ public class VisitView {
         this.labsToOrderBox.setItems(this.labsToOrder);
     }
 
-
     /**
      * Disable inputs.
      */
-    //doesn't disable diagnosis field
+    // doesn't disable diagnosis field
     private void disableInputs() {
         this.systolicField.disableProperty().set(true);
         this.diastolicField.disableProperty().set(true);

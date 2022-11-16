@@ -22,13 +22,13 @@ import main.java.ethos.model.UserRole;
  * The Class ControllerManager.
  */
 public class ControllerManager {
-    
+
     /** The login controller. */
     private LoginController loginController;
-    
+
     /** The main view controller. */
     private MainViewController mainViewController;
-    
+
     /** The reg edit controller. */
     private RegisterEditController regEditController;
 
@@ -37,13 +37,13 @@ public class ControllerManager {
 
     /** The visit controller. */
     private VisitController visitController;
-    
+
     /** The scene controller. */
     private SceneController sceneController;
-    
+
     /** The lab controller. */
     private LabController labController;
-    
+
     /**
      * Instantiates a new controller manager.
      */
@@ -71,7 +71,7 @@ public class ControllerManager {
      * Determines if a visit has already been made for the specified doctor
      * and datetime.
      *
-     * @param doctorId -- the doctor's id
+     * @param doctorId     -- the doctor's id
      * @param apptDatetime -- the datetime of the appointment
      * @return true if the visit has taken place; false otherwise
      */
@@ -83,7 +83,7 @@ public class ControllerManager {
     /**
      * Gets the visit info.
      *
-     * @param doctorId the doctor id
+     * @param doctorId     the doctor id
      * @param apptDateTime the appt date time
      * @return the visit info
      */
@@ -95,22 +95,22 @@ public class ControllerManager {
     /**
      * Update diagnosis.
      *
-     * @param doctorId the doctor id
+     * @param doctorId     the doctor id
      * @param apptDatetime the appt datetime
-     * @param diagnosis the diagnosis
-     * @param isFinal the is final
+     * @param diagnosis    the diagnosis
+     * @param isFinal      the is final
      */
     public void updateDiagnosis(int doctorId, LocalDateTime apptDatetime, String diagnosis, boolean isFinal) {
         this.visitController.updateDiagnosis(doctorId, apptDatetime, diagnosis, isFinal);
     }
-    
+
     /**
      * Validate login.
      *
      * @param username the username
      * @param password the password
-     * @param isAdmin the is admin
-     * @param isNurse the is nurse
+     * @param isAdmin  the is admin
+     * @param isNurse  the is nurse
      * @return true, if successful
      */
     public boolean validateLogin(String username, String password, boolean isAdmin, boolean isNurse) {
@@ -171,7 +171,6 @@ public class ControllerManager {
         return this.loginController.getLoggedInUser().getUserId();
     }
 
-
     /**
      * Changes the current view to the main screen.
      *
@@ -195,7 +194,7 @@ public class ControllerManager {
         this.sceneController.changeToLogin(currentStage, this);
 
     }
-    
+
     /**
      * Change to lab view.
      *
@@ -204,17 +203,17 @@ public class ControllerManager {
     public void changeToLabView(Stage currentStage) {
         this.sceneController.changeToLabView(currentStage, this);
     }
-    
+
     /**
      * Launch lab dialog.
      *
      * @param currentStage the current stage
      */
     public void launchLabDialog(Stage currentStage) {
-        
+
         this.sceneController.launchLabOrderDialog(currentStage, this);
     }
-    
+
     /**
      * Changes the current view to the main screen.
      *
@@ -238,8 +237,8 @@ public class ControllerManager {
      * Changes the view to the patient visit view.
      *
      * @param currentStage the current stage
-     * @param doctorId the doctor responsible for the visit
-     * @param appDateTime the app date time
+     * @param doctorId     the doctor responsible for the visit
+     * @param appDateTime  the app date time
      */
     public void changeToVisit(Stage currentStage, int doctorId, LocalDateTime appDateTime) {
         this.sceneController.changeToVisitView(currentStage, this, doctorId, appDateTime);
@@ -293,7 +292,7 @@ public class ControllerManager {
      * @return true, if successful
      */
     public boolean enterVisitInfo(Map<String, String> visitInfo) {
-        
+
         return this.visitController.submitVisitInfo(visitInfo);
     }
 
@@ -302,9 +301,14 @@ public class ControllerManager {
      *
      * @param indexOfPatient the new displayed patient
      */
-    public void setDisplayedPatient(int indexOfPatient) {
+    public void setDisplayedPatient(int patientId) {
         List<Patient> results = this.mainViewController.getResults();
-        this.regEditController.setDisplayedPatient(results.get(indexOfPatient));
+        for (Patient current : results) {
+            if (patientId == current.getPatientId()) {
+                this.regEditController.setDisplayedPatient(current);
+            }
+        }
+
     }
 
     /**
@@ -333,7 +337,7 @@ public class ControllerManager {
     public String getPatientSsn() {
         return this.regEditController.getPatientSsn();
     }
-    
+
     /**
      * Gets the selected patient id.
      *
@@ -422,7 +426,7 @@ public class ControllerManager {
         this.regEditController.clearDisplayedPatient();
 
     }
-    
+
     /**
      * Gets the all doctors.
      *
@@ -432,41 +436,42 @@ public class ControllerManager {
         this.apptController.getDoctors();
         return this.apptController.getAllDoctors();
     }
-    
+
     /**
      * Gets the patient appts.
      *
      * @return the patient appts
      */
-    public List<Map<String, Object>> getPatientAppts(){
-       return this.apptController.getPatientAppts(this.getSelectedPatientId());
+    public List<Map<String, Object>> getPatientAppts() {
+        return this.apptController.getPatientAppts(this.getSelectedPatientId());
     }
 
     /**
      * Gets a list of past visits for the currently selected patient.
+     * 
      * @return a list of visits.
      */
     public List<Map<String, Object>> getPatientVisits() {
         return this.visitController.getPatientVisits(this.getSelectedPatientId());
     }
-    
+
     /**
      * Gets the available labs.
      *
      * @return the available labs
      */
-    public List<Map<String, Object>> getAvailableLabs(){
+    public List<Map<String, Object>> getAvailableLabs() {
         return this.visitController.getCurrentLabs();
     }
-    
+
     /**
      * Builds the appt results for table.
      *
      * @return the list
      */
-    public List<Map<String,Object>> buildApptResultsForTable() {
+    public List<Map<String, Object>> buildApptResultsForTable() {
         return this.apptController.buildResultsForTable();
-    }    
+    }
 
     /**
      * Populates the states ComboBox for patient register/edit.
@@ -474,19 +479,19 @@ public class ControllerManager {
      * @param statesCombo - the states combo box
      */
     public void populateStatesComboBox(ComboBox<String> statesCombo) {
-        
+
         this.regEditController.populateStatesComboBox(statesCombo);
     }
-    
+
     /**
      * Gets the appt times.
      *
      * @param doctorName the doctor name
-     * @param date the date
+     * @param date       the date
      * @return the appt times
      */
     public List<LocalTime> getApptTimes(String doctorName, Date date) {
-        
+
         return this.apptController.getDoctorsAvailability(doctorName, date);
     }
 
@@ -496,50 +501,39 @@ public class ControllerManager {
      * @param indexOfAppt the index of appt
      * @return true, if is date after today
      */
-    public boolean isDateAfterToday(int indexOfAppt) {
-        if (indexOfAppt < 0) {
-            return false;
-        }
-        Appointment toCheck = this.apptController.getResults().get(indexOfAppt);
-        if (toCheck.getApptDateTime().isAfter(LocalDateTime.now())) {
+    public boolean isDateAfterToday(LocalDateTime time) {
+        if (time.isAfter(LocalDateTime.now())) {
             return true;
         }
         return false;
     }
-    
+
     /**
      * Checks if is date today.
      *
      * @param indexOfAppt the index of appt
      * @return true, if is date today
      */
-    public boolean isDateToday(int indexOfAppt) {
-        if (indexOfAppt < 0) {
-            return false;
-        }
-        Appointment toCheck = this.apptController.getResults().get(indexOfAppt);
-        if (toCheck.getApptDateTime().toLocalDate().isEqual(LocalDate.now())) {
+    public boolean isDateToday(LocalDateTime dateTime) {
+        if (dateTime.toLocalDate().isEqual(LocalDate.now())) {
             return true;
         }
         return false;
     }
-    
+
     /**
      * Checks if is appointment today within 15.
      *
      * @param indexOfAppt the index of appt
      * @return true, if is appointment today within 15
      */
-    public boolean isAppointmentTodayWithin15(int indexOfAppt) {
-        if (indexOfAppt < 0) {
-            return false;
-        }
-        if (this.isDateToday(indexOfAppt) && this.apptController.compareDates(indexOfAppt)) {
+    public boolean isAppointmentTodayWithin15(int doctorId, LocalDateTime dateTime) {
+        if (this.isDateToday(dateTime) && this.apptController.compareDates(doctorId, dateTime)) {
             return true;
         }
-        //changed for testing.
+        // changed for testing.
         return false;
-        
+
     }
 
     /**
@@ -559,8 +553,8 @@ public class ControllerManager {
     /**
      * Book appt.
      *
-     * @param doctorId the doctor id
-     * @param dateTime the date time
+     * @param doctorId    the doctor id
+     * @param dateTime    the date time
      * @param appt_reason the appt reason
      */
     public void bookAppt(int doctorId, LocalDateTime dateTime, String appt_reason) {
@@ -572,12 +566,12 @@ public class ControllerManager {
      * Edits the appt.
      *
      * @param selectedIndex the selected index
-     * @param newDate the new date
-     * @param doctorName the doctor name
-     * @param newTime the new time
+     * @param newDate       the new date
+     * @param doctorName    the doctor name
+     * @param newTime       the new time
      */
     public void editAppt(int selectedIndex, LocalDate newDate, String doctorName, LocalTime newTime) {
-       this.apptController.editAppt(selectedIndex, newDate, doctorName, newTime);
+        this.apptController.editAppt(selectedIndex, newDate, doctorName, newTime);
     }
 
     /**
@@ -605,9 +599,9 @@ public class ControllerManager {
      */
     public void setLabOrder(ObservableList<Map> selectedItems) {
         this.visitController.setLabOrder(selectedItems);
-        
+
     }
-    
+
     /**
      * Gets the selected visit id.
      *
@@ -616,7 +610,7 @@ public class ControllerManager {
     public int getSelectedVisitId() {
         return this.visitController.getCurrentId();
     }
-    
+
     /**
      * Gets the current order names.
      *
@@ -624,13 +618,14 @@ public class ControllerManager {
      */
     public List<String> getCurrentOrderNames() {
         List<String> names = new ArrayList<String>();
-        for (LabTest currentLab : this.visitController.getCurrentOrder()) {
-            names.add(currentLab.getTestName());
+        if (this.visitController.getCurrentOrder() != null) {
+            for (LabTest currentLab : this.visitController.getCurrentOrder()) {
+                names.add(currentLab.getTestName());
+            }
         }
         return names;
-        
     }
-    
+
     /**
      * Clear lab order.
      */
@@ -658,7 +653,7 @@ public class ControllerManager {
     public int getVisitDr() {
         return this.visitController.getCurrentDr();
     }
-    
+
     /**
      * Gets the visit date time.
      *
@@ -667,15 +662,19 @@ public class ControllerManager {
     public LocalDateTime getVisitDateTime() {
         return this.visitController.getCurrentDateTime();
     }
-    
+
     /**
      * Enter test result.
      *
-     * @param result the result
+     * @param result     the result
      * @param isAbnormal the is abnormal
-     * @param name the name
+     * @param name       the name
      */
     public void enterTestResult(String result, boolean isAbnormal, String name) {
         this.labController.enterTestResult(result, isAbnormal, name);
+    }
+    
+    public boolean isVisitFinal() {
+        return this.visitController.getCurrentVisit().isFinal();
     }
 }

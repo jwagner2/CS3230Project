@@ -87,7 +87,7 @@ public class PriorVisitView {
      */
     @FXML
     void handleShowDetails(ActionEvent event) {
-        int doctorId = (int) this.pastVisits.get(this.priorVisitsTableView.getSelectionModel().getSelectedIndex()).get("doctorId");
+        int doctorId = (int) this.priorVisitsTableView.getSelectionModel().getSelectedItem().get("doctorId");
         LocalDate apptDate = (LocalDate) this.priorVisitsTableView.getSelectionModel().getSelectedItem().get("date");
         LocalTime apptTime = (LocalTime) this.priorVisitsTableView.getSelectionModel().getSelectedItem().get("time");
         LocalDateTime apptDT = LocalDateTime.of(apptDate, apptTime);

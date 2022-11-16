@@ -29,7 +29,7 @@ public class LabOrderDialog {
 
     /** The current labs. */
     ObservableList<Map<String, Object>> currentLabs = FXCollections.<Map<String, Object>>observableArrayList();
-    
+
     /** The manager. */
     private ControllerManager manager;
 
@@ -60,6 +60,8 @@ public class LabOrderDialog {
         this.availableLabsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         this.currentLabs.addAll(this.manager.getAvailableLabs());
         this.initializeTableView();
+        this.addTableListener();
+
 
     }
 
@@ -70,8 +72,8 @@ public class LabOrderDialog {
      */
     @FXML
     void cancelOrderDialog(ActionEvent event) {
-      Stage stage = (Stage) this.cancelOrderButton.getScene().getWindow();
-      stage.close();
+        Stage stage = (Stage) this.cancelOrderButton.getScene().getWindow();
+        stage.close();
 
     }
 
@@ -82,7 +84,7 @@ public class LabOrderDialog {
      */
     @FXML
     void setOrder(ActionEvent event) {
-        
+
         this.manager.setLabOrder(this.availableLabsTable.getSelectionModel().getSelectedItems());
         Stage stage = (Stage) this.cancelOrderButton.getScene().getWindow();
         stage.close();
@@ -97,15 +99,29 @@ public class LabOrderDialog {
         this.availableLabsTable.getColumns().clear();
         TableColumn<Map, String> testName = new TableColumn<>("Test Name");
         testName.setCellValueFactory(new MapValueFactory<>("testName"));
+        testName.setSortable(false);
         TableColumn<Map, String> description = new TableColumn<>("Description");
         description.setCellValueFactory(new MapValueFactory<>("testDescription"));
+        description.setSortable(false);
         this.availableLabsTable.getColumns().add(testName);
         this.availableLabsTable.getColumns().add(description);
-        List<Map<String, Object>> currentResults = this.manager.buildResultsForTable();
-        if (currentResults != null) {
-            this.currentLabs.addAll(currentResults);
-            this.availableLabsTable.getItems().addAll(this.currentLabs);
-        }
+        this.availableLabsTable.getItems().addAll(this.currentLabs);
+        
     }
-    
+
+    /**
+     * Adds the table listener.
+     */
+    private void addTableListener() {
+        this.availableLabsTable.getSelectionModel().selectedIndexProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        this.setOrderButton.disableProperty().set(false);
+
+                    } else {
+                        this.setOrderButton.disableProperty().set(true);
+                    }
+                });
+    }
+
 }

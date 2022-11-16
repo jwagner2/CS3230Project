@@ -67,6 +67,7 @@ public class MainViewController {
             patient.put("lastName", currentPatient.getLastName());
             patient.put("dob", currentPatient.getBirthDate());
             patient.put("phone", currentPatient.getContactNumber());
+            patient.put("id", currentPatient.getPatientId());
             patientInfo.add(patient);
         }
 

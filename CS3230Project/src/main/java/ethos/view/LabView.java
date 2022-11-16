@@ -29,10 +29,10 @@ import main.java.ethos.controller.ControllerManager;
  * The Class LabView.
  */
 public class LabView {
-    
+
     /** The visit labs. */
     ObservableList<Map<String, Object>> visitLabs = FXCollections.<Map<String, Object>>observableArrayList();
-    
+
     /** The manager. */
     private ControllerManager manager;
 
@@ -60,7 +60,6 @@ public class LabView {
     @FXML
     private Button enterResultButton;
 
-
     /**
      * Handle enter result.
      *
@@ -68,7 +67,7 @@ public class LabView {
      */
     @FXML
     void handleEnterResult(ActionEvent event) {
-    
+
         TextInputDialog dialog = new TextInputDialog();
 
         dialog.setTitle(
@@ -80,7 +79,7 @@ public class LabView {
         dialog.getDialogPane().setExpandableContent(isAbnormalBox);
         dialog.getDialogPane().setExpanded(true);
         Optional<String> result = dialog.showAndWait();
-        
+
         result.ifPresent(name -> {
             this.manager.enterTestResult(result.get(), isAbnormalBox.isSelected(),
                     this.labResultsTable.getSelectionModel().getSelectedItem().get("testName").toString());
@@ -125,6 +124,12 @@ public class LabView {
                 .set("Hello, " + manager.getLoggedInName() + " (" + manager.getLoggedInUserName() + ")");
         this.labResultsLabel.textProperty()
                 .set("Lab Results For " + manager.getPatientFirstName() + " " + manager.getPatientLastName());
+        if (this.manager.isVisitFinal()) {
+            this.enterResultButton.setDisable(true);
+        } else {
+            this.addTableListener();
+        }
+
     }
 
     /**
@@ -142,15 +147,11 @@ public class LabView {
         this.labResultsTable.getColumns().add(results);
         this.labResultsTable.getColumns().add(abnormal);
         this.labResultsTable.getItems().clear();
-        List<Map<String, Object>> currentResults = this.manager.buildResultsForTable();
-        if (currentResults != null) {
-            this.visitLabs.addAll(currentResults);
-            this.labResultsTable.getItems().clear();
-            this.labResultsTable.getItems().addAll(this.visitLabs);
-        }
+        this.labResultsTable.getItems().clear();
+        this.labResultsTable.getItems().addAll(this.visitLabs);
 
     }
-    
+
     /**
      * Adds the table listener.
      */

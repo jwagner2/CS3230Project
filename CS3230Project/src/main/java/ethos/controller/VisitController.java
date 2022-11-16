@@ -37,6 +37,8 @@ public class VisitController {
     
     /** The visit id. */
     int visitId;
+    
+    Visit currentVisit;
 
     /**
      * Submit visit info.
@@ -203,6 +205,7 @@ public class VisitController {
                 visitInfo.put("apptDatetime", visit.getApptDateTime().toString());
                 visitInfo.put("isFinal", String.valueOf(visit.isFinal()));
                 this.visitId = visit.getVisitId();
+                this.currentVisit = visit;
             }
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
@@ -268,6 +271,10 @@ public class VisitController {
     public int getCurrentId() {
         return this.visitId;
     }
+    
+    public Visit getCurrentVisit() {
+        return this.currentVisit;
+    }
 
     /**
      * Gets the current labs.
@@ -298,6 +305,7 @@ public class VisitController {
             String name = (String) currentLabInfo.get("testName");
             String description = (String) currentLabInfo.get("testDescription");
             LabTest currentLab = new LabTest(labId, name, description);
+            System.out.println(currentLab.getTestName());
             this.testsToOrder.add(currentLab);
         }
 

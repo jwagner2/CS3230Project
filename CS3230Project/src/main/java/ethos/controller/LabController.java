@@ -28,6 +28,8 @@ public class LabController {
         this.currentLabs = new ArrayList<LabTest>();
     }
     
+    
+    
     /**
      * Gets the visit labs.
      *
