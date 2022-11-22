@@ -677,4 +677,9 @@ public class ControllerManager {
     public boolean isVisitFinal() {
         return this.visitController.getCurrentVisit().isFinal();
     }
+
+    public void removeLabFromOrder(String labName) {
+        this.visitController.removeLabFromOrder(labName);
+        
+    }
 }

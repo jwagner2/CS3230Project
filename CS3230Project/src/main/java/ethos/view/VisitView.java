@@ -158,6 +158,9 @@ public class VisitView {
     /** The final diagnosis chk bx. */
     @FXML
     private CheckBox finalDiagnosisChkBx;
+    
+    @FXML
+    private Button removeLabButton;
 
     /**
      * Handle end.
@@ -220,6 +223,13 @@ public class VisitView {
         this.labsToOrderBox.setItems(this.labsToOrder);
     }
 
+    @FXML
+    void handleRemoveLab(ActionEvent event) {
+        String labName = this.labsToOrderBox.getSelectionModel().getSelectedItem();
+        this.labsToOrder.remove(labName);
+        this.manager.removeLabFromOrder(labName);
+    }
+    
     /**
      * Handle view results.
      *
@@ -250,6 +260,7 @@ public class VisitView {
         this.invalidDataLabel.disableProperty().set(true);
         this.addEditableControls();
         this.enableControls();
+        this.addTableListener();
         if (this.manager.visitExists(doctorId, appDateTime)) {
             this.populateFields();
             this.readOnly = true;
@@ -395,6 +406,7 @@ public class VisitView {
         this.heightField.disableProperty().set(true);
         this.pulseField.disableProperty().set(true);
         this.symptomsTextArea.disableProperty().set(true);
+        this.removeLabButton.setDisable(true);
 
         this.systolicField.setStyle("-fx-opacity:0.8");
         this.diastolicField.setStyle("-fx-opacity:0.8");
@@ -411,4 +423,20 @@ public class VisitView {
             this.endVisit.disableProperty().set(true);
         }
     }
+
+    /**
+     * Adds the table listener.
+     */
+    private void addTableListener() {
+        this.labsToOrderBox.getSelectionModel().selectedIndexProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null && this.readOnly == false) {
+                        this.removeLabButton.setDisable(false);
+
+                    } else {
+                        this.removeLabButton.setDisable(true);
+                    }
+                });
+    }
+    
 }

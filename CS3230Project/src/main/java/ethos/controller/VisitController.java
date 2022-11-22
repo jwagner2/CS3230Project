@@ -330,4 +330,15 @@ public class VisitController {
 
     }
 
+    public void removeLabFromOrder(String labName) {
+        LabTest toRemove = null;
+        for (LabTest current : this.testsToOrder) {
+            if (current.getTestName().equals(labName)) {
+                toRemove = current;
+            }
+        }
+        this.testsToOrder.remove(toRemove);
+        
+    }
+
 }

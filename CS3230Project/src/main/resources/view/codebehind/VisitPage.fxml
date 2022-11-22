@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ethos.view.VisitView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ethos.view.VisitView">
    <children>
       <TextField fx:id="systolicField" layoutX="74.0" layoutY="62.0" prefHeight="26.0" prefWidth="46.0" />
       <TextField fx:id="diastolicField" layoutX="74.0" layoutY="106.0" prefHeight="26.0" prefWidth="46.0" />
@@ -45,5 +45,6 @@
       <Label fx:id="invalidDiagLabel" layoutX="217.0" layoutY="195.0" text="*" textFill="#e61c1c" visible="false" />
       <Label fx:id="drNameLabel" alignment="CENTER" layoutX="160.0" layoutY="8.0" opacity="0.6" prefHeight="17.0" prefWidth="246.0" text="Doctor Name" />
       <CheckBox fx:id="finalDiagnosisChkBx" layoutX="160.0" layoutY="316.0" mnemonicParsing="false" text="Final Diagnosis" />
+      <Button fx:id="removeLabButton" layoutX="428.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleRemoveLab" prefHeight="25.0" prefWidth="149.0" text="Remove Lab" />
    </children>
 </AnchorPane>
