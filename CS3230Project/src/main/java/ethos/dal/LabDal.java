@@ -54,10 +54,10 @@ public class LabDal {
     /**
      * Update lab.
      *
-     * @param result the result
+     * @param result     the result
      * @param isAbnormal the is abnormal
-     * @param visitId the visit id
-     * @param testId the test id
+     * @param visitId    the visit id
+     * @param testId     the test id
      * @throws SQLException the SQL exception
      */
     public void updateLab(String result, boolean isAbnormal, int visitId, int testId) throws SQLException {
@@ -75,20 +75,36 @@ public class LabDal {
     /**
      * Order labs.
      *
-     * @param tests the tests
+     * @param tests   the tests
      * @param visitId the visit id
      * @throws SQLException the SQL exception
      */
-    public void orderLabs(List<LabTest> tests, int visitId) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
-                PreparedStatement stmt = connection.prepareStatement(this.submitLabOrder)) {
-            for (LabTest current : tests) {
-                stmt.setInt(1, current.getTestId());
-                stmt.setInt(2, visitId);
-                java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-                stmt.setTimestamp(3, date);
-                stmt.executeUpdate();
+    public void orderLabs(List<LabTest> tests, int visitId) {
+        for (LabTest current : tests) {
+            try {
+                this.orderLab(current, visitId);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+
+        }
+    }
+
+    private void orderLab(LabTest current, int visitId) throws SQLException {
+        Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
+        try (PreparedStatement stmt = connection.prepareStatement(this.submitLabOrder)) {
+            connection.setAutoCommit(false);
+            stmt.setInt(1, current.getTestId());
+            stmt.setInt(2, visitId);
+            java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+            stmt.setTimestamp(3, date);
+            stmt.executeUpdate();
+            connection.commit();
+
+        } catch (SQLException e) {
+            connection.rollback();
+            e.printStackTrace();
+
         }
 
     }
