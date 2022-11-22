@@ -67,22 +67,25 @@ public class LabView {
      */
     @FXML
     void handleEnterResult(ActionEvent event) {
-
-        TextInputDialog dialog = new TextInputDialog();
+        String description = (String) this.labResultsTable.getSelectionModel().getSelectedItem().get("testResults");
+        String testName = (String) this.labResultsTable.getSelectionModel().getSelectedItem().get("testName");
+        Boolean isAbnormal = (Boolean) this.labResultsTable.getSelectionModel().getSelectedItem().get("isAbnormal");
+        TextInputDialog dialog = new TextInputDialog(description);
 
         dialog.setTitle(
-                "Enter Test Results for " + this.labResultsTable.getSelectionModel().getSelectedItem().get("testName"));
+                "Enter Test Results for " + testName);
         dialog.setHeaderText("Enter Results:");
         dialog.setContentText(
-                "Enter Test Results for " + this.labResultsTable.getSelectionModel().getSelectedItem().get("testName"));
+                "Enter Test Results for " + testName);
         CheckBox isAbnormalBox = new CheckBox("Is Result Abnormal?");
+        isAbnormalBox.selectedProperty().set(isAbnormal);
         dialog.getDialogPane().setExpandableContent(isAbnormalBox);
         dialog.getDialogPane().setExpanded(true);
         Optional<String> result = dialog.showAndWait();
 
         result.ifPresent(name -> {
             this.manager.enterTestResult(result.get(), isAbnormalBox.isSelected(),
-                    this.labResultsTable.getSelectionModel().getSelectedItem().get("testName").toString());
+                    testName);
             this.visitLabs.clear();
             this.visitLabs.addAll(this.manager.getVisitLabs());
             this.labResultsTable.getItems().clear();
