@@ -158,7 +158,7 @@ public class VisitView {
     /** The final diagnosis chk bx. */
     @FXML
     private CheckBox finalDiagnosisChkBx;
-    
+
     @FXML
     private Button removeLabButton;
 
@@ -174,8 +174,19 @@ public class VisitView {
             this.resetInvalidLabels();
             List<String> invalidInputs = this.manager.validateVisitInfo(this.visitDetails);
             if (invalidInputs.size() == 0) {
-                if (this.manager.enterVisitInfo(this.visitDetails)) {
-                    this.manager.changeToMainView((Stage) this.endVisit.getScene().getWindow());
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Confirm Visit Submission");
+                alert.setContentText(
+                        "You are about to sumbit the visit details.\nOnce submitted these details can't be edited.\nDo you wish to continue?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.CANCEL) {
+                    return;
+                } else {
+
+                    if (this.manager.enterVisitInfo(this.visitDetails)) {
+                        this.manager.changeToMainView((Stage) this.endVisit.getScene().getWindow());
+                    }
                 }
             } else {
                 this.invalidDataLabel.setVisible(true);
@@ -229,7 +240,7 @@ public class VisitView {
         this.labsToOrder.remove(labName);
         this.manager.removeLabFromOrder(labName);
     }
-    
+
     /**
      * Handle view results.
      *
@@ -251,6 +262,7 @@ public class VisitView {
         this.manager = manager;
         this.doctorId = doctorId;
         this.appDateTime = appDateTime;
+        this.removeLabButton.setDisable(true);
         this.readOnly = false;
         this.currentPatientField.textProperty()
                 .set("Patient: " + this.manager.getPatientFirstName() + " " + this.manager.getPatientLastName());
@@ -430,7 +442,7 @@ public class VisitView {
     private void addTableListener() {
         this.labsToOrderBox.getSelectionModel().selectedIndexProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null && this.readOnly == false) {
+                    if (newValue != null && this.labsToOrder.size() > 0 && this.readOnly == false) {
                         this.removeLabButton.setDisable(false);
 
                     } else {
@@ -438,5 +450,5 @@ public class VisitView {
                     }
                 });
     }
-    
+
 }

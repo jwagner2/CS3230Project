@@ -29,7 +29,7 @@ public class VisitDal {
     private String getDoctorById = "select fname, lname from doctor d join person p on d.pid = p.pid where d.doctor_id = ?";
 
     /** The get patient visits. */
-    private String getPatientVisits = "select v.* from appointment a join visit v on a.doctor_id = v.doctor_id and a.appt_datetime = v.appt_datetime where a.patient_id = ? and v.appt_datetime < NOW()";
+    private String getPatientVisits = "select v.* from appointment a join visit v on a.doctor_id = v.doctor_id and a.appt_datetime = v.appt_datetime where a.patient_id = ? and v.appt_save_time < NOW()";
 
     /** The get visits by doctor and datetime query. */
     private String getVisitsByDoctorAndDatetimeQuery = "select * from visit where doctor_id = ? and appt_datetime = ?";

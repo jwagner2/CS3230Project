@@ -46,7 +46,6 @@ public class ApptController {
         AppointmentDal apptDal = new AppointmentDal();
         try {
             this.searchResults = apptDal.getAppointmentsForPatient(patientId);
-            System.out.println(this.searchResults.size());
 
         } catch (SQLException e) {
             e.printStackTrace();
