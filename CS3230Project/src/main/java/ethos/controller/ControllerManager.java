@@ -182,6 +182,16 @@ public class ControllerManager {
     }
 
     /**
+     * Changes the current view to the main screen.
+     *
+     * @param currentStage - the current stage for the application
+     */
+    public void changeToAdminView(Stage currentStage) {
+        this.sceneController.changeToAdminView(currentStage, this);
+
+    }
+
+    /**
      * Change to login.
      *
      * @param currentStage the current stage

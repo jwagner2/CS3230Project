@@ -28,7 +28,9 @@ public enum PageType {
     PAST_VISIT("/view/codebehind/PriorVisitView.fxml"),
     
     /** The lab dialog. */
-    LAB_DIALOG("/view/codebehind/LabOrderDialog.fxml");
+    LAB_DIALOG("/view/codebehind/LabOrderDialog.fxml"),
+
+    ADMIN("/view/codebehind/AdminPage.fxml");
 
     /** The label. */
     public final String label;

@@ -32,7 +32,7 @@ public class LoginDal {
      */
     public User loginAdmin(String username, String password) throws SQLException {
 
-        String queryToUse = "select * from login l join person p on l.pid = p.pid left outer join admin a on p.pid = a.pid left outer join nurse n on p.pid = n.pid where username = binary ? and password = password = binary AES_ENCRYPT(?, ?)";
+        String queryToUse = "select * from login l join person p on l.pid = p.pid left outer join admin a on p.pid = a.pid left outer join nurse n on p.pid = n.pid where username = binary ? and password = binary AES_ENCRYPT(?, ?)";
         User loggedIn = null;
         try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
                 PreparedStatement stmt = connection.prepareStatement(queryToUse)) {
@@ -45,7 +45,7 @@ public class LoginDal {
                 
                 String firstName = rs.getString("fname");
                 String lastName = rs.getString("lname");
-                boolean isAdmin = rs.getInt("admin_id") != 0;
+                boolean isAdmin = rs.getInt("admin_id")  != 0;
                 int userId = rs.getInt("admin_id");
                 if (isAdmin) {
                     loggedIn = new User(firstName, lastName, username, password, UserRole.ADMIN, userId);

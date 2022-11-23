@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.java.ethos.model.PageType;
+import main.java.ethos.view.AdminView;
 import main.java.ethos.view.ApptView;
 import main.java.ethos.view.LabOrderDialog;
 import main.java.ethos.view.LabView;
@@ -43,6 +44,35 @@ public class SceneController {
 
             Scene scene = new Scene(parent);
             currentStage.setTitle("ethos");
+            currentStage.setScene(scene);
+            currentStage.show();
+        } catch (MalformedURLException murlerr) {
+            System.err.println("Bad FXML URL");
+            murlerr.printStackTrace();
+        } catch (IOException ioerr) {
+            System.err.println("Bad file");
+            ioerr.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Changes the current view to the main screen.
+     *
+     * @param currentStage - the current stage for the application
+     * @param manager the manager
+     */
+    public void changeToAdminView(Stage currentStage,  ControllerManager manager) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PageType.class.getResource(PageType.ADMIN.label));
+            Parent parent = loader.load();
+
+            AdminView adminView = loader.<AdminView>getController();
+            adminView.initialize(manager);
+
+            Scene scene = new Scene(parent);
+            currentStage.setTitle("ethos -- Admin Console");
             currentStage.setScene(scene);
             currentStage.show();
         } catch (MalformedURLException murlerr) {

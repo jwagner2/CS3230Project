@@ -61,8 +61,13 @@ public class LoginView {
 		} else {
 			this.invalidCredentialsLabel.setVisible(false);
 			if (this.manager.validateLogin(this.unameTextField.getText(), this.pwdTextField.getText(), this.adminRadioButton.isSelected(), this.nurseRadioButton.isSelected())) {
+				System.out.println("valid creds");
 				this.invalidCredentialsLabel.setVisible(false);
-				this.manager.changeToMainView((Stage) this.loginButton.getScene().getWindow());
+				if (this.adminRadioButton.isSelected()) {
+					this.manager.changeToAdminView((Stage) this.loginButton.getScene().getWindow());
+				} else {
+					this.manager.changeToMainView((Stage) this.loginButton.getScene().getWindow());
+				}
 			} else {
 				this.invalidCredentialsLabel.setVisible(true);
 				this.pwdTextField.setText("");
