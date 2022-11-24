@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ import java.util.List;
 
 import main.java.ethos.model.Visit;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class VisitDal.
  */
@@ -39,6 +39,9 @@ public class VisitDal {
     
     /** The get visit id. */
     private String getVisitId = "SELECT MAX(visit_id) from visit;";
+
+    //TODO: finish query
+    private String getVisitsBetweenQuery = "select v.visit_id, ";
 
     /**
      * Update diagnosis.
@@ -236,4 +239,10 @@ public class VisitDal {
             return visit;
         }
     }
+
+    public void searchForVisitsBetween(LocalDate startDate, LocalDate endDate) {
+        Timestamp startTimestamp = this.getTimestampFromDatetime(LocalDateTime.from(startDate));
+        Timestamp endTimestamp = this.getTimestampFromDatetime(LocalDateTime.from(endDate));
+    }
+
 }

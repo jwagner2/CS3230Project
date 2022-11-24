@@ -1,5 +1,7 @@
 package main.java.ethos.view;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Map;
 
 import javafx.event.ActionEvent;
@@ -16,6 +18,7 @@ public class AdminView {
     private ControllerManager manager;
 
     @FXML
+    @SuppressWarnings("rawtypes")
     private TableView<Map> queryResultsTableView;
 
     @FXML
@@ -38,7 +41,7 @@ public class AdminView {
 
     @FXML
     void handleGenerateReport(ActionEvent event) {
-
+        this.manager.changeToReportView((Stage) this.generateReportButton.getScene().getWindow());
     }
 
     /**
@@ -63,6 +66,11 @@ public class AdminView {
      */
     public void initialize(ControllerManager manager) {
         this.manager = manager;
+        this.currentUserLabel.textProperty()
+                .set("Hello, " + manager.getLoggedInName() + " (" + manager.getLoggedInUserName() + ")");
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("E, M/d/Y");
+        this.currentDateLabel.textProperty().set(format.format(calendar.getTime()));
     }
 
 }

@@ -14,7 +14,6 @@ import main.java.ethos.dal.VisitDal;
 import main.java.ethos.model.LabTest;
 import main.java.ethos.model.Visit;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class VisitController.
  */
@@ -298,6 +297,7 @@ public class VisitController {
      *
      * @param selectedItems the new lab order
      */
+    @SuppressWarnings("rawtypes")
     public void setLabOrder(ObservableList<Map> selectedItems) {
         this.testsToOrder = new ArrayList<LabTest>();
         for (Map<String, Object> currentLabInfo : selectedItems) {

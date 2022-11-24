@@ -2,7 +2,6 @@ package main.java.ethos.model;
 
 import java.time.LocalDateTime;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Visit.
  */

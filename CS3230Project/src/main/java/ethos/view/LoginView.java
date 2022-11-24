@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import main.java.ethos.controller.ControllerManager;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class LoginController.
  */

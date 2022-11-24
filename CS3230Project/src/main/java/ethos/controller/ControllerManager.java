@@ -17,7 +17,6 @@ import main.java.ethos.model.LabTest;
 import main.java.ethos.model.Patient;
 import main.java.ethos.model.UserRole;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ControllerManager.
  */
@@ -44,6 +43,8 @@ public class ControllerManager {
     /** The lab controller. */
     private LabController labController;
 
+    private ReportController reportController;
+
     /**
      * Instantiates a new controller manager.
      */
@@ -56,6 +57,7 @@ public class ControllerManager {
         this.apptController = new ApptController();
         this.visitController = new VisitController();
         this.labController = new LabController();
+        this.reportController = new ReportController();
     }
 
     /**
@@ -76,7 +78,6 @@ public class ControllerManager {
      * @return true if the visit has taken place; false otherwise
      */
     public boolean visitExists(int doctorId, LocalDateTime apptDatetime) {
-        Map<String, String> stuff = this.visitController.getVisitInfo(doctorId, apptDatetime);
         return this.visitController.getVisitInfo(doctorId, apptDatetime) != null;
     }
 
@@ -189,6 +190,10 @@ public class ControllerManager {
     public void changeToAdminView(Stage currentStage) {
         this.sceneController.changeToAdminView(currentStage, this);
 
+    }
+
+    public void changeToReportView(Stage currentStage) {
+        this.sceneController.changeToReportView(currentStage, this);
     }
 
     /**
@@ -607,6 +612,7 @@ public class ControllerManager {
      *
      * @param selectedItems the new lab order
      */
+    @SuppressWarnings("rawtypes")
     public void setLabOrder(ObservableList<Map> selectedItems) {
         this.visitController.setLabOrder(selectedItems);
 
@@ -691,5 +697,9 @@ public class ControllerManager {
     public void removeLabFromOrder(String labName) {
         this.visitController.removeLabFromOrder(labName);
         
+    }
+
+    public void searchForVisitsBetween(LocalDate startDate, LocalDate endDate) {
+        this.reportController.searchForVisitsBetween(startDate, endDate);
     }
 }

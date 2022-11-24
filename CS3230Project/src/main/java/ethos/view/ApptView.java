@@ -17,7 +17,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -51,6 +50,7 @@ public class ApptView {
 
     /** The appt data table view. */
     @FXML
+    @SuppressWarnings("rawtypes")
     private TableView<Map> apptDataTableView;
 
     /** The appt date picker. */

@@ -1,21 +1,14 @@
 package main.java.ethos.view;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -24,7 +17,6 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class LabView.
  */
@@ -50,6 +42,7 @@ public class LabView {
 
     /** The lab results table. */
     @FXML
+    @SuppressWarnings("rawtypes")
     private TableView<Map> labResultsTable;
 
     /** The logout button. */
@@ -138,6 +131,7 @@ public class LabView {
     /**
      * Initialize table view.
      */
+    @SuppressWarnings("rawtypes")
     private void initializeTableView() {
         this.labResultsTable.getColumns().clear();
         TableColumn<Map, String> testName = new TableColumn<>("Test Name");

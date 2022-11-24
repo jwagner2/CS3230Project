@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ethos.view.ReportView">
+   <children>
+      <TableView fx:id="visitsTableView" layoutX="29.0" layoutY="97.0" prefHeight="288.0" prefWidth="539.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+      <Separator layoutX="14.0" layoutY="72.0" prefHeight="3.0" prefWidth="570.0" />
+      <Label fx:id="currentDateLabel" layoutX="25.0" layoutY="42.0" prefHeight="32.0" prefWidth="213.0" text="Monday, September 25, 2022">
+         <font>
+            <Font name="Agency FB" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="currentUserLabel" alignment="CENTER_RIGHT" layoutX="381.0" layoutY="48.0" prefHeight="17.0" prefWidth="188.0" text="Hello, nurseUser1" textAlignment="RIGHT" />
+      <Button fx:id="logoutButton" layoutX="508.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleLogout" text="Log Out" />
+      <Button fx:id="searchVisitsButton" layoutX="234.0" layoutY="508.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="55.0" prefWidth="131.0" text="Search Visits" />
+      <Separator layoutX="30.0" layoutY="414.0" prefHeight="3.0" prefWidth="539.0" />
+      <DatePicker fx:id="startDatePicker" layoutX="42.0" layoutY="458.0" />
+      <DatePicker fx:id="endDatePicker" layoutX="385.0" layoutY="457.0" />
+      <Label layoutX="42.0" layoutY="434.0" opacity="0.6" text="Start Date:" />
+      <Label layoutX="385.0" layoutY="433.0" opacity="0.6" text="End Date:" />
+      <Button fx:id="backButton" layoutX="25.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleGoBack" text="&lt;- Back" />
+   </children>
+</AnchorPane>

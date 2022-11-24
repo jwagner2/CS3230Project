@@ -18,9 +18,9 @@ import main.java.ethos.view.LoginView;
 import main.java.ethos.view.MainView;
 import main.java.ethos.view.PatientInfoView;
 import main.java.ethos.view.PriorVisitView;
+import main.java.ethos.view.ReportView;
 import main.java.ethos.view.VisitView;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SceneController.
  */
@@ -57,7 +57,7 @@ public class SceneController {
     }
 
     /**
-     * Changes the current view to the main screen.
+     * Changes the current view to the admin screen.
      *
      * @param currentStage - the current stage for the application
      * @param manager the manager
@@ -82,7 +82,34 @@ public class SceneController {
             System.err.println("Bad file");
             ioerr.printStackTrace();
         }
+    }
 
+    /**
+     * Changes the current view to the report generation screen.
+     *
+     * @param currentStage - the current stage for the application
+     * @param manager the manager
+     */
+    public void changeToReportView(Stage currentStage, ControllerManager manager) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(PageType.class.getResource(PageType.REPORT_VIEW.label));
+            Parent parent = loader.load();
+
+            ReportView reportView = loader.<ReportView>getController();
+            reportView.initialize(manager);
+
+            Scene scene = new Scene(parent);
+            currentStage.setTitle("ethos -- View Visit Reports");
+            currentStage.setScene(scene);
+            currentStage.show();
+        } catch (MalformedURLException murlerr) {
+            System.err.println("Bad FXML URL");
+            murlerr.printStackTrace();
+        } catch (IOException ioerr) {
+            System.err.println("Bad file");
+            ioerr.printStackTrace();
+        }
     }
 
     /**
@@ -92,7 +119,6 @@ public class SceneController {
      * @param manager the manager
      */
     public void changeToLogin(Stage currentStage, ControllerManager manager) {
-   
         
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -146,7 +172,7 @@ public class SceneController {
     }
     
     /**
-     * Changes the current view to the appointment screen.
+     * Changes the current view to the visit screen.
      *
      * @param currentStage - the current stage for the application
      * @param manager the manager

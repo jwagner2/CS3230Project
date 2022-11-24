@@ -10,7 +10,6 @@ import java.util.List;
 
 import main.java.ethos.model.LabTest;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class LabDal.
  */
