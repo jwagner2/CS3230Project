@@ -60,7 +60,6 @@ public class LoginView {
 		} else {
 			this.invalidCredentialsLabel.setVisible(false);
 			if (this.manager.validateLogin(this.unameTextField.getText(), this.pwdTextField.getText(), this.adminRadioButton.isSelected(), this.nurseRadioButton.isSelected())) {
-				System.out.println("valid creds");
 				this.invalidCredentialsLabel.setVisible(false);
 				if (this.adminRadioButton.isSelected()) {
 					this.manager.changeToAdminView((Stage) this.loginButton.getScene().getWindow());

@@ -24,6 +24,8 @@ public class ControllerManager {
 
     /** The login controller. */
     private LoginController loginController;
+    
+    private AdminController adminController;
 
     /** The main view controller. */
     private MainViewController mainViewController;
@@ -43,7 +45,7 @@ public class ControllerManager {
     /** The lab controller. */
     private LabController labController;
 
-    private AdminController adminController;
+    private ReportController reportController;
 
     /**
      * Instantiates a new controller manager.
@@ -698,12 +700,12 @@ public class ControllerManager {
         this.visitController.removeLabFromOrder(labName);
         
     }
-
-    public void searchForVisitsBetween(LocalDate startDate, LocalDate endDate) {
-        this.adminController.searchForVisitsBetween(startDate, endDate);
-    }
-
+    
     public Map<String, Object> submitAdminQuery(String queryString) {
         return this.adminController.submitAdminQuery(queryString);
+    }
+    
+    public List<Map<String, Object>> getReport(LocalDate startDate, LocalDate endDate ) {
+        return this.adminController.getReport(startDate, endDate);
     }
 }
