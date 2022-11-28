@@ -58,7 +58,7 @@ public class ReportEntry {
         this.apptDate = apptDate;
         this.patientId = patientId;
         this.patientFName = patientFName;
-        this.patientLName = patientFName;
+        this.patientLName = patientLName;
         this.nurseName = nurseName;
         this.drName = drName;
         this.diagnosis = diagnosis;
