@@ -43,7 +43,7 @@ public class ControllerManager {
     /** The lab controller. */
     private LabController labController;
 
-    private ReportController reportController;
+    private AdminController adminController;
 
     /**
      * Instantiates a new controller manager.
@@ -57,7 +57,7 @@ public class ControllerManager {
         this.apptController = new ApptController();
         this.visitController = new VisitController();
         this.labController = new LabController();
-        this.reportController = new ReportController();
+        this.adminController = new AdminController();
     }
 
     /**
@@ -700,6 +700,10 @@ public class ControllerManager {
     }
 
     public void searchForVisitsBetween(LocalDate startDate, LocalDate endDate) {
-        this.reportController.searchForVisitsBetween(startDate, endDate);
+        this.adminController.searchForVisitsBetween(startDate, endDate);
+    }
+
+    public Map<String, Object> submitAdminQuery(String queryString) {
+        return this.adminController.submitAdminQuery(queryString);
     }
 }

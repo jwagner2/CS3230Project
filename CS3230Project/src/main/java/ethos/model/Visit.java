@@ -122,7 +122,6 @@ public class Visit {
      * @return the body weight lbs
      */
     public double getBodyWeightLbs() {
-        System.out.println(this.bodyWeightLbs);
         return bodyWeightLbs;
     }
 
@@ -159,7 +158,6 @@ public class Visit {
      * @return the pulse bpm
      */
     public int getPulseBpm() {
-        System.out.println(this.pulseBpm);
         return this.pulseBpm;
     }
 
