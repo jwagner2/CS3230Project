@@ -56,7 +56,7 @@ public class ReportView {
 
     @FXML
     void handleSearch(ActionEvent event) {
-        this.manager.searchForVisitsBetween(this.startDatePicker.getValue(), this.endDatePicker.getValue());
+        
     }
 
     /**

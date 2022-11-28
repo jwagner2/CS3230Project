@@ -45,8 +45,6 @@ public class ControllerManager {
     /** The lab controller. */
     private LabController labController;
 
-    private ReportController reportController;
-
     /**
      * Instantiates a new controller manager.
      */
@@ -700,7 +698,7 @@ public class ControllerManager {
         this.visitController.removeLabFromOrder(labName);
         
     }
-    
+
     public Map<String, Object> submitAdminQuery(String queryString) {
         return this.adminController.submitAdminQuery(queryString);
     }
