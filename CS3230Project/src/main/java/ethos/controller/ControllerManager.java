@@ -24,6 +24,8 @@ public class ControllerManager {
 
     /** The login controller. */
     private LoginController loginController;
+    
+    private AdminController adminController;
 
     /** The main view controller. */
     private MainViewController mainViewController;
@@ -58,6 +60,7 @@ public class ControllerManager {
         this.visitController = new VisitController();
         this.labController = new LabController();
         this.reportController = new ReportController();
+        this.adminController = new AdminController();
     }
 
     /**
@@ -701,5 +704,9 @@ public class ControllerManager {
 
     public void searchForVisitsBetween(LocalDate startDate, LocalDate endDate) {
         this.reportController.searchForVisitsBetween(startDate, endDate);
+    }
+    
+    public List<Map<String, Object>> getReport(LocalDate startDate, LocalDate endDate ) {
+        return this.adminController.getReport(startDate, endDate);
     }
 }
