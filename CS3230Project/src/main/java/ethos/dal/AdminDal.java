@@ -1,10 +1,20 @@
 package main.java.ethos.dal;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
+
+import main.java.ethos.model.LabTest;
+import main.java.ethos.model.ReportEntry;
 
 public class AdminDal {
 
@@ -46,5 +56,37 @@ public class AdminDal {
             ResultSet rs = stmt.executeQuery();
             return rs;
         }
+    }
+    
+
+    public List<ReportEntry> executeReportQuery(LocalDate startDate, LocalDate endDate) throws SQLException {
+        List<ReportEntry> report = new ArrayList<ReportEntry>();
+        Timestamp startTimestamp = this.getTimestampFromDatetime(LocalDateTime.from(startDate));
+        Timestamp endTimestamp = this.getTimestampFromDatetime(LocalDateTime.from(endDate));
+        try (Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
+                PreparedStatement stmt = connection.prepareStatement(this.reportQuery)) {
+            stmt.setTimestamp(1, endTimestamp);
+            stmt.setTimestamp(2, startTimestamp);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                LocalDateTime apptDatetime = rs.getTimestamp("appt_datetime").toLocalDateTime();
+                int patientId = rs.getInt("patient_id");
+                String patientName = rs.getString("patient_name");
+                String nurseName = rs.getString("nurse_name");
+                String doctorName = rs.getString("doctor_name");
+                String diagnosis = rs.getString("diagnosis");
+                String labs = rs.getString("labs_ordered");
+                String results = rs.getString("lab_results");
+                ReportEntry newEntry = new ReportEntry(apptDatetime, patientId, patientName, nurseName, doctorName, diagnosis, labs, results);
+                report.add(newEntry);
+            }
+            
+        }
+        return report;
+    }
+
+
+    private Timestamp getTimestampFromDatetime(LocalDateTime dateTime) {
+        return new Timestamp(Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()).getTime());
     }
 }
