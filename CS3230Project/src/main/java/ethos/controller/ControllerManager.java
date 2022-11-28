@@ -17,6 +17,7 @@ import main.java.ethos.model.LabTest;
 import main.java.ethos.model.Patient;
 import main.java.ethos.model.UserRole;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ControllerManager.
  */
@@ -25,6 +26,7 @@ public class ControllerManager {
     /** The login controller. */
     private LoginController loginController;
     
+    /** The admin controller. */
     private AdminController adminController;
 
     /** The main view controller. */
@@ -192,6 +194,11 @@ public class ControllerManager {
 
     }
 
+    /**
+     * Change to report view.
+     *
+     * @param currentStage the current stage
+     */
     public void changeToReportView(Stage currentStage) {
         this.sceneController.changeToReportView(currentStage, this);
     }
@@ -314,7 +321,7 @@ public class ControllerManager {
     /**
      * Sets the displayed patient.
      *
-     * @param indexOfPatient the new displayed patient
+     * @param patientId the new displayed patient
      */
     public void setDisplayedPatient(int patientId) {
         List<Patient> results = this.mainViewController.getResults();
@@ -513,7 +520,7 @@ public class ControllerManager {
     /**
      * Checks if is date after today.
      *
-     * @param indexOfAppt the index of appt
+     * @param time the time
      * @return true, if is date after today
      */
     public boolean isDateAfterToday(LocalDateTime time) {
@@ -526,7 +533,7 @@ public class ControllerManager {
     /**
      * Checks if is date today.
      *
-     * @param indexOfAppt the index of appt
+     * @param dateTime the date time
      * @return true, if is date today
      */
     public boolean isDateToday(LocalDateTime dateTime) {
@@ -539,7 +546,8 @@ public class ControllerManager {
     /**
      * Checks if is appointment today within 15.
      *
-     * @param indexOfAppt the index of appt
+     * @param doctorId the doctor id
+     * @param dateTime the date time
      * @return true, if is appointment today within 15
      */
     public boolean isAppointmentTodayWithin15(int doctorId, LocalDateTime dateTime) {
@@ -690,19 +698,42 @@ public class ControllerManager {
         this.labController.enterTestResult(result, isAbnormal, name);
     }
     
+    /**
+     * Checks if is visit final.
+     *
+     * @return true, if is visit final
+     */
     public boolean isVisitFinal() {
         return this.visitController.getCurrentVisit().isFinal();
     }
 
+    /**
+     * Removes the lab from order.
+     *
+     * @param labName the lab name
+     */
     public void removeLabFromOrder(String labName) {
         this.visitController.removeLabFromOrder(labName);
         
     }
 
+    /**
+     * Submit admin query.
+     *
+     * @param queryString the query string
+     * @return the map
+     */
     public Map<String, Object> submitAdminQuery(String queryString) {
         return this.adminController.submitAdminQuery(queryString);
     }
     
+    /**
+     * Gets the report.
+     *
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return the report
+     */
     public List<Map<String, Object>> getReport(LocalDate startDate, LocalDate endDate ) {
         return this.adminController.getReport(startDate, endDate);
     }

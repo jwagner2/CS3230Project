@@ -21,6 +21,7 @@ import main.java.ethos.view.PriorVisitView;
 import main.java.ethos.view.ReportView;
 import main.java.ethos.view.VisitView;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class SceneController.
  */

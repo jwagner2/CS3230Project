@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 import main.java.ethos.dal.AppointmentDal;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ApptView.
  */

@@ -16,6 +16,7 @@ import java.util.List;
 
 import main.java.ethos.model.Visit;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class VisitDal.
  */
@@ -40,6 +41,7 @@ public class VisitDal {
     /** The get visit id. */
     private String getVisitId = "SELECT MAX(visit_id) from visit;";
 
+    /** The get visits between query. */
     //TODO: finish query
     private String getVisitsBetweenQuery = "select v.visit_id, ";
 
@@ -240,6 +242,12 @@ public class VisitDal {
         }
     }
 
+    /**
+     * Search for visits between.
+     *
+     * @param startDate the start date
+     * @param endDate the end date
+     */
     public void searchForVisitsBetween(LocalDate startDate, LocalDate endDate) {
         Timestamp startTimestamp = this.getTimestampFromDatetime(LocalDateTime.from(startDate));
         Timestamp endTimestamp = this.getTimestampFromDatetime(LocalDateTime.from(endDate));

@@ -138,7 +138,8 @@ public class ApptController {
     /**
      * Compare dates.
      *
-     * @param apptIndex the appt index
+     * @param doctorId the doctor id
+     * @param time the time
      * @return true, if successful
      */
     public boolean compareDates(int doctorId, LocalDateTime time) {
@@ -149,6 +150,13 @@ public class ApptController {
         return true;
     }
     
+    /**
+     * Gets the by key.
+     *
+     * @param doctorId the doctor id
+     * @param time the time
+     * @return the by key
+     */
     private Appointment getByKey(int doctorId, LocalDateTime time) {
         for (Appointment current: this.searchResults) {
             if (doctorId == current.getDoctorId() && time == current.getApptDateTime()) {

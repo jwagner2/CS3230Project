@@ -159,6 +159,7 @@ public class VisitView {
     @FXML
     private CheckBox finalDiagnosisChkBx;
 
+    /** The remove lab button. */
     @FXML
     private Button removeLabButton;
 
@@ -234,6 +235,11 @@ public class VisitView {
         this.labsToOrderBox.setItems(this.labsToOrder);
     }
 
+    /**
+     * Handle remove lab.
+     *
+     * @param event the event
+     */
     @FXML
     void handleRemoveLab(ActionEvent event) {
         String labName = this.labsToOrderBox.getSelectionModel().getSelectedItem();

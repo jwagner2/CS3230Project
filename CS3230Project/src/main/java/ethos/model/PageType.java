@@ -1,5 +1,6 @@
 package main.java.ethos.model;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Enum PageType.
  */
@@ -29,8 +30,10 @@ public enum PageType {
     /** The lab dialog. */
     LAB_DIALOG("/view/codebehind/LabOrderDialog.fxml"),
 
+    /** The admin. */
     ADMIN("/view/codebehind/AdminPage.fxml"),
     
+    /** The report view. */
     REPORT_VIEW("/view/codebehind/ReportPage.fxml");
 
     /** The label. */

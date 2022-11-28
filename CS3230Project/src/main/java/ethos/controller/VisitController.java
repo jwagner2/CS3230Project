@@ -14,6 +14,7 @@ import main.java.ethos.dal.VisitDal;
 import main.java.ethos.model.LabTest;
 import main.java.ethos.model.Visit;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class VisitController.
  */
@@ -37,6 +38,7 @@ public class VisitController {
     /** The visit id. */
     int visitId;
     
+    /** The current visit. */
     Visit currentVisit;
 
     /**
@@ -271,6 +273,11 @@ public class VisitController {
         return this.visitId;
     }
     
+    /**
+     * Gets the current visit.
+     *
+     * @return the current visit
+     */
     public Visit getCurrentVisit() {
         return this.currentVisit;
     }
@@ -330,6 +337,11 @@ public class VisitController {
 
     }
 
+    /**
+     * Removes the lab from order.
+     *
+     * @param labName the lab name
+     */
     public void removeLabFromOrder(String labName) {
         LabTest toRemove = null;
         for (LabTest current : this.testsToOrder) {

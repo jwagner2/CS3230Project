@@ -10,6 +10,7 @@ import java.util.List;
 
 import main.java.ethos.model.LabTest;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class LabDal.
  */
@@ -76,7 +77,6 @@ public class LabDal {
      *
      * @param tests   the tests
      * @param visitId the visit id
-     * @throws SQLException the SQL exception
      */
     public void orderLabs(List<LabTest> tests, int visitId) {
         for (LabTest current : tests) {
@@ -89,6 +89,13 @@ public class LabDal {
         }
     }
 
+    /**
+     * Order lab.
+     *
+     * @param current the current
+     * @param visitId the visit id
+     * @throws SQLException the SQL exception
+     */
     private void orderLab(LabTest current, int visitId) throws SQLException {
         Connection connection = DriverManager.getConnection(ConnectionString.CONNECTION_STRING);
         try (PreparedStatement stmt = connection.prepareStatement(this.submitLabOrder)) {

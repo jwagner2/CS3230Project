@@ -6,6 +6,7 @@ import main.java.ethos.dal.LoginDal;
 import main.java.ethos.model.User;
 import main.java.ethos.model.UserRole;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class LoginController.
  */

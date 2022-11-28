@@ -10,6 +10,7 @@ import java.util.Map;
 import main.java.ethos.dal.AdminDal;
 import main.java.ethos.model.ReportEntry;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AdminController.
  */
@@ -53,7 +54,8 @@ public class AdminController {
             Map<String, Object> reportEntry = new HashMap<String, Object>();
             reportEntry.put("apptDateTime", currentEntry.getApptDate());
             reportEntry.put("patientId", currentEntry.getPatientId());
-            reportEntry.put("patientName", currentEntry.getPatientName());
+            reportEntry.put("patientFName", currentEntry.getPatientFName());
+            reportEntry.put("patientLName", currentEntry.getPatientLName());
             reportEntry.put("nurseName", currentEntry.getNurseName());
             reportEntry.put("doctorName", currentEntry.getDrName());
             reportEntry.put("diagnosis", currentEntry.getDiagnosis());
@@ -67,6 +69,12 @@ public class AdminController {
 
     
 
+    /**
+     * Submit admin query.
+     *
+     * @param queryString the query string
+     * @return the map
+     */
     public Map<String, Object> submitAdminQuery(String queryString) {
         AdminDal aDal = new AdminDal();
         try {

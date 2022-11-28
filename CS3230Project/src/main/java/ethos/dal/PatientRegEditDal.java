@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 import main.java.ethos.model.Patient;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class PatientRegEditDal.
  */

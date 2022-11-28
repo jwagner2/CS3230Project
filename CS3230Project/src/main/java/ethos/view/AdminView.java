@@ -17,32 +17,49 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AdminView.
+ */
 public class AdminView {
 
+    /** The manager. */
     private ControllerManager manager;
 
+    /** The query results table view. */
     @FXML
     @SuppressWarnings("rawtypes")
     private TableView<Map> queryResultsTableView;
 
+    /** The current date label. */
     @FXML
     private Label currentDateLabel;
 
+    /** The current user label. */
     @FXML
     private Label currentUserLabel;
 
+    /** The logout button. */
     @FXML
     private Button logoutButton;
 
+    /** The query entry text area. */
     @FXML
     private TextArea queryEntryTextArea;
 
+    /** The submit button. */
     @FXML
     private Button submitButton;
 
+    /** The generate report button. */
     @FXML
     private Button generateReportButton;
 
+    /**
+     * Handle generate report.
+     *
+     * @param event the event
+     */
     @FXML
     void handleGenerateReport(ActionEvent event) {
         this.manager.changeToReportView((Stage) this.generateReportButton.getScene().getWindow());
@@ -58,6 +75,11 @@ public class AdminView {
         this.manager.changeToLogin((Stage) this.logoutButton.getScene().getWindow());
     }
 
+    /**
+     * Handle submit.
+     *
+     * @param event the event
+     */
     @FXML
     @SuppressWarnings("unchecked")
     void handleSubmit(ActionEvent event) {
@@ -87,6 +109,11 @@ public class AdminView {
         }        
     }
 
+    /**
+     * Sets the table cols.
+     *
+     * @param columns the new table cols
+     */
     @SuppressWarnings("rawtypes")
     private void setTableCols(List<String> columns) {
         this.queryResultsTableView.getColumns().clear();
@@ -98,7 +125,7 @@ public class AdminView {
     }
 
     /**
-     * Initialize the admin view
+     * Initialize the admin view.
      *
      * @param manager the manager
      */

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import main.java.ethos.model.User;
 import main.java.ethos.model.UserRole;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class LoginDal.
  */

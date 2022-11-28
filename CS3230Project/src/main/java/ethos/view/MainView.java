@@ -23,6 +23,7 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.stage.Stage;
 import main.java.ethos.controller.ControllerManager;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class MainView.
  */
