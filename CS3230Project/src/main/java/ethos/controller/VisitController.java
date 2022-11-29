@@ -97,12 +97,12 @@ public class VisitController {
     public List<String> validateVisitFields(Map<String, String> fields) {
         List<String> invalidFields = new ArrayList<String>();
         if (fields.get("systolic") == null || fields.get("systolic").isEmpty()
-                || !Pattern.matches("[0-9]{2,}", fields.get("systolic"))) {
+                || !Pattern.matches("[0-9]{2,3}", fields.get("systolic"))) {
             System.out.println("Bad systolic pressure input");
             invalidFields.add("systolic");
         }
         if (fields.get("diastolic") == null || fields.get("diastolic").isEmpty()
-                || !Pattern.matches("[0-9]{2,}", fields.get("diastolic"))) {
+                || !Pattern.matches("[0-9]{2,3}", fields.get("diastolic"))) {
             System.out.println("Bad diastolic pressure input");
             invalidFields.add("diastolic");
         }
@@ -112,7 +112,7 @@ public class VisitController {
             invalidFields.add("weight");
         }
         if (fields.get("temperature") == null || fields.get("temperature").isEmpty()
-                || !Pattern.matches("[0-9]{2,}\\.*[0-9]?", fields.get("temperature"))) {
+                || !Pattern.matches("[0-9]{2,3}\\.*[0-9]?", fields.get("temperature"))) {
             System.out.println("Bad body temp input");
             invalidFields.add("temperature");
         }
@@ -122,7 +122,7 @@ public class VisitController {
             invalidFields.add("height");
         }
         if (fields.get("pulse") == null || fields.get("pulse").isEmpty()
-                || !Pattern.matches("[0-9]{2,}", fields.get("pulse"))) {
+                || !Pattern.matches("[0-9]{2,3}", fields.get("pulse"))) {
             System.out.println("Bad pulse input");
             invalidFields.add("pulse");
         }
